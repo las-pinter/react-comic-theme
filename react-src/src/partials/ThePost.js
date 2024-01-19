@@ -9,14 +9,20 @@ const ThePost = ({ index, context }) => {
   const item = posts()[index];
 
   let linkPrefix = item.type === 'page' ? '/page/' : '/post/';
-
+  let linkSlug = item.slug;
   let theContent = '';
+  let imageUrl = '';
 
   switch (context.route) {
     case '/': //if homepage,
-    case '/search/:term': //or if search
     case '/category/:catid': //or if search
       theContent = item.excerpt ? item.excerpt.rendered : "No Excerpt"; //show excerpt only
+      break;
+    case '/post/comic/*':
+      theContent = item.content.rendered;
+      linkPrefix = '/post/comic/';
+      linkSlug = context.comicSlug;
+      imageUrl = item._embedded['wp:featuredmedia'][0].source_url;
       break;
     default: //for single, pages - show entire content
       theContent = item.content.rendered;
@@ -25,11 +31,17 @@ const ThePost = ({ index, context }) => {
 
   return (
     <div id={'post-id-' + item.id} className={'post-item'}>
-      <h1><Link to={linkPrefix + item.slug}>{item.title.rendered}</Link></h1>
+      <h1><Link to={linkPrefix + linkSlug}>{item.title.rendered}</Link></h1>
       <PostMeta index={index}></PostMeta>
+      <div className="the-comic">
+        <img 
+          src={imageUrl}
+          alt="The Comic"
+        />
+      </div>
       <div className="post-content" dangerouslySetInnerHTML={{ __html: theContent }}></div>
-    </div>);
-
+    </div>
+  );
 };
 
 export default WithConsumer(ThePost);

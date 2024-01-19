@@ -6,7 +6,7 @@ import Foot from '../partials/Foot';
 import { Provider } from '../context/Context'
 import GetCurrentRouteData from '../hooks/CommonHooks';
 
-const Single = (props) => {
+const Single = () => {
   const routeData = GetCurrentRouteData();
 
   return (

@@ -7,16 +7,15 @@ import Foot from '../partials/Foot';
 import { Provider } from '../context/Context';
 import GetCurrentRouteData from '../hooks/CommonHooks';
 
-const Archive = () => {
+const MainPage = () => {
   const routeData = GetCurrentRouteData();
-  let pageTitle = routeData.route.path === '/search/:term' ? 'Search Results' : '';
 
   return (
     <Provider router={routeData}>
       <div className="archive">
         <Head></Head>
         <div className="content-area">
-          <h1>{pageTitle}</h1>
+          <h1>This is still a WIP site</h1>
           <TheLoop></TheLoop>
           <Pager></Pager>
         </div>
@@ -26,4 +25,4 @@ const Archive = () => {
   )
 }
 
-export default Archive
+export default MainPage

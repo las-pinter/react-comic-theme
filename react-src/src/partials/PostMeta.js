@@ -17,10 +17,10 @@ const PostMeta = ({ index, context }) => {
     }
 
     let theMeta = '';
-    if (item.type === 'post') {
+    if (item.type === 'post' || item.type === 'comic') {
         theMeta = (<div className="post-meta">
             Published:  <Moment format="MM/DD/YYYY">{item.date}</Moment>,
-            Written by {item.author_name}, {catLink}
+            Written by {item._embedded.author[0].name}, {catLink}
         </div>)
     }
 

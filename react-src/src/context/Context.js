@@ -13,6 +13,7 @@ export class Provider extends React.Component {
     let slug = props.router.params.slug ? props.router.params.slug : '';
     let term = props.router.params.term ? props.router.params.term : '';
     let catid = props.router.params.catid ? props.router.params.catid : '';
+    let comicSlug = props.router.params['*'] ? props.router.params['*'] : '';
 
     this.state = {
       term: term,
@@ -20,6 +21,7 @@ export class Provider extends React.Component {
       restType: restType,
       catid: catid,
       route: route,
+      comicSlug: comicSlug,
       posts: [],
       comments: [],
       currentPage: 1,
@@ -55,6 +57,9 @@ export class Provider extends React.Component {
         break;
       case '/category/:catid':
         restType = 'category';
+        break;
+      case '/post/comic/*':
+        restType = 'comic';
         break;
       case '/post/:slug':
       default:
@@ -149,15 +154,15 @@ export class Provider extends React.Component {
         url += 'pages/?slug=';
         url += this.state.slug
         break;
-      case 'search':
-        url += 'search/?s=';
-        url += this.state.term;
-        url += '&page=' + this.state.currentPage;
-        break;
       case 'category':
         url += 'posts?categories=';
         url += this.state.catid;
         url += '&page=' + this.state.currentPage;
+        break;
+      case 'comic':
+        url += 'comic?slug=';
+        url += this.state.comicSlug.split('/').reverse()[1];
+        url += '&_embed';
         break;
       case 'post':
       default:

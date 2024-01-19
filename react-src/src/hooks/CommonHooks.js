@@ -2,10 +2,10 @@ import { matchRoutes, useLocation } from 'react-router-dom'
 
 const routes = [
   { path: '/' },
-  { path: '/search/:term' },
   { path: '/page/:slug' },
   { path: '/category/:catid' },
-  { path: '/post/:slug' }
+  { path: '/post/:slug' },
+  { path: '/post/comic/*' }
 ]
 
 const GetCurrentRouteData = () => {
