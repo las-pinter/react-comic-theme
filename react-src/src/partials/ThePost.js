@@ -18,9 +18,9 @@ const ThePost = ({ index, context }) => {
     case '/category/:catid': //or if search
       theContent = item.excerpt ? item.excerpt.rendered : "No Excerpt"; //show excerpt only
       break;
-    case '/post/comic/*':
+    case '/comic/*':
       theContent = item.content.rendered;
-      linkPrefix = '/post/comic/';
+      linkPrefix = '/comic/';
       linkSlug = context.comicSlug;
       imageUrl = item._embedded['wp:featuredmedia'][0].source_url;
       break;

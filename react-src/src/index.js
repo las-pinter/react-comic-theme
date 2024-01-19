@@ -16,7 +16,7 @@ root.render(
         <Route exact path="/" element={<MainPage />} />
         <Route path="/page/:slug" element={<Single />} />
         <Route path="/post/:slug" element={<Single />} />
-        <Route path="/post/comic/*" element={<Single />} />
+        <Route path="/comic/*" element={<Single />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

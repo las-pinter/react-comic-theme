@@ -5,7 +5,7 @@ const routes = [
   { path: '/page/:slug' },
   { path: '/category/:catid' },
   { path: '/post/:slug' },
-  { path: '/post/comic/*' }
+  { path: '/comic/*' }
 ]
 
 const GetCurrentRouteData = () => {

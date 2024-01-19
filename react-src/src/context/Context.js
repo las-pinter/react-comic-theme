@@ -58,7 +58,7 @@ export class Provider extends React.Component {
       case '/category/:catid':
         restType = 'category';
         break;
-      case '/post/comic/*':
+      case '/comic/*':
         restType = 'comic';
         break;
       case '/post/:slug':
@@ -152,12 +152,12 @@ export class Provider extends React.Component {
     switch (this.state.restType) {
       case 'page':
         url += 'pages/?slug=';
-        url += this.state.slug
+        url += this.state.slug + '&_embed'
         break;
       case 'category':
         url += 'posts?categories=';
         url += this.state.catid;
-        url += '&page=' + this.state.currentPage;
+        url += '&page=' + this.state.currentPage + '&_embed';
         break;
       case 'comic':
         url += 'comic?slug=';
@@ -166,7 +166,7 @@ export class Provider extends React.Component {
         break;
       case 'post':
       default:
-        url += this.state.slug ? 'posts/?slug=' + this.state.slug : 'posts/?page=' + this.state.currentPage;
+        url += this.state.slug ? 'posts/?slug=' + this.state.slug + '&_embed' : 'posts/?page=' + this.state.currentPage + '&_embed';
         break;
     }
 
