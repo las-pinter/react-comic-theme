@@ -2,9 +2,8 @@ import { matchRoutes, useLocation } from 'react-router-dom'
 
 const routes = [
   { path: '/' },
+  { path: '/:slug' },
   { path: '/page/:slug' },
-  { path: '/category/:catid' },
-  { path: '/post/:slug' },
   { path: '/comic/*' }
 ]
 

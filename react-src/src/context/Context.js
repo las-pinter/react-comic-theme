@@ -47,7 +47,7 @@ export class Provider extends React.Component {
   }
 
   getRestType(path) {
-    let restType = 'post';
+    let restType = '';
     switch (path) {
       case '/page/:slug':
         restType = 'page';
@@ -61,7 +61,7 @@ export class Provider extends React.Component {
       case '/comic/*':
         restType = 'comic';
         break;
-      case '/post/:slug':
+      case '/:slug':
       default:
         restType = 'post';
         break;
