@@ -30,8 +30,8 @@ const ThePost = ({ index, context }) => {
   let comic = '';
 
   switch (context.route) {
-    case '/': //if homepage,
-      theContent = item.excerpt ? item.excerpt.rendered : "No Excerpt"; //show excerpt only
+    case '/':
+      theContent = item.excerpt ? item.excerpt.rendered : "No Excerpt";
       break;
     case '/comic/*':
       theContent = item.content.rendered;
@@ -39,8 +39,12 @@ const ThePost = ({ index, context }) => {
       linkSlug = context.comicSlug;
       comic = < TheComic index={index} />;
       break;
-    default: //for single, pages - show entire content
+    case '/:slug':
+    case '/page/:slug':
       theContent = item.content.rendered;
+      break;
+    default:
+      theContent = '';
       break;
   }
 

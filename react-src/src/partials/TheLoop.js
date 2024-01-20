@@ -4,16 +4,16 @@ import ThePost from './ThePost';
 
 const TheLoop = ({ context }) => {
   const posts = () => context.posts;
-  const pos = posts();
+  const thePosts = posts();
   let results = '';
 
   if (context.appError) {
     results = <div className="app-error">{context.appError}</div>;
   } else {
-    if (pos.length === 0) {
+    if (thePosts.length === 0) {
       results = <div className="no-results">no results</div>;
     } else {
-      results = pos.map(function (item, i) {
+      results = thePosts.map(function (item, i) {
         return <ThePost key={i} index={i}></ThePost>
       })
     }
