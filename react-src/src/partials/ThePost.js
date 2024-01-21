@@ -5,12 +5,10 @@ import PostMeta from './PostMeta';
 import TheComic from './TheComic';
 
 const ThePost = ({ index, context }) => {
-
-  const posts = () => context.posts;
-  const item = posts()[index];
+  const post = context.posts[index];
 
   let linkPrefix = '';
-  switch (item.type) {
+  switch (post.type) {
     case 'page':
       linkPrefix = '/page/';
       break;
@@ -25,23 +23,23 @@ const ThePost = ({ index, context }) => {
       break;
   }
 
-  let linkSlug = item.slug;
+  let linkSlug = post.slug;
   let theContent = '';
   let comic = '';
 
-  switch (context.route) {
-    case '/':
-      theContent = item.excerpt ? item.excerpt.rendered : "No Excerpt";
+  switch (context.contextType) {
+    case 'mainPage':
+      theContent = post.excerpt ? post.excerpt.rendered : "No Excerpt";
       break;
-    case '/comic/*':
-      theContent = item.content.rendered;
+    case 'comic':
+      theContent = post.content.rendered;
       linkPrefix = '/comic/';
-      linkSlug = context.comicSlug;
+      linkSlug = context.comicFullSlug;
       comic = < TheComic index={index} />;
       break;
-    case '/:slug':
-    case '/page/:slug':
-      theContent = item.content.rendered;
+    case 'post':
+    case 'page':
+      theContent = post.content.rendered;
       break;
     default:
       theContent = '';
@@ -49,8 +47,8 @@ const ThePost = ({ index, context }) => {
   }
 
   return (
-    <div id={'post-id-' + item.id} className={'post-item'}>
-      <h1><Link to={linkPrefix + linkSlug}>{item.title.rendered}</Link></h1>
+    <div id={'post-id-' + post.id} className={'post-item'}>
+      <h1><Link to={linkPrefix + linkSlug}>{post.title.rendered}</Link></h1>
       <PostMeta index={index} />
       {comic}
       <div className="post-content" dangerouslySetInnerHTML={{ __html: theContent }}></div>

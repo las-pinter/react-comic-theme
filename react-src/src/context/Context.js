@@ -8,7 +8,7 @@ export class Provider extends React.Component {
   constructor(props) {
     super(props);
 
-    let restType = this.getRestType(props.router.route.path);
+    let contextType = this.getContextType(props.router.route.path);
     let route = props.router.route.path;
     let slug = props.router.params.slug ? props.router.params.slug : '';
     let term = props.router.params.term ? props.router.params.term : '';
@@ -16,16 +16,17 @@ export class Provider extends React.Component {
     let comicSlug = props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '';
 
     this.state = {
+      contextType: contextType,
       term: term,
       slug: slug,
-      restType: restType,
       catid: catid,
       route: route,
-      comicSlug: comicSlug,
       posts: [],
       currentPage: 1,
       totalPages: 0,
       appError: '',
+      comicFullSlug: props.router.params['*'],
+      comicSlug: comicSlug,
       comicFirstPage: '',
       comicPreviousPage: '',
       comicNextPage: '',
@@ -37,27 +38,30 @@ export class Provider extends React.Component {
 
   }
 
-  getRestType(path) {
-    let restType = '';
+  getContextType(path) {
+    let contextType = '';
     switch (path) {
+      case '/':
+        contextType = 'mainPage';
+        break;
       case '/page/:slug':
-        restType = 'page';
+        contextType = 'page';
         break;
       case '/search/:term':
-        restType = 'search';
+        contextType = 'search';
         break;
       case '/category/:catid':
-        restType = 'category';
+        contextType = 'category';
         break;
       case '/comic/*':
-        restType = 'comic';
+        contextType = 'comic';
         break;
       case '/:slug':
       default:
-        restType = 'post';
+        contextType = 'post';
         break;
     }
-    return restType;
+    return contextType;
   }
 
   componentDidMount() {
@@ -66,10 +70,24 @@ export class Provider extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.router.pathname !== this.props.router.pathname) {
+      let contextType = this.getContextType(this.props.router.route.path);
+
+      let additionalStates = {};
+      if ('comic' === contextType) {
+        additionalStates = {
+          ...additionalStates,
+          ...{
+            comicFullSlug: this.props.router.params['*'],
+            comicSlug: this.formatComicSlug(this.props.router.params['*'])
+          }
+        };
+      }
+      
+      if (this.props.router.route.path)
       this.setState({
         currentPage: 1,
-        restType: this.getRestType(this.props.router.route.path),
-        comicSlug: this.formatComicSlug(this.props.router.params['*'])
+        contextType: contextType,
+        ...additionalStates
       }, function () {
         this.getPosts(this.buildUrl());
       })
@@ -79,7 +97,7 @@ export class Provider extends React.Component {
 
   buildUrl() {
     let url = '/wp-json/wp/v2/';
-    switch (this.state.restType) {
+    switch (this.state.contextType) {
       case 'page':
         url += 'pages/?slug=';
         url += this.state.slug + '&_embed'
@@ -111,7 +129,7 @@ export class Provider extends React.Component {
         totalPages: response.headers['x-wp-totalpages']
       }, function () {
         // Get additional comic data if we are dealing with a comic
-        if (self.state.restType === 'comic' && self.state.posts[0]) {
+        if (self.state.contextType === 'comic' && self.state.posts[0]) {
           let id = self.state.posts[0].id;
           self.getComicFirstPage(id);
           self.getComicPreviousPage(id);
