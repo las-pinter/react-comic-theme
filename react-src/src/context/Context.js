@@ -13,7 +13,7 @@ export class Provider extends React.Component {
     let slug = props.router.params.slug ? props.router.params.slug : '';
     let term = props.router.params.term ? props.router.params.term : '';
     let catid = props.router.params.catid ? props.router.params.catid : '';
-    let comicSlug = props.router.params['*'] ? props.router.params['*'] : '';
+    let comicSlug = props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '';
 
     this.state = {
       term: term,
@@ -23,25 +23,16 @@ export class Provider extends React.Component {
       route: route,
       comicSlug: comicSlug,
       posts: [],
-      comments: [],
       currentPage: 1,
       totalPages: 0,
-      commentFields: {
-        fullName: '',
-        email: '',
-        website: '',
-        comment: ''
-      },
       appError: '',
-      commentErrors: [],
+      comicFirstPage: '',
+      comicPreviousPage: '',
+      comicNextPage: '',
+      comicLastPage: '',
       //global methods
-      nextClicked: this.nextClicked.bind(this),
-      previousClicked: this.previousClicked.bind(this),
-      submitSearch: this.submitSearch.bind(this),
-      updateTerm: this.updateTerm.bind(this),
-      submitComment: this.submitComment.bind(this),
-      updateCommentFields: this.updateCommentFields.bind(this),
-      updateCommentErrors: this.updateCommentErrors.bind(this)
+      postsNextClicked: this.postsNextClicked.bind(this),
+      postsPreviousClicked: this.postsPreviousClicked.bind(this),
     };
 
   }
@@ -75,76 +66,15 @@ export class Provider extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.router.pathname !== this.props.router.pathname) {
-      let curProps = this.props.router.match;
       this.setState({
         currentPage: 1,
-        restType: this.getRestType(curProps.path),
-        catid: curProps.params.catid ? curProps.params.catid : ''
+        restType: this.getRestType(this.props.router.route.path),
+        comicSlug: this.formatComicSlug(this.props.router.params['*'])
       }, function () {
         this.getPosts(this.buildUrl());
       })
 
     }
-  }
-
-  updateTerm(term) {
-    this.setState({
-      term: term
-    })
-  }
-
-  updateCommentErrors(errors) {
-    this.setState({
-      commentErrors: errors
-    })
-  }
-
-  submitSearch() {
-    this.setState({
-      restType: 'search',
-      currentPage: 1
-    });
-
-    this.props.router.history.push('/search/' + this.state.term);
-  }
-
-  updateCommentFields(key, val) {
-    //TO UPDATE NESTED STATE:
-    //https://stackoverflow.com/questions/43040721/how-to-update-nested-state-properties-in-react
-    var commentFields = { ...this.state.commentFields }
-    commentFields[key] = val;
-    this.setState({ commentFields })
-  }
-
-  submitComment() {
-    // console.log(this.state);
-    let postdata = {
-      'post': this.state.posts[0].id,
-      'author_name': this.state.commentFields.fullName,
-      'author_email': this.state.commentFields.email,
-      'author_url': this.state.commentFields.website,
-      'content': this.state.commentFields.comment
-    }
-
-    let self = this;
-
-    Axios.post('/wp-json/wp/v2/comments', postdata).then((response) => {
-
-      let cmnt = response.data;
-      cmnt.waiting = 'Your comment is waiting approval';
-      let cmnts = self.state.comments;
-      cmnts.push(cmnt);
-      self.setState({
-        comments: cmnts
-      })
-    }).catch(function (error) {
-      let err = [];
-      err.push(error.message);
-      self.setState({
-        commentErrors: err
-      })
-    });
-
   }
 
   buildUrl() {
@@ -161,7 +91,7 @@ export class Provider extends React.Component {
         break;
       case 'comic':
         url += 'comic?slug=';
-        url += this.state.comicSlug.split('/').reverse()[1];
+        url += this.state.comicSlug;
         url += '&_embed';
         break;
       case 'post':
@@ -173,18 +103,6 @@ export class Provider extends React.Component {
     return url;
   }
 
-  getComments(id) {
-    let url = '/wp-json/wp/v2/comments?post=' + id;
-    let self = this;
-    Axios.get(url).then((response) => {
-      self.setState({
-        comments: response.data
-      })
-    }).catch(function (error) {
-      console.log(error);
-    });
-  }
-
   getPosts(url) {
     let self = this;
     Axios.get(url).then((response) => {
@@ -192,10 +110,13 @@ export class Provider extends React.Component {
         posts: response.data,
         totalPages: response.headers['x-wp-totalpages']
       }, function () {
-        //get comments if post, and post array is not empty
-        if (self.state.route === '/post/:slug'
-          && self.state.posts[0]) {
-          self.getComments(self.state.posts[0].id);
+        // Get additional comic data if we are dealing with a comic
+        if (self.state.restType === 'comic' && self.state.posts[0]) {
+          let id = self.state.posts[0].id;
+          self.getComicFirstPage(id);
+          self.getComicPreviousPage(id);
+          self.getComicNextPage(id);
+          self.getComicLastPage(id);
         }
       })
     }).catch(function (error) {
@@ -204,8 +125,63 @@ export class Provider extends React.Component {
     });
   }
 
+  getComicFirstPage(id) {
+    let url = '/wp-json/comics/v1/getfirst/' + id;
+    let self = this;
+    Axios.get(url).then((response) => {
+      self.setState({
+        comicFirstPage: response.data
+      })
+    }).catch(function (error) {
+      self.setState({
+        comicFirstPage: ''
+      })
+    });
+  }
 
-  nextClicked() {
+  getComicPreviousPage(id) {
+    let url = '/wp-json/comics/v1/getprevious/' + id;
+    let self = this;
+    Axios.get(url).then((response) => {
+      self.setState({
+        comicPreviousPage: response.data
+      })
+    }).catch(function (error) {
+      self.setState({
+        comicPreviousPage: ''
+      })
+    });
+  }
+
+  getComicNextPage(id) {
+    let url = '/wp-json/comics/v1/getnext/' + id;
+    let self = this;
+    Axios.get(url).then((response) => {
+      self.setState({
+        comicNextPage: response.data
+      })
+    }).catch(function (error) {
+      self.setState({
+        comicNextPage: ''
+      })
+    });
+  }
+
+  getComicLastPage(id) {
+    let url = '/wp-json/comics/v1/getlast/' + id;
+    let self = this;
+    Axios.get(url).then((response) => {
+      self.setState({
+        comicLastPage: response.data
+      })
+    }).catch(function (error) {
+      self.setState({
+        comicLastPage: ''
+      })
+    });
+  }
+
+  postsNextClicked() {
     let newPage = this.state.currentPage + 1;
     this.setState({
       currentPage: newPage
@@ -215,7 +191,7 @@ export class Provider extends React.Component {
   }
 
 
-  previousClicked() {
+  postsPreviousClicked() {
     let newPage = this.state.currentPage - 1;
     this.setState({
       currentPage: newPage
@@ -224,6 +200,10 @@ export class Provider extends React.Component {
     })
   }
 
+  
+  formatComicSlug(longSlug) {
+    return longSlug.split('/').reverse()[1];
+  }
 
   render() {
     return (

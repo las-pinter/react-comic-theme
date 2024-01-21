@@ -2,13 +2,12 @@ import React from 'react';
 import WithConsumer from '../context/WithConsumer';
 
 const Pager = ({ context }) => {
-
-  function nextClicked() {
-    context.nextClicked();
+  function postsNextClicked() {
+    context.postsNextClicked();
   }
 
-  function previousClicked() {
-    context.previousClicked();
+  function postsPreviousClicked() {
+    context.postsPreviousClicked();
   }
 
   let thePager = '';
@@ -18,13 +17,13 @@ const Pager = ({ context }) => {
       <div className="pager">
         <button
           disabled={context.currentPage <= 1}
-          onClick={previousClicked}
+          onClick={postsPreviousClicked}
         >
           Previous
         </button>
         <button
           disabled={context.currentPage >= context.totalPages}
-          onClick={nextClicked}
+          onClick={postsNextClicked}
         >
           Next
         </button>

@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { Consumer } from './Context';
-function WithConsumer(WrappedComponent) {
+
+const WithConsumer = (WrappedComponent) => {
   return function (props) {
     return (
       <Consumer>
@@ -9,4 +11,5 @@ function WithConsumer(WrappedComponent) {
     );
   };
 }
+
 export default WithConsumer;

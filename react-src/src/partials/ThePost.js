@@ -51,7 +51,7 @@ const ThePost = ({ index, context }) => {
   return (
     <div id={'post-id-' + item.id} className={'post-item'}>
       <h1><Link to={linkPrefix + linkSlug}>{item.title.rendered}</Link></h1>
-      <PostMeta index={index}></PostMeta>
+      <PostMeta index={index} />
       {comic}
       <div className="post-content" dangerouslySetInnerHTML={{ __html: theContent }}></div>
     </div>
