@@ -1,45 +1,34 @@
-// filename -App.js
- 
 import React from "react";
-import "./App.css";
-import Navbar from "./components/Navbar";
 import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-} from "react-router-dom";
-import Home from "./pages";
-import About from "./pages/about";
-import Events from "./pages/events";
-import AnnualReport from "./pages/annual";
-import Teams from "./pages/team";
-import Blogs from "./pages/blogs";
-import SignUp from "./pages/signup";
+    Nav,
+    NavLink,
+    Bars,
+    NavMenu,
+} from "./NavbarElements";
  
-function App() {
+const Navbar = () => {
     return (
-        <Router>
-            <Navbar />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route
-                    path="/events"
-                    element={<Events />}
-                />
-                <Route
-                    path="/annual"
-                    element={<AnnualReport />}
-                />
-                <Route path="/team" element={<Teams />} />
-                <Route path="/blogs" element={<Blogs />} />
-                <Route
-                    path="/sign-up"
-                    element={<SignUp />}
-                />
-            </Routes>
-        </Router>
-    );
-}
+        <>
+            <Nav>
+                <Bars />
  
-export default App;
+                <NavMenu>
+                    <NavLink to="/" >
+                        Home
+                    </NavLink>
+                    <NavLink to="/page/archives" activestyle="true">
+                        Archives
+                    </NavLink>
+                    <NavLink to="/page/cast" activestyle="true">
+                        Cast
+                    </NavLink>
+                    <NavLink to="/page/about" activestyle="true">
+                        About
+                    </NavLink>
+                </NavMenu>
+            </Nav>
+        </>
+    );
+};
+ 
+export default Navbar;

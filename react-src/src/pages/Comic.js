@@ -6,12 +6,12 @@ import Footer from '../components/Footer';
 import { Provider } from '../context/Context'
 import GetCurrentRouteData from '../hooks/CommonHooks';
 
-const Single = () => {
+const Comic = () => {
     const routeData = GetCurrentRouteData();
 
     return (
         <Provider router={routeData} >
-            <div className="Post">
+            <div className="comic-page">
                 <Header></Header>
                 <div className="content-area">
                     <TheLoop></TheLoop>
@@ -22,4 +22,4 @@ const Single = () => {
     )
 
 }
-export default Single
+export default Comic;
