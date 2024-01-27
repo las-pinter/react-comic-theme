@@ -25,6 +25,7 @@ export class Provider extends React.Component {
             currentPage: 1,
             totalPages: 0,
             appError: '',
+            comics: [],
             comicFullSlug: props.router.params['*'],
             comicSlug: comicSlug,
             comicFirstPage: '',
@@ -35,7 +36,6 @@ export class Provider extends React.Component {
             postsNextClicked: this.postsNextClicked.bind(this),
             postsPreviousClicked: this.postsPreviousClicked.bind(this),
         };
-
     }
 
     getContextType(path) {
@@ -49,9 +49,6 @@ export class Provider extends React.Component {
                 break;
             case '/search/:term':
                 contextType = 'search';
-                break;
-            case '/category/:catid':
-                contextType = 'category';
                 break;
             case '/comic/*':
                 contextType = 'comic';
@@ -102,11 +99,6 @@ export class Provider extends React.Component {
                 url += 'pages/?slug=';
                 url += this.state.slug + '&_embed'
                 break;
-            case 'category':
-                url += 'posts?categories=';
-                url += this.state.catid;
-                url += '&page=' + this.state.currentPage + '&_embed';
-                break;
             case 'comic':
                 url += 'comic?slug=';
                 url += this.state.comicSlug;
@@ -136,10 +128,12 @@ export class Provider extends React.Component {
                     self.getComicNextPage(id);
                     self.getComicLastPage(id);
                 }
+
+                if (self.state.contextType === 'mainPage' && self.state.posts[0]) {
+                    self.getComics();
+                }
             })
         }).catch(function (error) {
-            console.log(error);
-            self.appError = 'An unexpected error occurred';
         });
     }
 
@@ -215,9 +209,22 @@ export class Provider extends React.Component {
             currentPage: newPage
         }, function () {
             this.getPosts(this.buildUrl());
-        })
+        });
     }
 
+    getComics() {
+        let url = '/wp-json/comics/v1/getcomics';
+        let self = this;
+        Axios.get(url).then((response) => {
+            self.setState({
+                comics: response.data
+            })
+        }).catch(function (error) {
+            self.setState({
+                comics: []
+            })
+        });
+    }
 
     formatComicSlug(longSlug) {
         return longSlug.split('/').reverse()[1];

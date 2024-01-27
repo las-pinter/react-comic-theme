@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import WithConsumer from '../context/WithConsumer';
-import PostMeta from './PostMeta';
-import TheComic from './TheComic';
+import WithConsumer from '../../context/WithConsumer';
+import PostMeta from '../PostMeta';
+import TheComic from '../TheComic';
 
 const ThePost = ({ index, context }) => {
     const post = context.posts[index];
@@ -12,12 +12,10 @@ const ThePost = ({ index, context }) => {
         case 'page':
             linkPrefix = '/page/';
             break;
-        case 'post':
-            linkPrefix = '/';
-            break;
         case 'comic':
             linkPrefix = '/comic/';
             break;
+        case 'post':
         default:
             linkPrefix = '/';
             break;

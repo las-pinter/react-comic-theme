@@ -1,6 +1,6 @@
 import React from 'react';
-import WithConsumer from '../context/WithConsumer';
-import ThePost from './ThePost';
+import WithConsumer from '../../context/WithConsumer';
+import ThePost from '../../components/ThePost';
 
 const TheLoop = ({ context }) => {
     const posts = () => context.posts;

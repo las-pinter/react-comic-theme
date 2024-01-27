@@ -1,5 +1,5 @@
 import React from 'react';
-import WithConsumer from '../context/WithConsumer';
+import WithConsumer from '../../context/WithConsumer';
 
 const Pager = ({ context }) => {
     function postsNextClicked() {

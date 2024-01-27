@@ -1,8 +1,8 @@
 import React from 'react';
-import WithConsumer from '../context/WithConsumer';
+import WithConsumer from '../../context/WithConsumer';
 import { Link } from 'react-router-dom';
 
-const ComicNavigator = ({ index, context }) => {
+const ComicNavigator = ({ context }) => {
     let firstComicPage = context.comicFirstPage;
     let previousComicPage = context.comicPreviousPage;
     let nextComicPage = context.comicNextPage;
