@@ -13,11 +13,14 @@ import Post from './pages/Post';
 import Page from './pages/Page';
 import Comic from './pages/Comic';
 
+import Header from './components/Header';
+import Footer from './components/Footer';
 import Navbar from "./components/Navbar";
 
 const App = () => {
     return (
         <Router>
+            <Header />
             <Navbar />
             <Routes>
                 <Route exact path="/" element={<MainPage />} />
@@ -26,6 +29,7 @@ const App = () => {
                 <Route path="/comic/*" element={<Comic />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
+            <Footer />
         </Router>
     );
 }

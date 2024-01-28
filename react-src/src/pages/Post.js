@@ -1,10 +1,9 @@
 import React from 'react';
 
-import Header from '../components/Header';
-import TheLoop from '../components/TheLoop';
-import Footer from '../components/Footer';
-import { Provider } from '../context/Context'
 import GetCurrentRouteData from '../hooks/CommonHooks';
+import { Provider } from '../context/Context';
+
+import ThePost from '../components/ThePost';
 
 const Post = () => {
     const routeData = GetCurrentRouteData();
@@ -12,11 +11,9 @@ const Post = () => {
     return (
         <Provider router={routeData} >
             <div className="post-single">
-                <Header></Header>
                 <div className="content-area">
-                    <TheLoop></TheLoop>
+                    <ThePost index={0} />
                 </div>
-                <Footer></Footer>
             </div>
         </Provider>
     )

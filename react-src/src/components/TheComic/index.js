@@ -2,13 +2,20 @@ import React from 'react';
 import WithConsumer from '../../context/WithConsumer';
 import ComicNavigator from '../ComicNavigator';
 
-const TheComic = ({ index, context }) => {
-    const post = context.posts[index];
+const TheComic = ({ context }) => {
+    if (context.appError) {
+        return <div className="app-error">{context.appError}</div>;
+    }
+    if (context.posts.length === 0) {
+        return <div className="no-results"></div>;
+    }
+
+    const comicPost = context.posts[0];
 
     let comicImageUrl = '';
-    if (post._embedded) {
-        if (post._embedded['wp:featuredmedia']) {
-            comicImageUrl = post._embedded['wp:featuredmedia'][0].source_url;
+    if (comicPost._embedded) {
+        if (comicPost._embedded['wp:featuredmedia']) {
+            comicImageUrl = comicPost._embedded['wp:featuredmedia'][0].source_url;
         }
     }
 

@@ -2,16 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import WithConsumer from '../../context/WithConsumer';
 import PostMeta from '../PostMeta';
-import TheComic from '../TheComic';
 
 const ThePost = ({ index, context }) => {
+    if (context.appError) {
+        return <div className="app-error">{context.appError}</div>;
+    }
+    if (context.posts.length === 0) {
+        return <div className="no-results"></div>;
+    }
+
     const post = context.posts[index];
 
     let linkPrefix = '';
     switch (post.type) {
-        case 'page':
-            linkPrefix = '/page/';
-            break;
         case 'comic':
             linkPrefix = '/comic/';
             break;
@@ -23,7 +26,6 @@ const ThePost = ({ index, context }) => {
 
     let linkSlug = post.slug;
     let theContent = '';
-    let comic = '';
 
     switch (context.contextType) {
         case 'mainPage':
@@ -33,10 +35,8 @@ const ThePost = ({ index, context }) => {
             theContent = post.content.rendered;
             linkPrefix = '/comic/';
             linkSlug = context.comicFullSlug;
-            comic = < TheComic index={index} />;
             break;
         case 'post':
-        case 'page':
             theContent = post.content.rendered;
             break;
         default:
@@ -48,7 +48,6 @@ const ThePost = ({ index, context }) => {
         <div id={'post-id-' + post.id} className={'post-item'}>
             <h1><Link to={linkPrefix + linkSlug}>{post.title.rendered}</Link></h1>
             <PostMeta index={index} />
-            {comic}
             <div className="post-content" dangerouslySetInnerHTML={{ __html: theContent }}></div>
         </div>
     );

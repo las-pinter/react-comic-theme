@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Header from '../components/Header';
-import TheLoop from '../components/TheLoop';
-import Footer from '../components/Footer';
-import { Provider } from '../context/Context'
 import GetCurrentRouteData from '../hooks/CommonHooks';
+import { Provider } from '../context/Context';
+
+import TheComic from '../components/TheComic';
+import ThePost from '../components/ThePost';
 
 const Comic = () => {
     const routeData = GetCurrentRouteData();
@@ -12,11 +12,10 @@ const Comic = () => {
     return (
         <Provider router={routeData} >
             <div className="comic-page">
-                <Header></Header>
                 <div className="content-area">
-                    <TheLoop></TheLoop>
+                    <TheComic />
+                    <ThePost index={0} />
                 </div>
-                <Footer></Footer>
             </div>
         </Provider>
     )

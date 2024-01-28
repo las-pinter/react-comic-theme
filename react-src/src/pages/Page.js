@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Header from '../components/Header';
-import TheLoop from '../components/TheLoop';
-import Footer from '../components/Footer';
-import { Provider } from '../context/Context'
 import GetCurrentRouteData from '../hooks/CommonHooks';
+import { Provider } from '../context/Context';
+
+import ThePage from '../components/ThePage';
+
 
 const Page = () => {
     const routeData = GetCurrentRouteData();
@@ -12,11 +12,9 @@ const Page = () => {
     return (
         <Provider router={routeData} >
             <div className="page-single">
-                <Header></Header>
                 <div className="content-area">
-                    <TheLoop></TheLoop>
+                    <ThePage index={0} />
                 </div>
-                <Footer></Footer>
             </div>
         </Provider>
     )

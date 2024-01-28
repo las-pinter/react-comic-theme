@@ -121,7 +121,7 @@ export class Provider extends React.Component {
                 totalPages: response.headers['x-wp-totalpages']
             }, function () {
                 // Get additional comic data if we are dealing with a comic
-                if (self.state.contextType === 'comic' && self.state.posts[0]) {
+                if ('comic' === self.state.contextType && self.state.posts[0]) {
                     let id = self.state.posts[0].id;
                     self.getComicFirstPage(id);
                     self.getComicPreviousPage(id);
@@ -129,7 +129,7 @@ export class Provider extends React.Component {
                     self.getComicLastPage(id);
                 }
 
-                if (self.state.contextType === 'mainPage' && self.state.posts[0]) {
+                if ('mainPage' === self.state.contextType && self.state.posts[0]) {
                     self.getComics();
                 }
             })
