@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import WithConsumer from '../../context/WithConsumer';
-import PostMeta from '../PostMeta';
+import ComicArchive from './ComicArchive';
 
 const ThePage = ({ index, context }) => {
     if (context.appError) {
@@ -12,15 +12,20 @@ const ThePage = ({ index, context }) => {
     }
 
     const page = context.posts[index];
-    const linkPrefix = '/page/';
-    const linkSlug = page.slug;
-    const theContent = page.content.rendered;
+    const comicArchive = context.comics.find(comic => comic["archivePage"] === page.slug);
+
+    let theContent = '';
+
+    if (comicArchive) {
+        theContent = <ComicArchive comicSlug={comicArchive['comicSlug']} />;
+    } else {
+        theContent = <div className="page-content" dangerouslySetInnerHTML={{ __html: page.content.rendered }}></div>;
+    }
 
     return (
         <div id={'page-id-' + page.id} className="post-item">
-            <h1><Link to={linkPrefix + linkSlug}>{page.title.rendered}</Link></h1>
-            <PostMeta index={index} />
-            <div className="page-content" dangerouslySetInnerHTML={{ __html: theContent }}></div>
+            <h1><Link to={'/page/' + page.slug}>{page.title.rendered}</Link></h1>
+            {theContent}
         </div>
     );
 };

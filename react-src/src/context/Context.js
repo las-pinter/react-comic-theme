@@ -16,6 +16,7 @@ export class Provider extends React.Component {
         let comicSlug = props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '';
 
         this.state = {
+            isLoading: false,
             contextType: contextType,
             term: term,
             slug: slug,
@@ -26,6 +27,7 @@ export class Provider extends React.Component {
             totalPages: 0,
             appError: '',
             comics: [],
+            comicArchive: [],
             comicFullSlug: props.router.params['*'],
             comicSlug: comicSlug,
             comicFirstPage: '',
@@ -35,6 +37,7 @@ export class Provider extends React.Component {
             //global methods
             postsNextClicked: this.postsNextClicked.bind(this),
             postsPreviousClicked: this.postsPreviousClicked.bind(this),
+            getComicArchive: this.getComicArchive.bind(this),
         };
     }
 
@@ -46,9 +49,6 @@ export class Provider extends React.Component {
                 break;
             case '/page/:slug':
                 contextType = 'page';
-                break;
-            case '/search/:term':
-                contextType = 'search';
                 break;
             case '/comic/*':
                 contextType = 'comic';
@@ -63,6 +63,7 @@ export class Provider extends React.Component {
 
     componentDidMount() {
         this.getPosts(this.buildUrl());
+        this.getComics();
     }
 
     componentDidUpdate(prevProps) {
@@ -128,10 +129,6 @@ export class Provider extends React.Component {
                     self.getComicNextPage(id);
                     self.getComicLastPage(id);
                 }
-
-                if ('mainPage' === self.state.contextType && self.state.posts[0]) {
-                    self.getComics();
-                }
             })
         }).catch(function (error) {
         });
@@ -140,13 +137,18 @@ export class Provider extends React.Component {
     getComicFirstPage(id) {
         let url = '/wp-json/comics/v1/getfirst/' + id;
         let self = this;
+        self.setState({
+            isLoading: true
+        })
         Axios.get(url).then((response) => {
             self.setState({
-                comicFirstPage: response.data
+                comicFirstPage: response.data,
+                isLoading: false
             })
         }).catch(function (error) {
             self.setState({
-                comicFirstPage: ''
+                comicFirstPage: '',
+                isLoading: false
             })
         });
     }
@@ -154,13 +156,18 @@ export class Provider extends React.Component {
     getComicPreviousPage(id) {
         let url = '/wp-json/comics/v1/getprevious/' + id;
         let self = this;
+        self.setState({
+            isLoading: true
+        })
         Axios.get(url).then((response) => {
             self.setState({
-                comicPreviousPage: response.data
+                comicPreviousPage: response.data,
+                isLoading: false
             })
         }).catch(function (error) {
             self.setState({
-                comicPreviousPage: ''
+                comicPreviousPage: '',
+                isLoading: false
             })
         });
     }
@@ -168,13 +175,18 @@ export class Provider extends React.Component {
     getComicNextPage(id) {
         let url = '/wp-json/comics/v1/getnext/' + id;
         let self = this;
+        self.setState({
+            isLoading: true
+        })
         Axios.get(url).then((response) => {
             self.setState({
-                comicNextPage: response.data
+                comicNextPage: response.data,
+                isLoading: false
             })
         }).catch(function (error) {
             self.setState({
-                comicNextPage: ''
+                comicNextPage: '',
+                isLoading: false
             })
         });
     }
@@ -182,13 +194,18 @@ export class Provider extends React.Component {
     getComicLastPage(id) {
         let url = '/wp-json/comics/v1/getlast/' + id;
         let self = this;
+        self.setState({
+            isLoading: true
+        })
         Axios.get(url).then((response) => {
             self.setState({
-                comicLastPage: response.data
+                comicLastPage: response.data,
+                isLoading: false
             })
         }).catch(function (error) {
             self.setState({
-                comicLastPage: ''
+                comicLastPage: '',
+                isLoading: false
             })
         });
     }
@@ -215,13 +232,37 @@ export class Provider extends React.Component {
     getComics() {
         let url = '/wp-json/comics/v1/getcomics';
         let self = this;
+        self.setState({
+            isLoading: true
+        })
         Axios.get(url).then((response) => {
             self.setState({
-                comics: response.data
+                comics: response.data,
+                isLoading: false
             })
         }).catch(function (error) {
             self.setState({
-                comics: []
+                comics: [],
+                isLoading: false
+            })
+        });
+    }
+
+    getComicArchive(comicSlug) {
+        let url = '/wp-json/comics/v1/getcomicarchive/' + comicSlug;
+        let self = this;
+        self.setState({
+            isLoading: true
+        })
+        Axios.get(url).then((response) => {
+            self.setState({
+                comicArchive: response.data,
+                isLoading: false
+            })
+        }).catch(function (error) {
+            self.setState({
+                comicArchive: [],
+                isLoading: false
             })
         });
     }
@@ -232,9 +273,11 @@ export class Provider extends React.Component {
 
     render() {
         return (
-            <storeContext.Provider value={this.state}>
+            <>
+                <storeContext.Provider value={this.state}>
                 {this.props.children}
-            </storeContext.Provider>
+                </storeContext.Provider>
+            </>
         );
     }
 }

@@ -9,12 +9,12 @@ const ComicSelector = ({ index, context }) => {
             {
                 context.comics.map(function (item, i) {
                     return (
-                        <div key={i} className={"comic-selector-comic " + item['chapterSlug']}>
-                            <div className="comic-name"></div>
+                        <div key={item['comicSlug'] + '_' + i} className={"comic-selector-comic " + item['comicSlug']}>
+                            <div className="comic-name">{ item['name'] }</div>
                             <div>
                                 <Link to={item['lastPage']} className="comic-selector-nav">Last</Link>
                                 <Link to={item['firstPage']} className="comic-selector-nav">First</Link>
-                                <Link to={'archives/' + item['chapterSlug']} className="comic-selector-nav">Archive</Link>
+                                <Link to={'page/' + item['archivePage']} className="comic-selector-nav">Archive</Link>
                             </div>
                         </div>
                     )
