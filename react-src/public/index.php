@@ -12,6 +12,7 @@ $TEMPLATE_PATH = parse_url(get_template_directory_uri(), PHP_URL_PATH);
     <link rel="apple-touch-icon" href="<?php echo $TEMPLATE_PATH; ?>/logo192.png" />
     <link rel="manifest" href="<?php echo $TEMPLATE_PATH; ?>/manifest.json" />
     <title>React WordPress Theme</title>
+    <?php wp_head(); ?>
 </head>
 
 <body>
@@ -20,5 +21,8 @@ $TEMPLATE_PATH = parse_url(get_template_directory_uri(), PHP_URL_PATH);
     </noscript>
     <div id="root"></div>
 </body>
+
+<?php wp_footer(); ?>
+
 
 </html>
