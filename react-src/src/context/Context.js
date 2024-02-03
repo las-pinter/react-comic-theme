@@ -8,20 +8,12 @@ export class Provider extends React.Component {
     constructor(props) {
         super(props);
 
-        let contextType = this.getContextType(props.router.route.path);
-        let route = props.router.route.path;
-        let slug = props.router.params.slug ? props.router.params.slug : '';
-        let term = props.router.params.term ? props.router.params.term : '';
-        let catid = props.router.params.catid ? props.router.params.catid : '';
-        let comicSlug = props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '';
-
         this.state = {
             isLoading: false,
-            contextType: contextType,
-            term: term,
-            slug: slug,
-            catid: catid,
-            route: route,
+            contextType: this.getContextType(props.router.route.path),
+            term: props.router.params.term ? props.router.params.term : '',
+            slug: props.router.params.slug ? props.router.params.slug : '',
+            route:  props.router.route.path,
             posts: [],
             currentPage: 1,
             totalPages: 0,
@@ -29,7 +21,7 @@ export class Provider extends React.Component {
             comics: [],
             comicArchive: [],
             comicFullSlug: props.router.params['*'],
-            comicSlug: comicSlug,
+            comicSlug: props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '',
             comicFirstPage: '',
             comicPreviousPage: '',
             comicNextPage: '',
@@ -68,27 +60,19 @@ export class Provider extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.router.pathname !== this.props.router.pathname) {
-            let contextType = this.getContextType(this.props.router.route.path);
-
-            let additionalStates = {};
-            if ('comic' === contextType) {
-                additionalStates = {
-                    ...additionalStates,
-                    ...{
-                        comicFullSlug: this.props.router.params['*'],
-                        comicSlug: this.formatComicSlug(this.props.router.params['*'])
-                    }
-                };
-            }
-
-            if (this.props.router.route.path)
+            if (this.props.router.route.path) {
                 this.setState({
                     currentPage: 1,
-                    contextType: contextType,
-                    ...additionalStates
+                    contextType: this.getContextType(this.props.router.route.path),
+                    term: this.props.router.params.term ? this.props.router.params.term : '',
+                    slug: this.props.router.params.slug ? this.props.router.params.slug : '',
+                    route: this.props.router.route.path,
+                    comicFullSlug: this.props.router.params['*'],
+                    comicSlug: this.props.router.params['*'] ? this.formatComicSlug(this.props.router.params['*']) : ''
                 }, function () {
                     this.getPosts(this.buildUrl());
                 })
+            }
 
         }
     }
@@ -116,10 +100,14 @@ export class Provider extends React.Component {
 
     getPosts(url) {
         let self = this;
+        self.setState({
+            isLoading: true
+        })
         Axios.get(url).then((response) => {
             self.setState({
                 posts: response.data,
-                totalPages: response.headers['x-wp-totalpages']
+                totalPages: response.headers['x-wp-totalpages'],
+                isLoading: false
             }, function () {
                 // Get additional comic data if we are dealing with a comic
                 if ('comic' === self.state.contextType && self.state.posts[0]) {

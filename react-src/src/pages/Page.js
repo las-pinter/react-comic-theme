@@ -5,7 +5,6 @@ import { Provider } from '../context/Context';
 
 import ThePage from '../components/ThePage';
 
-
 const Page = () => {
     const routeData = GetCurrentRouteData();
 
