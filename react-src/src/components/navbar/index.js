@@ -1,34 +1,31 @@
 import React from "react";
-import {
-    Nav,
-    NavLink,
-    Bars,
-    NavMenu,
-} from "./NavbarElements";
- 
-const Navbar = () => {
+import { FaBars } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+import WithConsumer from '../../context/WithConsumer';
+
+import './index.css';
+
+const Navbar = ({ context }) => {
     return (
-        <>
-            <Nav>
-                <Bars />
- 
-                <NavMenu>
-                    <NavLink to="/" >
-                        Home
-                    </NavLink>
-                    <NavLink to="/page/archives" activestyle="true">
-                        Archives
-                    </NavLink>
-                    <NavLink to="/page/cast" activestyle="true">
-                        Cast
-                    </NavLink>
-                    <NavLink to="/page/about" activestyle="true">
-                        About
-                    </NavLink>
-                </NavMenu>
-            </Nav>
-        </>
+        <nav className="navbar">
+            <FaBars className="navigation-bar-bars" />
+
+            <ul className="container-horizontal">
+                {
+                    context.menu.map(function (item, i) {
+                        return (
+                            <li key={'menu-item-' + i} className="menu-item">
+                                <Link to={item['path']} >
+                                    {item['name']}
+                                </Link>
+                            </li>
+                        )
+                    })
+                }
+            </ul>
+        </nav>
     );
 };
- 
-export default Navbar;
+
+export default WithConsumer(Navbar);

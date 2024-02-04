@@ -2,6 +2,8 @@ import React from 'react';
 import WithConsumer from '../../context/WithConsumer';
 import ComicNavigator from '../ComicNavigator';
 
+import './index.css';
+
 const TheComic = ({ context }) => {
     if (context.appError) {
         return <div className="app-error">{context.appError}</div>;

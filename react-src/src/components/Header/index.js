@@ -1,8 +1,16 @@
 import React from 'react'
 
+import Navbar from '../Navbar'
+import Title from './Title';
+
+import './index.css'
+
 const Header = () => {
     return (
-        <div className="header">header</div>
+        <header className="container-vertical">
+            <Title />
+            <Navbar />
+        </header>
     );
 }
 

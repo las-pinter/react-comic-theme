@@ -1,22 +1,20 @@
 import React from 'react';
 
-import GetCurrentRouteData from '../hooks/CommonHooks';
-import { Provider } from '../context/Context';
+import WithHeadFoot from './WithHeadFoot';
+import WithProvider from '../context/WithProvider';
 
 import ThePost from '../components/ThePost';
 
-const Post = () => {
-    const routeData = GetCurrentRouteData();
+import "./index.css";
 
+const Post = () => {
     return (
-        <Provider router={routeData} >
-            <div className="post-single">
-                <div className="content-area">
-                    <ThePost index={0} />
-                </div>
+        <div className="post-single container-vertical">
+            <div className="content-wrapper container-vertical">
+                <ThePost index={0} />
             </div>
-        </Provider>
+        </div>
     )
 
 }
-export default Post;
+export default WithProvider(WithHeadFoot(Post));

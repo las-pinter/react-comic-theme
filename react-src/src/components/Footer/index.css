@@ -1,0 +1,26 @@
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border-top: 1px solid color-mix(in hsl, var(--cmx-secondary-color) 50%, transparent);
+    background: radial-gradient(ellipse at bottom, color-mix(in hsl, var(--cmx-primary-color) 100%, transparent), transparent),
+                radial-gradient(ellipse at top, color-mix(in hsl, var(--cmx-secondary-color) 100%, transparent), transparent),
+                color-mix(in hsl, var(--cmx-quaternary-shadow) 97%, transparent);
+    box-shadow: 0 4.5px 20px color-mix(in hsl, var(--cmx-secondary-color) 3%, transparent),
+                0 12.5px 50px color-mix(in hsl, var(--cmx-secondary-color) 4%, transparent),
+                0 30.1px 80px color-mix(in hsl, var(--cmx-secondary-color) 10%, transparent);
+}
+
+footer ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 0px;
+}
+
+footer li {
+    list-style: none;
+    display: block;
+}

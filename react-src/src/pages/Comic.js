@@ -1,24 +1,22 @@
 import React from 'react';
 
-import GetCurrentRouteData from '../hooks/CommonHooks';
-import { Provider } from '../context/Context';
+import WithHeadFoot from './WithHeadFoot';
+import WithProvider from '../context/WithProvider';
 
 import TheComic from '../components/TheComic';
 import ThePost from '../components/ThePost';
 
-const Comic = () => {
-    const routeData = GetCurrentRouteData();
+import "./index.css";
 
+const Comic = () => {
     return (
-        <Provider router={routeData} >
-            <div className="comic-page">
-                <div className="content-area">
-                    <TheComic />
-                    <ThePost index={0} />
-                </div>
+        <div className="comic-page container-vertical">
+            <div className="content-wrapper container-vertical">
+                <TheComic />
+                <ThePost index={0} />
             </div>
-        </Provider>
+        </div>
     )
 
 }
-export default Comic;
+export default WithProvider(WithHeadFoot(Comic));

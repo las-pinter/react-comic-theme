@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import WithConsumer from '../../context/WithConsumer';
 
-const ComicSelector = ({ index, context }) => {
+const ComicSelector = ({ context }) => {
     return (
         <div className="comic-selector">
             {

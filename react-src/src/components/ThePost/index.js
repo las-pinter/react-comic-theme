@@ -28,14 +28,12 @@ const ThePost = ({ index, context }) => {
     let theContent = '';
 
     switch (context.contextType) {
-        case 'mainPage':
-            theContent = post.excerpt ? post.excerpt.rendered : "No Excerpt";
-            break;
         case 'comic':
             theContent = post.content.rendered;
             linkPrefix = '/comic/';
             linkSlug = context.comicFullSlug;
             break;
+        case 'mainPage':
         case 'post':
             theContent = post.content.rendered;
             break;

@@ -1,13 +1,54 @@
+/* Variables */
 body {
+  --cmx-background-color: hsl(213, 50%, 7%);
+  --cmx-primary-color: hsl(212, 49%, 7%);
+  --cmx-secondary-color: hsl(55, 6%, 43%);
+  --cmx-tertiary-color: hsl(55, 6%, 43%);
+  --cmx-quaternary-color: hsl(55, 6%, 43%);
+  --cmx-quaternary-shadow: hsl(55, 6%, 43%);
+  --cmx-quinary-color: hsl(55, 6%, 43%);
+  --cmx-text-color: hsl(45, 10%, 48%);
+  --cmx-content-width: 1200px;
+}
+
+/* Background */
+body {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--cmx-background-color);
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Fonts */
+body {
+  color: var(--cmx-text-color);
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  line-height: 34px;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-horizontal {
+  display: flex;
+  flex-direction: row;
+  row-gap: 20px;
+}
+
+.container-vertical {
+  display: flex;
+  flex-direction: column;
+  column-gap: 20px;
 }

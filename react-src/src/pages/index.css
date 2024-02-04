@@ -1,0 +1,8 @@
+.main-page, .page-single, .comic-page, .post-single {
+    align-items: center;
+}
+
+.content-wrapper {
+    max-width: var(--cmx-content-width);
+    align-items: center;
+}

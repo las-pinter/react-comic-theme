@@ -1,0 +1,16 @@
+.comic-navigator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 20px;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 0;
+}
+
+.comic-navigator .comic-navigator-item {
+    display: flex;
+    list-style: none;
+}

@@ -1,22 +1,20 @@
 import React from 'react';
 
-import GetCurrentRouteData from '../hooks/CommonHooks';
-import { Provider } from '../context/Context';
+import WithHeadFoot from './WithHeadFoot';
+import WithProvider from '../context/WithProvider';
 
 import ThePage from '../components/ThePage';
 
-const Page = () => {
-    const routeData = GetCurrentRouteData();
+import "./index.css";
 
+const Page = () => {
     return (
-        <Provider router={routeData} >
-            <div className="page-single">
-                <div className="content-area">
-                    <ThePage index={0} />
-                </div>
+        <div className="page-single container-vertical">
+            <div className="content-wrapper container-vertical">
+                <ThePage index={0} />
             </div>
-        </Provider>
+        </div>
     )
 
 }
-export default Page;
+export default WithProvider(WithHeadFoot(Page));

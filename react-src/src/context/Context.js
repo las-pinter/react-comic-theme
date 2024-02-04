@@ -13,7 +13,29 @@ export class Provider extends React.Component {
             contextType: this.getContextType(props.router.route.path),
             term: props.router.params.term ? props.router.params.term : '',
             slug: props.router.params.slug ? props.router.params.slug : '',
-            route:  props.router.route.path,
+            route: props.router.route.path,
+            menu: [
+                {
+                    'name': 'Home',
+                    'path': '/'
+                },
+                {
+                    'name': 'Archives',
+                    'path': '/page/archives'
+                },
+                {
+                    'name': 'Cast',
+                    'path': '/page/cast'
+                },
+                {
+                    'name': 'About',
+                    'path': '/page/about'
+                },
+                {
+                    'name': 'Links',
+                    'path': '/page/links'
+                },
+            ],
             posts: [],
             currentPage: 1,
             totalPages: 0,
@@ -263,7 +285,7 @@ export class Provider extends React.Component {
         return (
             <>
                 <storeContext.Provider value={this.state}>
-                {this.props.children}
+                    {this.props.children}
                 </storeContext.Provider>
             </>
         );

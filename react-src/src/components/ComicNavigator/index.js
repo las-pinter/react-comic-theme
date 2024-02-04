@@ -1,6 +1,9 @@
 import React from 'react';
-import WithConsumer from '../../context/WithConsumer';
 import { Link } from 'react-router-dom';
+
+import WithConsumer from '../../context/WithConsumer';
+
+import './index.css';
 
 const ComicNavigator = ({ context }) => {
     let firstComicPage = context.comicFirstPage;
@@ -9,12 +12,12 @@ const ComicNavigator = ({ context }) => {
     let lastComicPage = context.comicLastPage;
 
     return (
-        <div className="navigator">
-            <div><Link to={firstComicPage}>First</Link></div>
-            <div><Link to={previousComicPage}>Previous</Link></div>
-            <div><Link to={nextComicPage}>Next</Link></div>
-            <div><Link to={lastComicPage}>Last</Link></div>
-        </div>
+        <ul className="comic-navigator">
+            <li className="comic-navigator-item"><Link to={firstComicPage}>First</Link></li>
+            <li className="comic-navigator-item"><Link to={previousComicPage}>Previous</Link></li>
+            <li className="comic-navigator-item"><Link to={nextComicPage}>Next</Link></li>
+            <li className="comic-navigator-item"><Link to={lastComicPage}>Last</Link></li>
+        </ul>
     );
 };
 
