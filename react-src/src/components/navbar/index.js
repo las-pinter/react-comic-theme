@@ -18,7 +18,7 @@ const Navbar = ({ context }) => {
     }
 
     return (
-        <nav className="navbar">
+        <nav className="navbar container-horizontal">
             <FaBars className="navigation-bar-bars" />
 
             <ul className="container-horizontal">
@@ -48,7 +48,7 @@ const Navbar = ({ context }) => {
                                         }
 
                                         for (const [itemID, prevState] of Object.entries(prev)) {
-                                            if (itemID == item['ID']) {
+                                            if (parseInt(itemID) === item['ID']) {
                                                 currentState[itemID] = !prevState;
                                                 continue;
                                             }

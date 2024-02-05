@@ -278,7 +278,7 @@ export class Provider extends React.Component {
                     return menuItem['menu_item_parent'] !== "0";
                 }).forEach(childItem => {
                     parentItems.filter(parentItem => {
-                        return parentItem['ID'] == childItem['menu_item_parent'];
+                        return parseInt(parentItem['ID']) === parseInt(childItem['menu_item_parent']);
                     }).forEach(parentItem => {
                         parentItem['children'].push(childItem);
                     })

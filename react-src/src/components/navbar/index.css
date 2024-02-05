@@ -5,7 +5,7 @@
     height: 40px;
     font-size: 40px;
     padding: 6px;
-    color: hsl(156, 79%, 55%);
+    color: var(--cmx-accent-color);
     cursor: pointer;
     @media screen and (max-width: 768px) {
         display: block;
@@ -17,20 +17,23 @@
 }
 
 .navbar {
-    display: flex;
     align-items: center;
     max-width: var(--cmx-content-width);
+    transition: all linear 0.3s;
 }
 
 .navbar ul {
-    flex-wrap: wrap;
     text-align: center;
     column-gap: 20px;
+    transition: all linear 0.3s;
     margin-block-start: 0;
     margin-block-end: 0;
     margin-inline-start: 0;
     margin-inline-end: 0;
     padding-inline-start: 0px;
+    @media screen and (min-width: 1200px) {
+        column-gap: 50px;
+    }
 }
 
 .navbar li {
@@ -49,5 +52,6 @@
 }
 
 .dropdown-menu {
-    transition: all linear 1s;
+    transition: all linear 0.3s;
+    padding: 5px;
 }

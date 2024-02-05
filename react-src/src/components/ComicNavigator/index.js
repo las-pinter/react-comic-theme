@@ -12,7 +12,7 @@ const ComicNavigator = ({ context }) => {
     let lastComicPage = context.comicLastPage;
 
     return (
-        <ul className="comic-navigator">
+        <ul className="comic-navigator container-horizontal">
             <li className="comic-navigator-item"><Link to={firstComicPage}>First</Link></li>
             <li className="comic-navigator-item"><Link to={previousComicPage}>Previous</Link></li>
             <li className="comic-navigator-item"><Link to={nextComicPage}>Next</Link></li>
