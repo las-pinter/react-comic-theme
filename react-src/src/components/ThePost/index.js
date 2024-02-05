@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import WithConsumer from '../../context/WithConsumer';
 import PostMeta from '../PostMeta';
+
+import './index.css';
 
 const ThePost = ({ index, context }) => {
     if (context.appError) {

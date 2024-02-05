@@ -1,8 +1,4 @@
-.sidebar-item {
-    /* To be removed in production */
-    min-width: 200px;
-    min-height: 100px;
-
+.post-item {
     background: var(--cmx-foreground-color);
     border: 1px solid var(--cmx-detail-color);
     padding: 15px;

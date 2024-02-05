@@ -1,13 +1,16 @@
 /* Variables */
 body {
-  --cmx-background-color: hsl(213, 50%, 7%);
-  --cmx-primary-color: hsl(212, 49%, 7%);
-  --cmx-secondary-color: hsl(55, 6%, 43%);
-  --cmx-tertiary-color: hsl(55, 6%, 43%);
-  --cmx-quaternary-color: hsl(55, 6%, 43%);
-  --cmx-quaternary-shadow: hsl(55, 6%, 43%);
-  --cmx-quinary-color: hsl(55, 6%, 43%);
-  --cmx-text-color: hsl(45, 10%, 48%);
+  --cmx-base-color: hsl(0deg 0% 8.02%);
+  --cmx-foreground-color: hsl(0deg 0% 11.96%);
+  --cmx-text-color: hsl(0deg 0% 49.75%);
+  --cmx-detail-color: hsl(0deg 0% 27.36%);
+  --cmx-accent-color: hsl(0deg 0% 93.85%);
+  --cmx-detail-shadow: hsl(0deg 0% 30.86%);
+  --cmx-base-shadow: color-mix(in hsl, var(--cmx-base-color) 10%, hsl(0, 25%, 1%));
+  --cmx-foreground-shadow: color-mix(in hsl, var(--cmx-foreground-color) 10%, hsl(0, 25%, 1%));
+  --cmx-text-shadow: color-mix(in hsl, var(--cmx-text-color) 10%, hsl(0, 25%, 1%));
+  --cmx-detail-shadow: color-mix(in hsl, var(--cmx-detail-color) 90%, hsl(0, 25%, 1%));
+  --cmx-accent-shadow: color-mix(in hsl, var(--cmx-accent-color) 10%, hsl(0, 25%, 1%));
   --cmx-content-width: 1200px;
 }
 
@@ -21,7 +24,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--cmx-background-color);
+  background: var(--cmx-base-color);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -44,11 +47,15 @@ body {
 .container-horizontal {
   display: flex;
   flex-direction: row;
-  row-gap: 20px;
+  column-gap: 20px;
 }
 
 .container-vertical {
   display: flex;
   flex-direction: column;
-  column-gap: 20px;
+  row-gap: 20px;
+}
+
+a {
+  color: var(--cmx-accent-color);
 }
