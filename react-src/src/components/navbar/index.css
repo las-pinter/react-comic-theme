@@ -35,6 +35,7 @@
 
 .navbar li {
     list-style: none;
+    transition: all linear 2s;
     @media screen and (max-width: 768px) {
         display: none;
     }
@@ -45,4 +46,8 @@
     &.active {
         color: #000000;
     }
+}
+
+.dropdown-menu {
+    transition: all linear 1s;
 }

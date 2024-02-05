@@ -13,15 +13,19 @@ footer {
                 0 30.1px 80px color-mix(in hsl, var(--cmx-foreground-color) 10%, transparent);
 }
 
-footer ul {
+footer li {
+    list-style: none;
+    display: block;
+}
+
+.navigation-bottom > ul {
     margin-block-start: 0;
     margin-block-end: 0;
     margin-inline-start: 0;
     margin-inline-end: 0;
-    padding-inline-start: 0px;
+    padding-inline-start: 0px
 }
 
-footer li {
-    list-style: none;
-    display: block;
+.navigation-bottom {
+    align-items: flex-start;
 }

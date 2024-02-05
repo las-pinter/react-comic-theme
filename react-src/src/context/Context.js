@@ -14,28 +14,7 @@ export class Provider extends React.Component {
             term: props.router.params.term ? props.router.params.term : '',
             slug: props.router.params.slug ? props.router.params.slug : '',
             route: props.router.route.path,
-            menu: [
-                {
-                    'name': 'Home',
-                    'path': '/'
-                },
-                {
-                    'name': 'Archives',
-                    'path': '/page/archives'
-                },
-                {
-                    'name': 'Cast',
-                    'path': '/page/cast'
-                },
-                {
-                    'name': 'About',
-                    'path': '/page/about'
-                },
-                {
-                    'name': 'Links',
-                    'path': '/page/links'
-                },
-            ],
+            menus: [],
             posts: [],
             currentPage: 1,
             totalPages: 0,
@@ -78,6 +57,7 @@ export class Provider extends React.Component {
     componentDidMount() {
         this.getPosts(this.buildUrl());
         this.getComics();
+        this.getMenus();
     }
 
     componentDidUpdate(prevProps) {
@@ -272,6 +252,48 @@ export class Provider extends React.Component {
         }).catch(function (error) {
             self.setState({
                 comicArchive: [],
+                isLoading: false
+            })
+        });
+    }
+
+    getMenus() {
+        let url = '/wp-json/generic/v1/menu/';
+        let self = this;
+        self.setState({
+            isLoading: true
+        })
+        Axios.get(url).then((response) => {
+            let processedMenus = {};
+            for (const [menu, menuItems] of Object.entries(response.data)) {
+                let parentItems = menuItems.filter(menuItem => {
+                    return menuItem['menu_item_parent'] === "0";
+                })
+
+                parentItems.forEach(parentItem => {
+                    parentItem['children'] = [];
+                });
+
+                menuItems.filter(menuItem => {
+                    return menuItem['menu_item_parent'] !== "0";
+                }).forEach(childItem => {
+                    parentItems.filter(parentItem => {
+                        return parentItem['ID'] == childItem['menu_item_parent'];
+                    }).forEach(parentItem => {
+                        parentItem['children'].push(childItem);
+                    })
+                });
+
+                processedMenus[menu] = parentItems;
+            };
+
+            self.setState({
+                menus: processedMenus,
+                isLoading: false
+            });
+        }).catch(function (error) {
+            self.setState({
+                menus: [],
                 isLoading: false
             })
         });
