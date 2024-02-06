@@ -8,19 +8,16 @@ import {
 
 import './index.css';
 
-import MainPage from './pages/MainPage';
-import Post from './pages/Post';
-import Page from './pages/Page';
-import Comic from './pages/Comic';
+import PageRouter from './pages/PageRouter';
 
 const App = () => {
     return (
         <Router>
             <Routes>
-                <Route exact path="/" element={<MainPage />} />
-                <Route path="/:slug" element={<Post />} />
-                <Route path="/page/:slug" element={<Page />} />
-                <Route path="/comic/*" element={<Comic />} />
+                <Route exact path="/" element={<PageRouter />} />
+                <Route path="/:slug" element={<PageRouter />} />
+                <Route path="/page/:slug" element={<PageRouter />} />
+                <Route path="/comic/*" element={<PageRouter />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </Router>

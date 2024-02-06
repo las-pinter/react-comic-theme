@@ -1,8 +1,5 @@
 import React from 'react';
 
-import WithHeadFoot from './WithHeadFoot';
-import WithProvider from '../context/WithProvider';
-
 import ThePosts from '../components/ThePosts';
 import Pager from '../components/Pager';
 import ComicSelector from '../components/ComicSelector';
@@ -29,4 +26,4 @@ const MainPage = () => {
     )
 }
 
-export default WithProvider(WithHeadFoot(MainPage));
+export default MainPage;

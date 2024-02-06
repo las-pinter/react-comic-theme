@@ -1,8 +1,5 @@
 import React from 'react';
 
-import WithHeadFoot from './WithHeadFoot';
-import WithProvider from '../context/WithProvider';
-
 import ThePost from '../components/ThePost';
 
 import "./index.css";
@@ -17,4 +14,4 @@ const Post = () => {
     )
 
 }
-export default WithProvider(WithHeadFoot(Post));
+export default Post;

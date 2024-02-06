@@ -1,8 +1,5 @@
 import React from 'react';
 
-import WithHeadFoot from './WithHeadFoot';
-import WithProvider from '../context/WithProvider';
-
 import ThePage from '../components/ThePage';
 
 import "./index.css";
@@ -17,4 +14,4 @@ const Page = () => {
     )
 
 }
-export default WithProvider(WithHeadFoot(Page));
+export default Page;

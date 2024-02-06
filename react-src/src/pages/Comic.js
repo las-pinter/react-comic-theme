@@ -1,8 +1,5 @@
 import React from 'react';
 
-import WithHeadFoot from './WithHeadFoot';
-import WithProvider from '../context/WithProvider';
-
 import TheComic from '../components/TheComic';
 import ThePost from '../components/ThePost';
 
@@ -19,4 +16,4 @@ const Comic = () => {
     )
 
 }
-export default WithProvider(WithHeadFoot(Comic));
+export default Comic;
