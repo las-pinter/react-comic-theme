@@ -1,0 +1,19 @@
+.comic-selector {
+    width: 100%;
+}
+
+.comic-selector-comic {
+    background: var(--cmx-container-background);
+    box-shadow: var(--cmx-container-box-shadow);
+    border: var(--cmx-container-border);
+    text-align: center;
+    width: 100%;
+}
+
+.selector-navigation {
+    justify-content: space-between;
+}
+
+.selector-image img {
+    max-width: 100%;
+}

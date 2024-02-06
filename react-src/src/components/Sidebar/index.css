@@ -1,11 +1,9 @@
 .sidebar-item {
+    background: var(--cmx-container-background);
+    box-shadow: var(--cmx-container-box-shadow);
+    border: var(--cmx-container-border);
     min-height: 100px;
-    background: radial-gradient(ellipse at bottom, color-mix(in hsl, var(--cmx-foreground-color) 30%, transparent), transparent),
-                radial-gradient(ellipse at top, color-mix(in hsl, var(--cmx-detail-color) 30%, transparent), transparent),
-                color-mix(in hsl, var(--cmx-detail-shadow) 30%, transparent);
-    border: 1px solid var(--cmx-detail-color);
     padding: 0 15px 15px 15px;
-    box-shadow: 0px 0px 10px 0px color-mix(in hsl, var(--cmx-detail-shadow) 100%, transparent);
 }
 
 .sidebar-item li {

@@ -3,18 +3,23 @@ import { Link } from 'react-router-dom';
 
 import WithConsumer from '../../context/WithConsumer';
 
+import './index.css';
+
 const ComicSelector = ({ context }) => {
     return (
-        <div className="comic-selector">
+        <div className="comic-selector container-horizontal">
             {
                 context.comics.map(function (item, i) {
                     return (
-                        <div key={item['comicSlug'] + '_' + i} className={"comic-selector-comic " + item['comicSlug']}>
-                            <div className="comic-name">{ item['name'] }</div>
-                            <div>
-                                <Link to={item['lastPage']} className="comic-selector-nav">Last</Link>
+                        <div key={item['comicSlug'] + '_' + i} className={"comic-selector-comic container-vertical " + item['comicSlug']}>
+                            <div className="comic-name">{item['name']}</div>
+                            <div className="selector-image">
+                                <img src="" />
+                            </div>
+                            <div className="selector-navigation container-horizontal">
                                 <Link to={item['firstPage']} className="comic-selector-nav">First</Link>
                                 <Link to={'page/' + item['archivePage']} className="comic-selector-nav">Archive</Link>
+                                <Link to={item['lastPage']} className="comic-selector-nav">Last</Link>
                             </div>
                         </div>
                     )

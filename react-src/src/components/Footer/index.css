@@ -5,9 +5,7 @@ footer {
     margin-top: 50px;
     width: 100%;
     border-top: 1px solid color-mix(in hsl, var(--cmx-detail-color) 80%, transparent);
-    background: radial-gradient(ellipse at bottom, color-mix(in hsl, var(--cmx-foreground-color) 30%, transparent), transparent),
-                radial-gradient(ellipse at top, color-mix(in hsl, var(--cmx-detail-color) 30%, transparent), transparent),
-                color-mix(in hsl, var(--cmx-detail-shadow) 30%, transparent);
+    background: var(--cmx-container-background);
     box-shadow: 0 3.5px 20px color-mix(in hsl, var(--cmx-foreground-color) 100%, transparent),
                 0 12.5px 50px color-mix(in hsl, var(--cmx-foreground-color) 4%, transparent),
                 0 30.1px 80px color-mix(in hsl, var(--cmx-foreground-color) 10%, transparent);

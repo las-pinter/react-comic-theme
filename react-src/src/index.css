@@ -12,6 +12,15 @@ body {
   --cmx-detail-shadow: color-mix(in hsl, var(--cmx-detail-color) 90%, hsl(0, 25%, 1%));
   --cmx-accent-shadow: color-mix(in hsl, var(--cmx-accent-color) 10%, hsl(0, 25%, 1%));
   --cmx-content-width: 1100px;
+
+  --cmx-container-background: radial-gradient(ellipse at bottom, color-mix(in hsl, var(--cmx-foreground-color) 30%, transparent), transparent),
+                          radial-gradient(ellipse at top, color-mix(in hsl, var(--cmx-detail-color) 30%, transparent), transparent),
+                          color-mix(in hsl, var(--cmx-detail-shadow) 30%, transparent);
+  --cmx-container-background-reverse: radial-gradient(ellipse at bottom, color-mix(in hsl, var(--cmx-detail-color) 30%, transparent), transparent),
+                          radial-gradient(ellipse at top, color-mix(in hsl, var(--cmx-foreground-color) 30%, transparent), transparent),
+                          color-mix(in hsl, var(--cmx-detail-shadow) 30%, transparent);
+  --cmx-container-box-shadow: 0px 0px 10px 0px color-mix(in hsl, var(--cmx-detail-shadow) 100%, transparent);
+  --cmx-container-border: 1px solid var(--cmx-detail-color);
 }
 
 /* Background */
