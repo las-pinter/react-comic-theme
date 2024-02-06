@@ -13,7 +13,7 @@ import "./index.css";
 
 const PageRouter = ({ context }) => {
     return (
-        <>
+        <div className="content-wrapper container-vertical">
             {
                 (() => {
                     switch (context.contextType) {
@@ -30,7 +30,7 @@ const PageRouter = ({ context }) => {
                     }
                 })()
             }
-        </>
+        </div>
     )
 }
 

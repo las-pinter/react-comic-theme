@@ -47,7 +47,7 @@ const ThePost = ({ index, context }) => {
 
     return (
         <div id={'post-id-' + post.id} className={'post-item'}>
-            <h1><Link to={linkPrefix + linkSlug}>{post.title.rendered}</Link></h1>
+            <h1><Link to={linkPrefix + linkSlug}>{decodeURIComponent(post.title.rendered)}</Link></h1>
             <PostMeta index={index} />
             <div className="post-content" dangerouslySetInnerHTML={{ __html: theContent }}></div>
         </div>

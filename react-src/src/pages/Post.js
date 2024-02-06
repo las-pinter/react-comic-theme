@@ -7,9 +7,7 @@ import "./index.css";
 const Post = () => {
     return (
         <div className="post-single container-vertical">
-            <div className="content-wrapper container-vertical">
-                <ThePost index={0} />
-            </div>
+            <ThePost index={0} />
         </div>
     )
 

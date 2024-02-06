@@ -1,20 +1,26 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-
-import WithConsumer from '../../context/WithConsumer';
+import React,
+{ useEffect } from 'react';
 
 import './index.css'
+import WithConsumer from '../../context/WithConsumer';
 
-const Sidebar = ({ index, context }) => {
+const Sidebar = ({ context, sidebarId }) => {
+    useEffect(() => {
+        context.getSidebar(sidebarId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <>
-            <div className="sidebar-item">a</div>
-            <div className="sidebar-item">b</div>
-            <div className="sidebar-item">c</div>
-            <div className="sidebar-item">d</div>
-            <div className="sidebar-item">e</div>
-            <div className="sidebar-item">f</div>
-            <div className="sidebar-item">g</div>
+            {
+                (() => {
+                    if (context.sidebars[sidebarId]) {
+                        return context.sidebars[sidebarId].map((item, i) => {
+                            return <div key={sidebarId + "_" + item['id']} className="sidebar-item" dangerouslySetInnerHTML={{ __html: item['rendered'] }}></div>
+                        })
+                    }
+                })()
+            }
         </>
     );
 };

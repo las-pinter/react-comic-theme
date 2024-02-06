@@ -16,6 +16,7 @@ export class Provider extends React.Component {
             route: props.router.route.path,
             menus: [],
             posts: [],
+            sidebars: {},
             currentPage: 1,
             totalPages: 0,
             appError: '',
@@ -31,6 +32,7 @@ export class Provider extends React.Component {
             postsNextClicked: this.postsNextClicked.bind(this),
             postsPreviousClicked: this.postsPreviousClicked.bind(this),
             getComicArchive: this.getComicArchive.bind(this),
+            getSidebar: this.getSidebar.bind(this),
         };
     }
 
@@ -294,6 +296,28 @@ export class Provider extends React.Component {
         }).catch(function (error) {
             self.setState({
                 menus: [],
+                isLoading: false
+            })
+        });
+    }
+
+    getSidebar(sidebarId) {
+        let url = '/wp-json/wp/v2/widgets?sidebar=' + sidebarId;
+        let self = this;
+        self.setState({
+            isLoading: true
+        })
+        Axios.get(url).then((response) => {
+            let newSidebars = self.state.sidebars;
+            newSidebars[sidebarId] = response.data;
+
+            self.setState({
+                sidebars: newSidebars,
+                isLoading: false
+            })
+        }).catch(function (error) {
+            self.setState({
+                sidebars: self.sidebars,
                 isLoading: false
             })
         });

@@ -1,8 +1,17 @@
 .main-page, .page-single, .comic-page, .post-single {
+    max-width: var(--cmx-content-width);
     align-items: center;
+    width: 100%;
 }
 
 .content-wrapper {
-    max-width: var(--cmx-content-width);
     align-items: center;
+}
+
+.main-content {
+    width: 70%;
+}
+
+.sidebar-content {
+    width: 30%;
 }

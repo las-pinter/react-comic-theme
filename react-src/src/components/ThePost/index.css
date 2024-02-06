@@ -3,6 +3,8 @@
                 radial-gradient(ellipse at top, color-mix(in hsl, var(--cmx-detail-color) 30%, transparent), transparent),
                 color-mix(in hsl, var(--cmx-detail-shadow) 30%, transparent);
     border: 1px solid var(--cmx-detail-color);
-    padding: 15px;
+    padding: 0 15px 15px 15px;
     box-shadow: 0px 0px 10px 0px color-mix(in hsl, var(--cmx-detail-shadow) 100%, transparent);
+    box-sizing: border-box;
+    width: 100%;
 }

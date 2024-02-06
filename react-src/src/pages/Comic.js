@@ -8,10 +8,8 @@ import "./index.css";
 const Comic = () => {
     return (
         <div className="comic-page container-vertical">
-            <div className="content-wrapper container-vertical">
-                <TheComic />
-                <ThePost index={0} />
-            </div>
+            <TheComic />
+            <ThePost index={0} />
         </div>
     )
 

@@ -8,3 +8,15 @@ function custom_theme_setup()
     ));
 }
 add_action('after_setup_theme', 'custom_theme_setup');
+
+function custom_widgets_init()
+{
+    register_sidebar(array(
+        'id'            => 'right-to-main-content',
+        'name'          => 'Widgets right to main content',
+        'show_in_rest' => true,
+    ));
+}
+add_action('widgets_init', 'custom_widgets_init');
+
+remove_filter( 'the_title', 'wptexturize' );
