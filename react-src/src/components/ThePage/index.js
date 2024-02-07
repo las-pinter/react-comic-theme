@@ -17,7 +17,7 @@ const ThePage = ({ index, context }) => {
     let theContent = '';
 
     if (comicArchive) {
-        theContent = <ComicArchive comicSlug={comicArchive['comicSlug']} />;
+        theContent = <ComicArchive comicSlug={comicArchive.comicSlug} />;
     } else {
         theContent = <div className="page-content" dangerouslySetInnerHTML={{ __html: page.content.rendered }}></div>;
     }

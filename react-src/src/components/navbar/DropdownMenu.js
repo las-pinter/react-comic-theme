@@ -10,9 +10,9 @@ const DropdownMenu = ({ items }) => {
                 {
                     items.map(function (item, i) {
                         return (
-                            <li key={'menu-item-' + item['ID']} className="menu-item">
-                                <Link to={item['url']} >
-                                    {item['title']}
+                            <li key={'menu-item-' + item.ID} className="menu-item">
+                                <Link to={item.url} >
+                                    {item.title}
                                 </Link>
                             </li>
                         )

@@ -6,10 +6,10 @@ import WithConsumer from '../../context/WithConsumer';
 import './index.css';
 
 const ComicNavigator = ({ context }) => {
-    let firstComicPage = context.comicFirstPage;
-    let previousComicPage = context.comicPreviousPage;
-    let nextComicPage = context.comicNextPage;
-    let lastComicPage = context.comicLastPage;
+    let firstComicPage = context.currentComic.firstPage;
+    let previousComicPage = context.currentComic.previousPage;
+    let nextComicPage = context.currentComic.nextPage;
+    let lastComicPage = context.currentComic.lastPage;
 
     return (
         <ul className="comic-navigator container-horizontal">

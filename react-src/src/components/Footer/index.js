@@ -21,14 +21,14 @@ const Footer = ({ context }) => {
                         {
                             menuList.map(function (item, i) {
 
-                                let childItems = item['children'].map(function(childItem, j) {
+                                let childItems = item.children.map(function(childItem, j) {
                                     return (
                                         <li
-                                            key={'footer-menu-item-' + childItem['ID']}
+                                            key={'footer-menu-item-' + childItem.ID}
                                             className="footer-menu-item"
                                         >
-                                            <Link to={childItem['url']} >
-                                                {childItem['title']}
+                                            <Link to={childItem.url} >
+                                                {childItem.title}
                                             </Link>
                                         </li>
                                     )
@@ -36,11 +36,11 @@ const Footer = ({ context }) => {
 
                                 return (
                                     <li
-                                        key={'footer-menu-item-' + item['ID']}
+                                        key={'footer-menu-item-' + item.ID}
                                         className="footer-menu-item"
                                     >
-                                        <Link to={item['url']} >
-                                            {item['title']}
+                                        <Link to={item.url} >
+                                            {item.title}
                                         </Link>
                                         <ul>
                                             { childItems }

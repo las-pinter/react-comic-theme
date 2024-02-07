@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import WithConsumer from '../../context/WithConsumer';
 
-const ComicArchive = ({ index, context, comicSlug }) => {
+const ComicArchive = ({ context, comicSlug }) => {
     useEffect(() => {
         context.getComicArchive(comicSlug);
         // eslint-disable-next-line react-hooks/exhaustive-deps

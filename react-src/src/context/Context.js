@@ -9,7 +9,7 @@ export class Provider extends React.Component {
         super(props);
 
         this.state = {
-            isLoading: false,
+            loadingComponents: {},
             contextType: this.getContextType(props.router.route.path),
             term: props.router.params.term ? props.router.params.term : '',
             slug: props.router.params.slug ? props.router.params.slug : '',
@@ -22,16 +22,20 @@ export class Provider extends React.Component {
             appError: '',
             comics: [],
             comicArchive: [],
-            comicFullSlug: props.router.params['*'],
-            comicSlug: props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '',
-            comicFirstPage: '',
-            comicPreviousPage: '',
-            comicNextPage: '',
-            comicLastPage: '',
+            currentComic: {
+                comicFullSlug: props.router.params['*'],
+                comicSlug: props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '',
+                firstPage: '',
+                previousPage: '',
+                nextPage: '',
+                lastPage: '',
+            },
+
             //global methods
             postsNextClicked: this.postsNextClicked.bind(this),
             postsPreviousClicked: this.postsPreviousClicked.bind(this),
             getComicArchive: this.getComicArchive.bind(this),
+            getComics: this.getComics.bind(this),
             getSidebar: this.getSidebar.bind(this),
         };
     }
@@ -58,7 +62,6 @@ export class Provider extends React.Component {
 
     componentDidMount() {
         this.getPosts(this.buildUrl());
-        this.getComics();
         this.getMenus();
     }
 
@@ -71,9 +74,11 @@ export class Provider extends React.Component {
                     term: this.props.router.params.term ? this.props.router.params.term : '',
                     slug: this.props.router.params.slug ? this.props.router.params.slug : '',
                     route: this.props.router.route.path,
-                    comicFullSlug: this.props.router.params['*'],
-                    comicSlug: this.props.router.params['*'] ? this.formatComicSlug(this.props.router.params['*']) : ''
-                }, function () {
+                    currentComic: {
+                        comicFullSlug: this.props.router.params['*'],
+                        comicSlug: this.props.router.params['*'] ? this.formatComicSlug(this.props.router.params['*']) : ''
+                    }
+                }, () => {
                     this.getPosts(this.buildUrl());
                 })
             }
@@ -90,7 +95,7 @@ export class Provider extends React.Component {
                 break;
             case 'comic':
                 url += 'comic?slug=';
-                url += this.state.comicSlug;
+                url += this.state.currentComic.comicSlug;
                 url += '&_embed';
                 break;
             case 'post':
@@ -104,100 +109,222 @@ export class Provider extends React.Component {
 
     getPosts(url) {
         let self = this;
-        self.setState({
-            isLoading: true
+        self.setState((prevState) => {
+            return {
+                loadingComponents: {
+                    ...prevState.loadingComponents,
+                    post: true
+                }
+            }
         })
         Axios.get(url).then((response) => {
-            self.setState({
-                posts: response.data,
-                totalPages: response.headers['x-wp-totalpages'],
-                isLoading: false
-            }, function () {
+            self.setState((prevState) => {
+                return {
+                    posts: response.data,
+                    totalPages: response.headers['x-wp-totalpages'],
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        post: false
+                    }
+                }
+            }, () => {
                 // Get additional comic data if we are dealing with a comic
                 if ('comic' === self.state.contextType && self.state.posts[0]) {
                     let id = self.state.posts[0].id;
-                    self.getComicFirstPage(id);
-                    self.getComicPreviousPage(id);
-                    self.getComicNextPage(id);
-                    self.getComicLastPage(id);
+                    self.getComic(id);
                 }
             })
-        }).catch(function (error) {
+        }).catch((error) => {
+        });
+    }
+
+    getComic(id) {
+        let self = this;
+        self.setState((prevState) => {
+            return {
+                loadingComponents: {
+                    ...prevState.loadingComponents,
+                    comic: true
+                }
+            }
+        })
+
+        Promise.all([
+            this.getComicFirstPage(id),
+            this.getComicPreviousPage(id),
+            this.getComicNextPage(id),
+            this.getComicLastPage(id),
+        ]).then(() => {
+            self.setState((prevState) => {
+                return {
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        comic: false
+                    }
+                }
+            })
         });
     }
 
     getComicFirstPage(id) {
-        let url = '/wp-json/comics/v1/getfirst/' + id;
+        let url = '/wp-json/comics/v1/first/' + id;
         let self = this;
-        self.setState({
-            isLoading: true
+        self.setState((prevState) => {
+            return {
+                loadingComponents: {
+                    ...prevState.loadingComponents,
+                    comicFirstPage: true
+                }
+            }
         })
-        Axios.get(url).then((response) => {
-            self.setState({
-                comicFirstPage: response.data,
-                isLoading: false
+        return Axios.get(url).then((response) => {
+            self.setState((prevState) => {
+                return {
+                    currentComic: {
+                        ...prevState.currentComic,
+                        firstPage: response.data
+                    },
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        comicFirstPage: false
+                    }
+                }
             })
         }).catch(function (error) {
-            self.setState({
-                comicFirstPage: '',
-                isLoading: false
+            self.setState((prevState) => {
+                return {
+                    currentComic: {
+                        ...prevState.currentComic,
+                        firstPage: ''
+                    },
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        comicFirstPage: false
+                    }
+                }
             })
         });
     }
 
     getComicPreviousPage(id) {
-        let url = '/wp-json/comics/v1/getprevious/' + id;
+        let url = '/wp-json/comics/v1/previous/' + id;
         let self = this;
-        self.setState({
-            isLoading: true
+        self.setState((prevState) => {
+            return {
+                loadingComponents: {
+                    ...prevState.loadingComponents,
+                    comicPreviousPage: true
+                }
+            }
         })
-        Axios.get(url).then((response) => {
-            self.setState({
-                comicPreviousPage: response.data,
-                isLoading: false
+        return Axios.get(url).then((response) => {
+            self.setState((prevState) => {
+                return {
+                    currentComic: {
+                        ...prevState.currentComic,
+                        previousPage: response.data
+                    },
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        comicPreviousPage: false
+                    }
+                }
             })
         }).catch(function (error) {
-            self.setState({
-                comicPreviousPage: '',
-                isLoading: false
+            let newCurrentComic = self.state.currentComic;
+            newCurrentComic.previousPage = '';
+
+            self.setState((prevState) => {
+                return {
+                    currentComic: {
+                        ...prevState.currentComic,
+                        previousPage: ''
+                    },
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        comicPreviousPage: false
+                    }
+                }
             })
         });
     }
 
     getComicNextPage(id) {
-        let url = '/wp-json/comics/v1/getnext/' + id;
+        let url = '/wp-json/comics/v1/next/' + id;
         let self = this;
-        self.setState({
-            isLoading: true
+        self.setState((prevState) => {
+            return {
+                loadingComponents: {
+                    ...prevState.loadingComponents,
+                    comicNextPage: true
+                }
+            }
         })
-        Axios.get(url).then((response) => {
-            self.setState({
-                comicNextPage: response.data,
-                isLoading: false
+        return Axios.get(url).then((response) => {
+            self.setState((prevState) => {
+                return {
+                    currentComic: {
+                        ...prevState.currentComic,
+                        nextPage: response.data
+                    },
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        comicNextPage: false
+                    }
+                }
             })
         }).catch(function (error) {
-            self.setState({
-                comicNextPage: '',
-                isLoading: false
+            self.setState((prevState) => {
+                return {
+                    currentComic: {
+                        ...prevState.currentComic,
+                        nextPage: ''
+                    },
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        comicNextPage: false
+                    }
+                }
             })
         });
     }
 
     getComicLastPage(id) {
-        let url = '/wp-json/comics/v1/getlast/' + id;
+        let url = '/wp-json/comics/v1/last/' + id;
         let self = this;
-        self.setState({
-            isLoading: true
+        self.setState((prevState) => {
+            return {
+                loadingComponents: {
+                    ...prevState.loadingComponents,
+                    comicLastPage: true
+                }
+            }
         })
-        Axios.get(url).then((response) => {
-            self.setState({
-                comicLastPage: response.data,
-                isLoading: false
+        return Axios.get(url).then((response) => {
+            self.setState((prevState) => {
+                return {
+                    currentComic: {
+                        ...prevState.currentComic,
+                        lastPage: response.data
+                    },
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        comicLastPage: false
+                    }
+                }
             })
         }).catch(function (error) {
-            self.setState({
-                comicLastPage: '',
-                isLoading: false
+            self.setState((prevState) => {
+                return {
+                    currentComic: {
+                        ...prevState.currentComic,
+                        lastPage: ''
+                    },
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        comicLastPage: false
+                    }
+                }
             })
         });
     }
@@ -222,39 +349,69 @@ export class Provider extends React.Component {
     }
 
     getComics() {
-        let url = '/wp-json/comics/v1/getcomics';
+        let url = '/wp-json/comics/v1/comics';
         let self = this;
-        self.setState({
-            isLoading: true
+        self.setState((prevState) => {
+            return {
+                loadingComponents: {
+                    ...prevState.loadingComponents,
+                    comics: true
+                }
+            }
         })
         Axios.get(url).then((response) => {
-            self.setState({
-                comics: response.data,
-                isLoading: false
+            self.setState((prevState) => {
+                return {
+                    comics: response.data,
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        comics: false
+                    }
+                }
             })
         }).catch(function (error) {
-            self.setState({
-                comics: [],
-                isLoading: false
+            self.setState((prevState) => {
+                return {
+                    comics: [],
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        comics: false
+                    }
+                }
             })
         });
     }
 
     getComicArchive(comicSlug) {
-        let url = '/wp-json/comics/v1/getcomicarchive/' + comicSlug;
+        let url = '/wp-json/comics/v1/comicarchive/' + comicSlug;
         let self = this;
-        self.setState({
-            isLoading: true
+        self.setState((prevState) => {
+            return {
+                loadingComponents: {
+                    ...prevState.loadingComponents,
+                    comicArchive: true
+                }
+            }
         })
         Axios.get(url).then((response) => {
-            self.setState({
-                comicArchive: response.data,
-                isLoading: false
+            self.setState((prevState) => {
+                return {
+                    comicArchive: response.data,
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        comicArchive: false
+                    }
+                }
             })
         }).catch(function (error) {
-            self.setState({
-                comicArchive: [],
-                isLoading: false
+            self.setState((prevState) => {
+                return {
+                    comicArchive: [],
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        comicArchive: false
+                    }
+                }
             })
         });
     }
@@ -262,8 +419,13 @@ export class Provider extends React.Component {
     getMenus() {
         let url = '/wp-json/generic/v1/menu/';
         let self = this;
-        self.setState({
-            isLoading: true
+        self.setState((prevState) => {
+            return {
+                loadingComponents: {
+                    ...prevState.loadingComponents,
+                    menus: true
+                }
+            }
         })
         Axios.get(url).then((response) => {
             let processedMenus = {};
@@ -289,14 +451,24 @@ export class Provider extends React.Component {
                 processedMenus[menu] = parentItems;
             };
 
-            self.setState({
-                menus: processedMenus,
-                isLoading: false
+            self.setState((prevState) => {
+                return {
+                    menus: processedMenus,
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        menus: false
+                    }
+                }
             });
         }).catch(function (error) {
-            self.setState({
-                menus: [],
-                isLoading: false
+            self.setState((prevState) => {
+                return {
+                    menus: [],
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        menus: false
+                    }
+                }
             })
         });
     }
@@ -304,21 +476,36 @@ export class Provider extends React.Component {
     getSidebar(sidebarId) {
         let url = '/wp-json/wp/v2/widgets?sidebar=' + sidebarId;
         let self = this;
-        self.setState({
-            isLoading: true
+        self.setState((prevState) => {
+            return {
+                loadingComponents: {
+                    ...prevState.loadingComponents,
+                    sidebar: true
+                }
+            }
         })
         Axios.get(url).then((response) => {
             let newSidebars = self.state.sidebars;
             newSidebars[sidebarId] = response.data;
 
-            self.setState({
-                sidebars: newSidebars,
-                isLoading: false
+            self.setState((prevState) => {
+                return {
+                    sidebars: newSidebars,
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        sidebar: false
+                    }
+                }
             })
         }).catch(function (error) {
-            self.setState({
-                sidebars: self.sidebars,
-                isLoading: false
+            self.setState((prevState) => {
+                return {
+                    sidebars: self.sidebars,
+                    loadingComponents: {
+                        ...prevState.loadingComponents,
+                        sidebar: false
+                    }
+                }
             })
         });
     }

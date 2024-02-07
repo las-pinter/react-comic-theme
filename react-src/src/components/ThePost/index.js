@@ -34,7 +34,7 @@ const ThePost = ({ index, context }) => {
         case 'comic':
             theContent = post.content.rendered;
             linkPrefix = '/comic/';
-            linkSlug = context.comicFullSlug;
+            linkSlug = context.currentComic.comicFullSlug;
             break;
         case 'mainPage':
         case 'post':
