@@ -3,7 +3,7 @@ import React,
 import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-import WithConsumer from '../../context/WithConsumer';
+import WithConsumer from '../../wrappers/WithConsumer';
 
 import './index.css';
 import DropdownMenu from "./DropdownMenu";

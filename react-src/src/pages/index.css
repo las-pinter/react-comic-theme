@@ -2,6 +2,8 @@
     max-width: var(--cmx-content-width);
     align-items: center;
     width: 100%;
+    position: relative;
+    transition: all linear 0.3s;
 }
 
 .content-wrapper {

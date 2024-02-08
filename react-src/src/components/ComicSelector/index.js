@@ -2,7 +2,7 @@ import React,
 { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import WithConsumer from '../../context/WithConsumer';
+import WithConsumer from '../../wrappers/WithConsumer';
 
 import './index.css';
 

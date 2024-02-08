@@ -1,6 +1,6 @@
 import React from 'react';
 import Moment from 'react-moment';
-import WithConsumer from '../../context/WithConsumer';
+import WithConsumer from '../../wrappers/WithConsumer';
 
 const PostMeta = ({ index, context }) => {
 

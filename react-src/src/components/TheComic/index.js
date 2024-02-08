@@ -1,5 +1,6 @@
 import React from 'react';
-import WithConsumer from '../../context/WithConsumer';
+import WithConsumer from '../../wrappers/WithConsumer';
+
 import ComicNavigator from '../ComicNavigator';
 
 import './index.css';
@@ -22,17 +23,19 @@ const TheComic = ({ context }) => {
     }
 
     return (
-        <div className="the-comic-container">
-            <div className="navigator-top">
-                <ComicNavigator />
+        <>
+            <div className="the-comic-container">
+                <div className="navigator-top">
+                    <ComicNavigator />
+                </div>
+                <div className="the-comic">
+                    <img src={comicImageUrl} alt="Name of the Comic" />
+                </div>
+                <div className="navigator-bottom">
+                    <ComicNavigator />
+                </div>
             </div>
-            <div className="the-comic">
-                <img src={comicImageUrl} alt="Name of the Comic" />
-            </div>
-            <div className="navigator-bottom">
-                <ComicNavigator />
-            </div>
-        </div>
+        </>
     );
 };
 

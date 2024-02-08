@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Consumer } from './Context';
+import { Consumer } from '../context/Context';
 
 const WithConsumer = (WrappedComponent) => {
     return function (props) {

@@ -3,15 +3,20 @@ import { DiscussionEmbed } from 'disqus-react';
 
 import './index.css';
 
-const DisqusComments = ({ post }) => {
+const DisqusComments = ({ post, display }) => {
     return (
-        <div id="disqus">
+        <div
+            id="disqus"
+            style={{
+                display: display ? "block" : "none"
+            }}
+        >
             <DiscussionEmbed
                 shortname='talesfromsomewhere'
                 config={
                     {
                         url: window.location.href,
-                        identifier: post.id,
+                        identifier: post.id.toString(),
                         title: post.title.rendered
                     }
                 }

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import WithHeadFoot from './WithHeadFoot';
-import WithProvider from '../context/WithProvider';
-import WithConsumer from '../context/WithConsumer';
+import WithHeadFoot from '../wrappers/WithHeadFoot';
+import WithProvider from '../wrappers/WithProvider';
+import WithConsumer from '../wrappers/WithConsumer';
 
 import MainPage from './MainPage';
 import Page from './Page';

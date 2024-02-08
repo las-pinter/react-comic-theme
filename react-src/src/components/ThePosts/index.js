@@ -1,5 +1,6 @@
 import React from 'react';
-import WithConsumer from '../../context/WithConsumer';
+
+import WithConsumer from '../../wrappers/WithConsumer';
 import ThePost from '../ThePost';
 
 const ThePosts = ({ context }) => {
@@ -13,7 +14,7 @@ const ThePosts = ({ context }) => {
             results = <div className="no-results"></div>;
         } else {
             results = thePosts.map(function (item, i) {
-                return <ThePost key={i} index={i}></ThePost>
+                return <ThePost key={'post-list-' + i} index={i}></ThePost>
             })
         }
     }

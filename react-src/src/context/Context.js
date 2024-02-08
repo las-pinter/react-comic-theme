@@ -117,25 +117,28 @@ export class Provider extends React.Component {
                 }
             }
         })
-        Axios.get(url).then((response) => {
-            self.setState((prevState) => {
-                return {
-                    posts: response.data,
-                    totalPages: response.headers['x-wp-totalpages'],
-                    loadingComponents: {
-                        ...prevState.loadingComponents,
-                        post: false
+        //code before the pause
+        setTimeout(function () {
+            Axios.get(url).then((response) => {
+                self.setState((prevState) => {
+                    return {
+                        posts: response.data,
+                        totalPages: response.headers['x-wp-totalpages'],
+                        loadingComponents: {
+                            ...prevState.loadingComponents,
+                            post: false
+                        }
                     }
-                }
-            }, () => {
-                // Get additional comic data if we are dealing with a comic
-                if ('comic' === self.state.contextType && self.state.posts[0]) {
-                    let id = self.state.posts[0].id;
-                    self.getComic(id);
-                }
-            })
-        }).catch((error) => {
-        });
+                }, () => {
+                    // Get additional comic data if we are dealing with a comic
+                    if ('comic' === self.state.contextType && self.state.posts[0]) {
+                        let id = self.state.posts[0].id;
+                        self.getComic(id);
+                    }
+                })
+            }).catch((error) => {
+            });
+        }, 2000)
     }
 
     getComic(id) {
@@ -148,22 +151,24 @@ export class Provider extends React.Component {
                 }
             }
         })
-
-        Promise.all([
-            this.getComicFirstPage(id),
-            this.getComicPreviousPage(id),
-            this.getComicNextPage(id),
-            this.getComicLastPage(id),
-        ]).then(() => {
-            self.setState((prevState) => {
-                return {
-                    loadingComponents: {
-                        ...prevState.loadingComponents,
-                        comic: false
+        //code before the pause
+        setTimeout(function () {
+            Promise.all([
+                self.getComicFirstPage(id),
+                self.getComicPreviousPage(id),
+                self.getComicNextPage(id),
+                self.getComicLastPage(id),
+            ]).then(() => {
+                self.setState((prevState) => {
+                    return {
+                        loadingComponents: {
+                            ...prevState.loadingComponents,
+                            comic: false
+                        }
                     }
-                }
-            })
-        });
+                })
+            });
+        }, 2000)
     }
 
     getComicFirstPage(id) {

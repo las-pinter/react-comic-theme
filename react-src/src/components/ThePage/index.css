@@ -1,8 +1,8 @@
-.post-wrapper {
-    width: 100%;
+.page-wrapper {
+    width: 100%
 }
 
-.post-item {
+.page-item {
     background: var(--cmx-container-background);
     box-shadow: var(--cmx-container-box-shadow);
     border: var(--cmx-container-border);
@@ -11,41 +11,41 @@
     width: 100%;
 }
 
-.post-appear {
+.page-appear {
     opacity: 0;
 }
 
-.post-appear-active {
+.page-appear-active {
     opacity: 1;
     transition: opacity 200ms;
 }
 
-.post-appear-done {
+.page-appear-done {
     opacity: 1;
 }
 
-.post-enter {
+.page-enter {
     opacity: 0;
 }
 
-.post-enter-active {
+.page-enter-active {
     opacity: 1;
     transition: opacity 200ms;
 }
 
-.post-enter-done {
+.page-enter-done {
     opacity: 1;
 }
 
-.post-exit {
+.page-exit {
     opacity: 1;
 }
 
-.post-exit-active {
+.page-exit-active {
     opacity: 0;
     transition: opacity 200ms;
 }
 
-.post-exit-done {
+.page-exit-done {
     opacity: 0;
 }

@@ -2,7 +2,7 @@ import React,
 { useEffect } from 'react';
 
 import './index.css'
-import WithConsumer from '../../context/WithConsumer';
+import WithConsumer from '../../wrappers/WithConsumer';
 
 const Sidebar = ({ context, sidebarId }) => {
     useEffect(() => {

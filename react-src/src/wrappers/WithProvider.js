@@ -1,7 +1,7 @@
 import React from 'react';
 
 import GetCurrentRouteData from '../hooks/CommonHooks';
-import { Provider } from './Context';
+import { Provider } from '../context/Context';
 
 const WithProvider = (WrappedComponent) => {
     return function (props) {
