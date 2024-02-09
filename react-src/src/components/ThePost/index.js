@@ -6,6 +6,7 @@ import WithConsumer from '../../wrappers/WithConsumer';
 import PostMeta from '../PostMeta';
 
 import './index.css';
+import Fader from '../../effects/Fader';
 
 const ThePost = ({ index, context }) => {
     if (context.appError) {
@@ -48,20 +49,22 @@ const ThePost = ({ index, context }) => {
 
     return (
         <div className="post-wrapper container-vertical">
-            <div id={'post-id-' + post.id} className={'post-item'}>
-                <h1><Link to={linkPrefix + linkSlug}>{decodeURIComponent(post.title.rendered)}</Link></h1>
-                <PostMeta index={index} />
-                <div className="post-content" dangerouslySetInnerHTML={{ __html: theContent }} />
-            </div>
-            {
-                (() => {
-                    if (context.contextType !== 'mainPage') {
-                        return (
-                            <DisqusComments post={post} display={!context.loadingComponents.post} />
-                        );
-                    }
-                })()
-            }
+            <Fader depend={context.posts}>
+                <div id={'post-id-' + post.id} className={'post-item'}>
+                    <h1><Link to={linkPrefix + linkSlug}>{decodeURIComponent(post.title.rendered)}</Link></h1>
+                    <PostMeta index={index} />
+                    <div className="post-content" dangerouslySetInnerHTML={{ __html: theContent }} />
+                </div>
+                {
+                    (() => {
+                        if (context.contextType !== 'mainPage') {
+                            return (
+                                <DisqusComments post={post} display={!context.loadingComponents.post} />
+                            );
+                        }
+                    })()
+                }
+            </Fader>
         </div>
     );
 };

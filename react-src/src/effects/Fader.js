@@ -23,7 +23,7 @@ const Fader = (props) => {
     }, [props.depend]);
 
     const defaultStyle = {
-        transition: `opacity ${duration}ms ease-in-out`,
+        transition: 'opacity ' + duration + 'ms ease-in-out',
         opacity: 0,
     }
 

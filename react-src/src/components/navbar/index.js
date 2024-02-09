@@ -21,34 +21,34 @@ const Navbar = ({ context }) => {
         <nav className="navbar container-horizontal">
             <FaBars className="navigation-bar-bars" />
 
-            <ul className="container-horizontal">
+            <div className="menu container-horizontal">
                 {
                     menuList.map(function (item, i) {
-                        if (item['children'].length === 0) {
+                        if (item.children.length === 0) {
                             return (
-                                <li
-                                    key={'menu-item-' + item['ID']}
+                                <div
+                                    key={'menu-item-' + item.ID}
                                     className="menu-item"
                                 >
-                                    <Link to={item['url']} >
-                                        {item['title']}
+                                    <Link to={item.url} >
+                                        {item.title}
                                     </Link>
-                                </li>
+                                </div>
                             )
                         } else {
                             return (
-                                <li
-                                    key={'menu-item-' + item['ID']}
+                                <div
+                                    key={'menu-item-' + item.ID}
                                     className="menu-item"
                                     onClick={() => setDropdown((prev) => {
                                         let currentState = {};
-                                        
-                                        if (!prev[item['ID']]) {
-                                            currentState[item['ID']] = true;
+
+                                        if (!prev[item.ID]) {
+                                            currentState[item.ID] = true;
                                         }
 
                                         for (const [itemID, prevState] of Object.entries(prev)) {
-                                            if (parseInt(itemID) === item['ID']) {
+                                            if (parseInt(itemID) === item.ID) {
                                                 currentState[itemID] = !prevState;
                                                 continue;
                                             }
@@ -57,16 +57,16 @@ const Navbar = ({ context }) => {
                                         return currentState;
                                     })}
                                 >
-                                    <Link to={item['url']} >
-                                        {item['title']}
+                                    <Link to={item.url}>
+                                        {item.title}
                                     </Link>
-                                    {dropdown[item['ID']] && <DropdownMenu items={item['children']} />}
-                                </li>
+                                    <DropdownMenu items={item.children} display={dropdown[item.ID]} />
+                                </div>
                             )
                         }
                     })
                 }
-            </ul>
+            </div>
         </nav>
     );
 };

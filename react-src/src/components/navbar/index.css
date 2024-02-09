@@ -1,4 +1,3 @@
-
 .navigation-bar-bars {
     display: none;
     width: 40px;
@@ -7,6 +6,7 @@
     padding: 6px;
     color: var(--cmx-accent-color);
     cursor: pointer;
+
     @media screen and (max-width: 768px) {
         display: block;
         position: absolute;
@@ -22,7 +22,7 @@
     transition: all linear 0.3s;
 }
 
-.navbar ul {
+.menu {
     text-align: center;
     column-gap: 20px;
     transition: all linear 0.3s;
@@ -31,14 +31,16 @@
     margin-inline-start: 0;
     margin-inline-end: 0;
     padding-inline-start: 0px;
+
     @media screen and (min-width: 1200px) {
         column-gap: 50px;
     }
 }
 
-.navbar li {
+.menu-item {
     list-style: none;
     transition: all linear 2s;
+
     @media screen and (max-width: 768px) {
         display: none;
     }
@@ -46,6 +48,7 @@
 
 .menu-item a {
     cursor: pointer;
+
     &.active {
         color: #000000;
     }
@@ -53,5 +56,10 @@
 
 .dropdown-menu {
     transition: all linear 0.3s;
-    padding: 5px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    background: var(--cmx-container-background);
+    box-shadow: var(--cmx-container-box-shadow);
+    border: var(--cmx-container-border);
 }
