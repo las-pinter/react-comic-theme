@@ -38,23 +38,18 @@ const ThePage = ({ context }) => {
     }
 
     return (
-        <>
-
-            <div className="page-wrapper container-vertical">
-
-                <div id={'page-id-' + page.id} className="page-item">
-                    <Fader depend={context.posts}>
-                        <h1><Link to={'/page/' + page.slug}>{page.title.rendered}</Link></h1>
-                        {content}
-                    </Fader>
-                </div>
-
+        <div className="page-wrapper container-vertical">
+            <div id={'page-id-' + page.id} className="page-item">
                 <Fader depend={context.posts}>
-                    <DisqusComments post={page} display={true} />
+                    <h1><Link to={'/page/' + page.slug}>{page.title.rendered}</Link></h1>
+                    {content}
                 </Fader>
             </div>
 
-        </>
+            <Fader depend={context.posts}>
+                <DisqusComments post={page} display={true} />
+            </Fader>
+        </div>
     );
 };
 

@@ -49,22 +49,30 @@ const ThePost = ({ index, context }) => {
 
     return (
         <div className="post-wrapper container-vertical">
-            <Fader depend={context.posts}>
-                <div id={'post-id-' + post.id} className={'post-item'}>
-                    <h1><Link to={linkPrefix + linkSlug}>{decodeURIComponent(post.title.rendered)}</Link></h1>
+
+            <div id={'post-id-' + post.id} className={'post-item'}>
+                <Fader depend={context.posts}>
+                    <h1>
+                        <Link to={linkPrefix + linkSlug}>
+                            {decodeURIComponent(post.title.rendered)}
+                        </Link>
+                    </h1>
                     <PostMeta index={index} />
                     <div className="post-content" dangerouslySetInnerHTML={{ __html: theContent }} />
-                </div>
-                {
-                    (() => {
-                        if (context.contextType !== 'mainPage') {
-                            return (
-                                <DisqusComments post={post} display={!context.loadingComponents.post} />
-                            );
-                        }
-                    })()
-                }
-            </Fader>
+                </Fader>
+            </div>
+            {
+                (() => {
+                    if (context.contextType !== 'mainPage') {
+                        return (
+                            <Fader depend={context.posts}>
+                                <DisqusComments post={post} display={true} />
+                            </Fader>
+                        );
+                    }
+                })()
+            }
+
         </div>
     );
 };
