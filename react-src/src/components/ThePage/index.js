@@ -1,4 +1,5 @@
 import React, {
+    useEffect,
     useRef
 } from 'react';
 import { Link } from 'react-router-dom';
@@ -14,6 +15,11 @@ import './index.css';
 
 const ThePage = ({ index, context }) => {
     const nodeRef = useRef(null);
+
+    useEffect(() => {
+        context.getComics();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     if (context.appError) {
         return <div className="app-error">{context.appError}</div>;
@@ -37,7 +43,7 @@ const ThePage = ({ index, context }) => {
         <>
             <CSSTransition
                 classNames="page"
-                timeout={300}
+                timeout={500}
                 nodeRef={nodeRef}
                 appear={true}
                 in={!context.loadingComponents.post}
