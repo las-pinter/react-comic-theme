@@ -15,8 +15,6 @@ const Fader = (props) => {
     useEffect(() => {
         setLoading(true);
 
-        console.log(duration);
-
         setTimeout(() => {
             setTheContent(props.children);
             setLoading(false);

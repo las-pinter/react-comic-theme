@@ -3,12 +3,11 @@ import WithConsumer from '../../wrappers/WithConsumer';
 
 import ComicNavigator from '../ComicNavigator';
 
+import Fader from '../../effects/Fader';
+
 import './index.css';
 
 const TheComic = ({ context }) => {
-    if (context.appError) {
-        return <div className="app-error">{context.appError}</div>;
-    }
     if (context.posts.length === 0) {
         return <div className="no-results"></div>;
     }
@@ -23,19 +22,19 @@ const TheComic = ({ context }) => {
     }
 
     return (
-        <>
-            <div className="the-comic-container">
-                <div className="navigator-top">
-                    <ComicNavigator />
-                </div>
-                <div className="the-comic">
-                    <img src={comicImageUrl} alt="Name of the Comic" />
-                </div>
-                <div className="navigator-bottom">
-                    <ComicNavigator />
-                </div>
+        <div className="the-comic-container">
+            <div className="navigator-top">
+                <ComicNavigator />
             </div>
-        </>
+            <div className="the-comic">
+                <Fader depend={context.posts}>
+                    <img src={comicImageUrl} alt="Name of the Comic" />
+                </Fader>
+            </div>
+            <div className="navigator-bottom">
+                <ComicNavigator />
+            </div>
+        </div>
     );
 };
 
