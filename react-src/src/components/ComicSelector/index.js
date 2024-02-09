@@ -23,9 +23,15 @@ const ComicSelector = ({ context }) => {
                                 <img src="" alt={item.name} />
                             </div>
                             <div className="selector-navigation container-horizontal">
-                                <Link to={item.firstPage} className="comic-selector-nav">First</Link>
-                                <Link to={'page/' + item.archivePage} className="comic-selector-nav">Archive</Link>
-                                <Link to={item.lastPage} className="comic-selector-nav">Last</Link>
+                                <Link to={item.firstPage} className="comic-selector-nav comic-selector-nav-first">
+                                    First
+                                </Link>
+                                <Link to={'page/' + item.archivePage} className="comic-selector-nav comic-selector-nav-archive">
+                                    Archive
+                                </Link>
+                                <Link to={item.lastPage} className="comic-selector-nav comic-selector-nav-last">
+                                    Last
+                                </Link>
                             </div>
                         </div>
                     )
