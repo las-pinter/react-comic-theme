@@ -9,7 +9,7 @@ const WithProvider = (WrappedComponent) => {
         return (
             <>
                 <Provider router={routeData}>
-                    { <WrappedComponent {...props} /> }
+                    <WrappedComponent {...props} />
                 </Provider>
             </>
         );

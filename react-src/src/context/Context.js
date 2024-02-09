@@ -19,7 +19,6 @@ export class Provider extends React.Component {
             sidebars: {},
             currentPage: 1,
             totalPages: 0,
-            appError: '',
             comics: [],
             comicArchive: [],
             currentComic: {
@@ -138,7 +137,7 @@ export class Provider extends React.Component {
                 })
             }).catch((error) => {
             });
-        }, 2000)
+        }, 1000)
     }
 
     getComic(id) {
@@ -364,7 +363,7 @@ export class Provider extends React.Component {
                 }
             }
         })
-        Axios.get(url).then((response) => {
+        return Axios.get(url).then((response) => {
             self.setState((prevState) => {
                 return {
                     comics: response.data,

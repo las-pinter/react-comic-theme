@@ -17,7 +17,7 @@
 
 .page-appear-active {
     opacity: 1;
-    transition: opacity 200ms;
+    transition: opacity 500ms;
 }
 
 .page-appear-done {
@@ -30,7 +30,7 @@
 
 .page-enter-active {
     opacity: 1;
-    transition: opacity 200ms;
+    transition: opacity 500ms;
 }
 
 .page-enter-done {
@@ -43,7 +43,7 @@
 
 .page-exit-active {
     opacity: 0;
-    transition: opacity 200ms;
+    transition: opacity 500ms;
 }
 
 .page-exit-done {

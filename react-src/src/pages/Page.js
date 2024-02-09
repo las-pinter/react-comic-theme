@@ -7,7 +7,7 @@ import "./index.css";
 const Page = () => {
     return (
         <div className="page-single container-vertical">
-            <ThePage index={0} />
+            <ThePage />
         </div>
     )
 

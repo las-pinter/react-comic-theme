@@ -8,7 +8,7 @@ const WithHeadFoot = (WrappedComponent) => {
         return (
             <>
                 <Header />
-                    { <WrappedComponent {...props} /> }
+                <WrappedComponent {...props} />
                 <Footer />
             </>
         );
