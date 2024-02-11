@@ -9,11 +9,11 @@ const ComicSelectorNavigator = ({ link, text }) => {
     return (
         <div
             className="comic-selector-nav-wrapper"
-            onMouseEnter={e => {
+            onMouseEnter={() => {
                 setVisible(true);
             }}
 
-            onMouseLeave={e => {
+            onMouseLeave={() => {
                 setVisible(false);
             }}
         >

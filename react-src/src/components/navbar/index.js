@@ -1,16 +1,13 @@
-import React,
-{ useState } from "react";
+import React from "react";
 import { FaBars } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
 import WithConsumer from '../../wrappers/WithConsumer';
 
 import './index.css';
-import DropdownMenu from "./DropdownMenu";
+
+import MenuItem from "./MenuItem";
 
 const Navbar = ({ context }) => {
-    const [dropdown, setDropdown] = useState({});
-
     let menuList = []
 
     if (context.menus['top']) {
@@ -24,46 +21,7 @@ const Navbar = ({ context }) => {
             <div className="menu container-horizontal">
                 {
                     menuList.map(function (item, i) {
-                        if (item.children.length === 0) {
-                            return (
-                                <div
-                                    key={'menu-item-' + item.ID}
-                                    className="menu-item"
-                                >
-                                    <Link to={item.url} >
-                                        {item.title}
-                                    </Link>
-                                </div>
-                            )
-                        } else {
-                            return (
-                                <div
-                                    key={'menu-item-' + item.ID}
-                                    className="menu-item"
-                                    onClick={() => setDropdown((prev) => {
-                                        let currentState = {};
-
-                                        if (!prev[item.ID]) {
-                                            currentState[item.ID] = true;
-                                        }
-
-                                        for (const [itemID, prevState] of Object.entries(prev)) {
-                                            if (parseInt(itemID) === item.ID) {
-                                                currentState[itemID] = !prevState;
-                                                continue;
-                                            }
-                                            currentState[itemID] = prevState;
-                                        }
-                                        return currentState;
-                                    })}
-                                >
-                                    <Link to={item.url}>
-                                        {item.title}
-                                    </Link>
-                                    <DropdownMenu items={item.children} display={dropdown[item.ID]} />
-                                </div>
-                            )
-                        }
+                        return <MenuItem key={'menu-item-' + item.ID} item={item} />
                     })
                 }
             </div>
