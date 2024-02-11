@@ -17,10 +17,6 @@ const Characters = ({ comicPost }) => {
             return;
         }
 
-        if (!comicPost._embedded['wp:term']) {
-            return;
-        }
-
         let characterList = comicPost._embedded['wp:term'][2];
 
         let promises = [];

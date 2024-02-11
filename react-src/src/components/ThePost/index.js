@@ -54,7 +54,7 @@ const ThePost = ({ index, context }) => {
                 <Fader depend={context.posts}>
                     <h1>
                         <Link to={linkPrefix + linkSlug}>
-                            {decodeURIComponent(post.title.rendered)}
+                            {post.title.rendered}
                         </Link>
                     </h1>
                     <PostMeta index={index} />

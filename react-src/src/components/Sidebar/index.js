@@ -1,25 +1,32 @@
 import React,
-{ useEffect } from 'react';
+{
+    useEffect,
+    useState
+} from 'react';
+import Axios from 'axios';
 
 import './index.css'
 import WithConsumer from '../../wrappers/WithConsumer';
 
-const Sidebar = ({ context, sidebarId }) => {
+const Sidebar = ({ sidebarId }) => {
+    const [sidebar, setSidebar] = useState([]);
+
     useEffect(() => {
-        context.getSidebar(sidebarId);
+        let url = '/wp-json/wp/v2/widgets?sidebar=' + sidebarId;
+
+        Axios.get(url).then((response) => {
+            setSidebar(response.data);
+        }).catch(() => {
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [sidebarId])
 
     return (
         <>
             {
-                (() => {
-                    if (context.sidebars[sidebarId]) {
-                        return context.sidebars[sidebarId].map((item, i) => {
-                            return <div key={sidebarId + "_" + item['id']} className="sidebar-item" dangerouslySetInnerHTML={{ __html: item['rendered'] }}></div>
-                        })
-                    }
-                })()
+                sidebar.map((item, i) => {
+                    return <div key={sidebarId + "_" + item['id']} className="sidebar-item" dangerouslySetInnerHTML={{ __html: item['rendered'] }}></div>
+                })
             }
         </>
     );

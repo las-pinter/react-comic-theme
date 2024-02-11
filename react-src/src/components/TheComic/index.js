@@ -10,10 +10,14 @@ import Characters from './Characters';
 
 const TheComic = ({ context }) => {
     if (context.posts.length === 0) {
-        return <div className="no-results"></div>;
+        return;
     }
 
     const comicPost = context.posts[0];
+
+    if (comicPost.type !== 'comic') {
+        return;
+    }
 
     let comicImageUrl = '';
     if (comicPost._embedded) {
@@ -29,7 +33,7 @@ const TheComic = ({ context }) => {
             </div>
             <div className="the-comic">
                 <Fader depend={context.posts}>
-                    <img src={comicImageUrl} alt={context.currentComic.name} />
+                    <img src={comicImageUrl} alt={comicPost.title.rendered} />
                 </Fader>
             </div>
             <div className="navigator-bottom">

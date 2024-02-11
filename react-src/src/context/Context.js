@@ -35,7 +35,6 @@ export class Provider extends React.Component {
             postsPreviousClicked: this.postsPreviousClicked.bind(this),
             getComicArchive: this.getComicArchive.bind(this),
             getComics: this.getComics.bind(this),
-            getSidebar: this.getSidebar.bind(this),
         };
     }
 
@@ -467,43 +466,6 @@ export class Provider extends React.Component {
                     loadingComponents: {
                         ...prevState.loadingComponents,
                         menus: false
-                    }
-                }
-            })
-        });
-    }
-
-    getSidebar(sidebarId) {
-        let url = '/wp-json/wp/v2/widgets?sidebar=' + sidebarId;
-        let self = this;
-        self.setState((prevState) => {
-            return {
-                loadingComponents: {
-                    ...prevState.loadingComponents,
-                    sidebar: true
-                }
-            }
-        })
-        Axios.get(url).then((response) => {
-            let newSidebars = self.state.sidebars;
-            newSidebars[sidebarId] = response.data;
-
-            self.setState((prevState) => {
-                return {
-                    sidebars: newSidebars,
-                    loadingComponents: {
-                        ...prevState.loadingComponents,
-                        sidebar: false
-                    }
-                }
-            })
-        }).catch(function (error) {
-            self.setState((prevState) => {
-                return {
-                    sidebars: self.sidebars,
-                    loadingComponents: {
-                        ...prevState.loadingComponents,
-                        sidebar: false
                     }
                 }
             })
