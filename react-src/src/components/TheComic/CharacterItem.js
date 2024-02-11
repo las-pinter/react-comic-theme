@@ -10,7 +10,7 @@ const CharacterItem = ({ character }) => {
                 {
                     character.image ?
                         <img
-                            src={character.image}
+                            src={character.thumbnail}
                             alt={character.name}
                         /> :
                         <div className="gray-placeholder"></div>

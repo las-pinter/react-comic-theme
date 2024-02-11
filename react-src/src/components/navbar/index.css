@@ -31,10 +31,6 @@
     margin-inline-start: 0;
     margin-inline-end: 0;
     padding-inline-start: 0px;
-
-    @media screen and (min-width: 1200px) {
-        column-gap: 50px;
-    }
 }
 
 .menu-item {
@@ -62,4 +58,16 @@
     background: var(--cmx-container-background);
     box-shadow: var(--cmx-container-box-shadow);
     border: var(--cmx-container-border);
+}
+
+@media screen and (min-width: 1025px) {
+    .menu {
+        column-gap: 50px;
+    }
+}
+
+@media screen and (min-width: 1201px) {
+    .menu {
+        column-gap: 100px;
+    }
 }

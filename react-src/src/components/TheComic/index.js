@@ -70,9 +70,9 @@ const TheComic = ({ context }) => {
             <div className="navigator-top">
                 <ComicNavigator comicNavLinks={comicNavLinks} />
             </div>
-            <div className="the-comic">
+            <div id="the-comic">
                 <Fader depend={comicPost}>
-                    <img src={comicImageUrl} alt={comicPost.title.rendered} />
+                    <img src={comicImageUrl} alt={comicPost.title.rendered} title={comicPost.title.rendered} />
                 </Fader>
             </div>
             <div className="navigator-bottom">
