@@ -1,30 +1,36 @@
-import React, { useState } from 'react';
-import { useEffect } from "react";
+import React, {
+    useState,
+    useEffect
+} from 'react';
+import Axios from 'axios';
 
-import WithConsumer from '../../wrappers/WithConsumer';
 import ArchiveChapter from './ArchiveChapter';
 
 import './index.css';
 
-const ComicArchive = ({ context, comicSlug }) => {
+const ComicArchive = ({ comicSlug }) => {
     const [loading, setLoading] = useState(true);
+    const [comicArchive, setComicArchive] = useState([]);
 
     useEffect(() => {
         setLoading(true);
-        context.getComicArchive(comicSlug).then(() => {
+        let url = '/wp-json/comics/v1/comicarchive/' + comicSlug;
+        Axios.get(url).then((response) => {
+            setComicArchive(response.data);
             setLoading(false);
+        }).catch(function (error) {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [comicSlug])
 
-    if (context.comicArchive.length === 0 || loading) {
-        return <div className="no-results"></div>;
+    if (comicArchive.length === 0 || loading) {
+        return;
     }
 
     return (
         <div className="comic-archive container-vertical">
             {
-                context.comicArchive.map((chapter, i) => {
+                comicArchive.map((chapter, i) => {
                     return (
                         <ArchiveChapter
                             key={chapter['slug'] + '_' + i}
@@ -37,4 +43,4 @@ const ComicArchive = ({ context, comicSlug }) => {
     );
 };
 
-export default WithConsumer(ComicArchive);
+export default ComicArchive;

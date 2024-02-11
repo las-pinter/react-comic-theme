@@ -16,11 +16,9 @@ export class Provider extends React.Component {
             route: props.router.route.path,
             menus: [],
             posts: [],
-            sidebars: {},
             currentPage: 1,
             totalPages: 0,
             comics: [],
-            comicArchive: [],
             currentComic: {
                 comicFullSlug: props.router.params['*'],
                 comicSlug: props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '',
@@ -33,7 +31,6 @@ export class Provider extends React.Component {
             //global methods
             postsNextClicked: this.postsNextClicked.bind(this),
             postsPreviousClicked: this.postsPreviousClicked.bind(this),
-            getComicArchive: this.getComicArchive.bind(this),
             getComics: this.getComics.bind(this),
         };
     }
@@ -375,40 +372,6 @@ export class Provider extends React.Component {
                     loadingComponents: {
                         ...prevState.loadingComponents,
                         comics: false
-                    }
-                }
-            })
-        });
-    }
-
-    getComicArchive(comicSlug) {
-        let url = '/wp-json/comics/v1/comicarchive/' + comicSlug;
-        let self = this;
-        self.setState((prevState) => {
-            return {
-                loadingComponents: {
-                    ...prevState.loadingComponents,
-                    comicArchive: true
-                }
-            }
-        })
-        return Axios.get(url).then((response) => {
-            self.setState((prevState) => {
-                return {
-                    comicArchive: response.data,
-                    loadingComponents: {
-                        ...prevState.loadingComponents,
-                        comicArchive: false
-                    }
-                }
-            })
-        }).catch(function (error) {
-            self.setState((prevState) => {
-                return {
-                    comicArchive: [],
-                    loadingComponents: {
-                        ...prevState.loadingComponents,
-                        comicArchive: false
                     }
                 }
             })

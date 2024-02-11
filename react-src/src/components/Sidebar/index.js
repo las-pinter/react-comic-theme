@@ -6,7 +6,6 @@ import React,
 import Axios from 'axios';
 
 import './index.css'
-import WithConsumer from '../../wrappers/WithConsumer';
 
 const Sidebar = ({ sidebarId }) => {
     const [sidebar, setSidebar] = useState([]);
@@ -32,4 +31,4 @@ const Sidebar = ({ sidebarId }) => {
     );
 };
 
-export default WithConsumer(Sidebar);
+export default Sidebar;
