@@ -14,45 +14,49 @@ const Footer = ({ context }) => {
 
     return (
         <footer className="container-vertical">
-            <div className="container-horizontal">
+            <div className="footer-link-collection container-horizontal">
                 <div className="navigation-bottom">
                     <h2>Navigation</h2>
-                    <ul className="container-vertical">
+                    <div className="container-vertical">
                         {
                             menuList.map(function (item, i) {
 
-                                let childItems = item.children.map(function(childItem, j) {
+                                let childItems = item.children.map(function (childItem, j) {
                                     return (
-                                        <li
+                                        <div
                                             key={'footer-menu-item-' + childItem.ID}
                                             className="footer-menu-item"
                                         >
                                             <Link to={childItem.url} >
                                                 {childItem.title}
                                             </Link>
-                                        </li>
+                                        </div>
                                     )
                                 });
 
                                 return (
-                                    <li
+                                    <div
                                         key={'footer-menu-item-' + item.ID}
                                         className="footer-menu-item"
                                     >
                                         <Link to={item.url} >
                                             {item.title}
                                         </Link>
-                                        <ul>
-                                            { childItems }
-                                        </ul>
-                                    </li>
+                                        <div className="footer-sub-menu container-vertical">
+                                            {childItems}
+                                        </div>
+                                    </div>
                                 )
                             })
                         }
-                    </ul>
+                    </div>
                 </div>
-                <div className="social-media"></div>
-                <div className="related"></div>
+                <div className="social-media">
+                    <h2>Social Media</h2>
+                </div>
+                <div className="related">
+                    <h2>Related</h2>
+                </div>
             </div>
             <div className="copyright"></div>
         </footer>

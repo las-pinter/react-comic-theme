@@ -7,8 +7,8 @@ footer {
     border-top: 1px solid color-mix(in hsl, var(--cmx-detail-color) 80%, transparent);
     background: var(--cmx-container-background);
     box-shadow: 0 3.5px 20px color-mix(in hsl, var(--cmx-foreground-color) 100%, transparent),
-                0 12.5px 50px color-mix(in hsl, var(--cmx-foreground-color) 4%, transparent),
-                0 30.1px 80px color-mix(in hsl, var(--cmx-foreground-color) 10%, transparent);
+        0 12.5px 50px color-mix(in hsl, var(--cmx-foreground-color) 4%, transparent),
+        0 30.1px 80px color-mix(in hsl, var(--cmx-foreground-color) 10%, transparent);
 }
 
 footer li {
@@ -16,7 +16,7 @@ footer li {
     display: block;
 }
 
-.navigation-bottom > ul {
+.navigation-bottom>ul {
     margin-block-start: 0;
     margin-block-end: 0;
     margin-inline-start: 0;
@@ -26,4 +26,13 @@ footer li {
 
 .navigation-bottom {
     align-items: flex-start;
+}
+
+.footer-sub-menu {
+    margin-left: 20px;
+}
+
+.footer-link-collection {
+    width: 100%;
+    justify-content: space-evenly;
 }
