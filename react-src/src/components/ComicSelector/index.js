@@ -1,8 +1,10 @@
 import React,
-{ useEffect } from 'react';
-import { Link } from 'react-router-dom';
+{
+    useEffect,
+} from 'react';
 
 import WithConsumer from '../../wrappers/WithConsumer';
+import ComicSelectorNavigator from './ComicSelectorNavigator';
 
 import './index.css';
 
@@ -23,21 +25,15 @@ const ComicSelector = ({ context }) => {
                                 <img src="" alt={item.name} />
                             </div>
                             <div className="selector-navigation container-horizontal">
-                                <Link to={item.firstPage} className="comic-selector-nav comic-selector-nav-first">
-                                    First
-                                </Link>
-                                <Link to={'page/' + item.archivePage} className="comic-selector-nav comic-selector-nav-archive">
-                                    Archive
-                                </Link>
-                                <Link to={item.lastPage} className="comic-selector-nav comic-selector-nav-last">
-                                    Last
-                                </Link>
+                                <ComicSelectorNavigator link={item.firstPage} text={'First'} />
+                                <ComicSelectorNavigator link={item.archivePage} text={'Archive'} />
+                                <ComicSelectorNavigator link={item.lastPage} text={'Last'} />
                             </div>
                         </div>
                     )
                 })
             }
-        </div>
+        </div >
     );
 };
 
