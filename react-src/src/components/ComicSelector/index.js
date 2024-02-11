@@ -17,7 +17,7 @@ const ComicSelector = ({ context }) => {
     return (
         <div className="comic-selector container-horizontal">
             {
-                context.comics.map(function (item, i) {
+                context.comics.map((item, i) => {
                     return (
                         <div key={item.comicSlug + '_' + i} className={"comic-selector-comic container-vertical " + item.comicSlug}>
                             <div className="comic-name">{item.name}</div>
@@ -26,7 +26,7 @@ const ComicSelector = ({ context }) => {
                             </div>
                             <div className="selector-navigation container-horizontal">
                                 <ComicSelectorNavigator link={item.firstPage} text={'First'} />
-                                <ComicSelectorNavigator link={item.archivePage} text={'Archive'} />
+                                <ComicSelectorNavigator link={'page/' + item.archivePage} text={'Archive'} />
                                 <ComicSelectorNavigator link={item.lastPage} text={'Last'} />
                             </div>
                         </div>

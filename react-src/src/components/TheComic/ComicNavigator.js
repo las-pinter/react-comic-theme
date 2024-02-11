@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 import './index.css';
 
-const ComicNavigator = ({ currentComic }) => {
-    let firstComicPage = currentComic.firstPage;
-    let previousComicPage = currentComic.previousPage;
-    let nextComicPage = currentComic.nextPage;
-    let lastComicPage = currentComic.lastPage;
+const ComicNavigator = ({ comicNavLinks }) => {
+    let firstComicPage = comicNavLinks.firstPage;
+    let previousComicPage = comicNavLinks.previousPage;
+    let nextComicPage = comicNavLinks.nextPage;
+    let lastComicPage = comicNavLinks.lastPage;
 
     return (
         <ul className="comic-navigator container-horizontal">

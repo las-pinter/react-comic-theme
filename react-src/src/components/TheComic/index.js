@@ -1,24 +1,62 @@
-import React from 'react';
-import WithConsumer from '../../wrappers/WithConsumer';
+import React, { useEffect, useState } from 'react';
+import Axios from 'axios';
 
+import WithConsumer from '../../wrappers/WithConsumer';
 import ComicNavigator from './ComicNavigator';
+import Characters from './Characters';
+import ComicTitle from './ComicTitle';
 
 import Fader from '../../effects/Fader';
 
 import './index.css';
-import Characters from './Characters';
 
 const TheComic = ({ context }) => {
-    if (context.posts.length === 0) {
-        return;
-    }
+    const [comicNavLinks, setComicNavLinks] = useState({});
+
+    useEffect(() => {
+        if (context.posts.length === 0) {
+            return;
+        }
+
+        const comicPost = context.posts[0];
+
+        if (comicPost.type !== 'comic') {
+            return;
+        }
+
+        const id = comicPost.id;
+        let requests = [];
+
+        [
+            '/wp-json/comics/v1/first/' + id,
+            '/wp-json/comics/v1/previous/' + id,
+            '/wp-json/comics/v1/next/' + id,
+            '/wp-json/comics/v1/last/' + id,
+        ].forEach((url) => {
+            requests.push(
+                Axios.get(url).then((response) => {
+                    return response.data;
+                }).catch(() => {
+                })
+            );
+        });
+
+        Promise.all(requests).then((values) => {
+            setComicNavLinks({
+                firstPage: values[0],
+                previousPage: values[1],
+                nextPage: values[2],
+                lastPage: values[3]
+            });
+        });
+    }, [context.posts]);
 
     const comicPost = context.posts[0];
 
     if (comicPost.type !== 'comic') {
         return;
     }
-
+    
     let comicImageUrl = '';
     if (comicPost._embedded) {
         if (comicPost._embedded['wp:featuredmedia']) {
@@ -28,16 +66,17 @@ const TheComic = ({ context }) => {
 
     return (
         <div className="the-comic-container">
+            <ComicTitle title={comicPost.title.rendered}/>
             <div className="navigator-top">
-                <ComicNavigator currentComic={context.currentComic}/>
+                <ComicNavigator comicNavLinks={comicNavLinks} />
             </div>
             <div className="the-comic">
-                <Fader depend={context.posts}>
+                <Fader depend={comicPost}>
                     <img src={comicImageUrl} alt={comicPost.title.rendered} />
                 </Fader>
             </div>
             <div className="navigator-bottom">
-                <ComicNavigator currentComic={context.currentComic}/>
+                <ComicNavigator comicNavLinks={comicNavLinks} />
             </div>
             <Characters comicPost={comicPost} />
         </div>
