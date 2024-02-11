@@ -11,7 +11,7 @@ const ArchiveComicItem = ({ comic, number }) => {
                     {
                         comic.thumbnail ?
                             <img
-                                src={comic.thumbnail ? comic.thumbnail : ''}
+                                src={comic.thumbnail}
                                 alt={comic.name}
                             /> :
                             <div className="gray-placeholder"></div>

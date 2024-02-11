@@ -1,15 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import WithConsumer from '../../wrappers/WithConsumer';
-
 import './index.css';
 
-const ComicNavigator = ({ context }) => {
-    let firstComicPage = context.currentComic.firstPage;
-    let previousComicPage = context.currentComic.previousPage;
-    let nextComicPage = context.currentComic.nextPage;
-    let lastComicPage = context.currentComic.lastPage;
+const ComicNavigator = ({ currentComic }) => {
+    let firstComicPage = currentComic.firstPage;
+    let previousComicPage = currentComic.previousPage;
+    let nextComicPage = currentComic.nextPage;
+    let lastComicPage = currentComic.lastPage;
 
     return (
         <ul className="comic-navigator container-horizontal">
@@ -21,4 +19,4 @@ const ComicNavigator = ({ context }) => {
     );
 };
 
-export default WithConsumer(ComicNavigator);
+export default ComicNavigator;

@@ -1,11 +1,12 @@
 import React from 'react';
 import WithConsumer from '../../wrappers/WithConsumer';
 
-import ComicNavigator from '../ComicNavigator';
+import ComicNavigator from './ComicNavigator';
 
 import Fader from '../../effects/Fader';
 
 import './index.css';
+import Characters from './Characters';
 
 const TheComic = ({ context }) => {
     if (context.posts.length === 0) {
@@ -24,16 +25,17 @@ const TheComic = ({ context }) => {
     return (
         <div className="the-comic-container">
             <div className="navigator-top">
-                <ComicNavigator />
+                <ComicNavigator currentComic={context.currentComic}/>
             </div>
             <div className="the-comic">
                 <Fader depend={context.posts}>
-                    <img src={comicImageUrl} alt="Name of the Comic" />
+                    <img src={comicImageUrl} alt={context.currentComic.name} />
                 </Fader>
             </div>
             <div className="navigator-bottom">
-                <ComicNavigator />
+                <ComicNavigator currentComic={context.currentComic}/>
             </div>
+            <Characters comicPost={comicPost} />
         </div>
     );
 };
