@@ -393,7 +393,7 @@ export class Provider extends React.Component {
                 }
             }
         })
-        Axios.get(url).then((response) => {
+        return Axios.get(url).then((response) => {
             self.setState((prevState) => {
                 return {
                     comicArchive: response.data,

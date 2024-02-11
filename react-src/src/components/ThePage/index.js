@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import WithConsumer from '../../wrappers/WithConsumer';
 
-import ComicArchive from './ComicArchive';
+import ComicArchive from '../ComicArchive';
 import DisqusComments from '../DisqusComments';
 
 import './index.css';

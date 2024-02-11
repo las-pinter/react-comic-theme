@@ -47,3 +47,7 @@
 .selector-image img {
     max-width: 100%;
 }
+
+.comic-selector-nav-wrapper:hover .comic-selector-nav {
+    visibility: visible
+}

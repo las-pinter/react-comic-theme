@@ -1,26 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import './index.css';
 
 const ComicSelectorNavigator = ({ link, text }) => {
-    const [visible, setVisible] = useState(false);
-
     return (
-        <div
-            className="comic-selector-nav-wrapper"
-            onMouseEnter={() => {
-                setVisible(true);
-            }}
-
-            onMouseLeave={() => {
-                setVisible(false);
-            }}
-        >
+        <div className="comic-selector-nav-wrapper">
             <Link
                 to={link}
                 className="comic-selector-nav"
-                style={{ visibility: visible ? 'visible' : 'hidden' }}
             >
                 {text}
             </Link>
