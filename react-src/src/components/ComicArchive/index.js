@@ -18,7 +18,7 @@ const ComicArchive = ({ comicSlug }) => {
         Axios.get(url).then((response) => {
             setComicArchive(response.data);
             setLoading(false);
-        }).catch(function (error) {
+        }).catch(() => {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [comicSlug])
