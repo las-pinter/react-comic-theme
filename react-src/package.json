@@ -6,6 +6,10 @@
         "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
+        "@types/jest": "^29.5.12",
+        "@types/node": "^20.11.17",
+        "@types/react": "^18.2.55",
+        "@types/react-dom": "^18.2.19",
         "axios": "^1.6.7",
         "create-react-app": "^5.0.1",
         "disqus-react": "^1.1.5",
@@ -43,6 +47,7 @@
     },
     "homepage": "/wp-content/themes/comic-theme",
     "devDependencies": {
+        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
         "dotenv-cli": "^7.3.0"
     }
 }
