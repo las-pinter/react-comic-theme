@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
     BrowserRouter as Router,
     Navigate,
@@ -14,7 +14,7 @@ const App = () => {
     return (
         <Router>
             <Routes>
-                <Route exact path="/" element={<PageRouter />} />
+                <Route path="/" element={<PageRouter />} />
                 <Route path="/:slug" element={<PageRouter />} />
                 <Route path="/page/:slug" element={<PageRouter />} />
                 <Route path="/comic/*" element={<PageRouter />} />

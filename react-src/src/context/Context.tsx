@@ -1,20 +1,84 @@
 import React from 'react';
 import Axios from 'axios';
 
-const storeContext = React.createContext();
+type MenuItem = {
+    ID: string,
+    menu_item_parent: string,
+    children: Array<MenuItem>
+};
+type Menu = Array<MenuItem>;
+type Menus = Record<string, Menu>;
+type Post = any;
+type Comic = any;
+
+interface Props {
+    router: {
+        route: {
+            path: string
+        },
+        params: {
+            term: string,
+            slug: string,
+            '*': string
+        },
+        pathname: string
+    },
+    children: React.ReactNode
+};
+
+interface State {
+    contextType: string,
+    term: string,
+    slug: string,
+    route: string,
+    menus: Menus,
+    posts: Array<Post>,
+    currentPage: number,
+    totalPages: number,
+    comics: Array<Comic>,
+    currentComic: {
+        comicFullSlug: string,
+        comicSlug: string
+    },
+    postsNextClicked: Function,
+    postsPreviousClicked: Function,
+    getComics: Function
+};
+
+
+const storeContext = React.createContext<Readonly<State>>(
+    {
+        contextType: '',
+        term: '',
+        slug: '',
+        route: '',
+        menus: {},
+        posts: [],
+        currentPage: 1,
+        totalPages: 0,
+        comics: [],
+        currentComic: {
+            comicFullSlug: '',
+            comicSlug: ''
+        },
+        postsNextClicked: ()=>{},
+        postsPreviousClicked: ()=>{},
+        getComics: ()=>{},
+    }
+);
 export const Consumer = storeContext.Consumer;
 
-export class Provider extends React.Component {
-    constructor(props) {
+
+export class Provider extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
 
         this.state = {
-            loadingComponents: {},
             contextType: this.getContextType(props.router.route.path),
             term: props.router.params.term ? props.router.params.term : '',
             slug: props.router.params.slug ? props.router.params.slug : '',
             route: props.router.route.path,
-            menus: [],
+            menus: {},
             posts: [],
             currentPage: 1,
             totalPages: 0,
@@ -31,7 +95,7 @@ export class Provider extends React.Component {
         };
     }
 
-    getContextType(path) {
+    getContextType(path: string): string {
         let contextType = '';
         switch (path) {
             case '/':
@@ -56,7 +120,7 @@ export class Provider extends React.Component {
         this.getMenus();
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps: any) {
         if (prevProps.router.pathname !== this.props.router.pathname) {
             if (this.props.router.route.path) {
                 this.setState({
@@ -77,7 +141,7 @@ export class Provider extends React.Component {
         }
     }
 
-    buildUrl() {
+    buildUrl(): string {
         let url = '/wp-json/wp/v2/';
         switch (this.state.contextType) {
             case 'page':
@@ -98,26 +162,14 @@ export class Provider extends React.Component {
         return url;
     }
 
-    getPosts(url) {
+    getPosts(url: string) {
         let self = this;
-        self.setState((prevState) => {
-            return {
-                loadingComponents: {
-                    ...prevState.loadingComponents,
-                    post: true
-                }
-            }
-        })
 
         return Axios.get(url).then((response) => {
-            self.setState((prevState) => {
+            self.setState(() => {
                 return {
                     posts: response.data,
-                    totalPages: response.headers['x-wp-totalpages'],
-                    loadingComponents: {
-                        ...prevState.loadingComponents,
-                        post: false
-                    }
+                    totalPages: response.headers['x-wp-totalpages']
                 }
             });
         }).catch((error) => {
@@ -128,7 +180,7 @@ export class Provider extends React.Component {
         let newPage = this.state.currentPage + 1;
         this.setState({
             currentPage: newPage
-        }, function () {
+        }, () => {
             this.getPosts(this.buildUrl());
         })
     }
@@ -138,7 +190,7 @@ export class Provider extends React.Component {
         let newPage = this.state.currentPage - 1;
         this.setState({
             currentPage: newPage
-        }, function () {
+        }, () => {
             this.getPosts(this.buildUrl());
         });
     }
@@ -146,33 +198,14 @@ export class Provider extends React.Component {
     getComics() {
         let url = '/wp-json/comics/v1/comics';
         let self = this;
-        self.setState((prevState) => {
-            return {
-                loadingComponents: {
-                    ...prevState.loadingComponents,
-                    comics: true
-                }
-            }
-        })
+
         return Axios.get(url).then((response) => {
-            self.setState((prevState) => {
-                return {
-                    comics: response.data,
-                    loadingComponents: {
-                        ...prevState.loadingComponents,
-                        comics: false
-                    }
-                }
+            self.setState({
+                comics: response.data
             })
-        }).catch(function (error) {
-            self.setState((prevState) => {
-                return {
-                    comics: [],
-                    loadingComponents: {
-                        ...prevState.loadingComponents,
-                        comics: false
-                    }
-                }
+        }).catch(() => {
+            self.setState({
+                comics: [],
             })
         });
     }
@@ -180,17 +213,14 @@ export class Provider extends React.Component {
     getMenus() {
         let url = '/wp-json/generic/v1/menu/';
         let self = this;
-        self.setState((prevState) => {
-            return {
-                loadingComponents: {
-                    ...prevState.loadingComponents,
-                    menus: true
-                }
-            }
-        })
-        Axios.get(url).then((response) => {
-            let processedMenus = {};
-            for (const [menu, menuItems] of Object.entries(response.data)) {
+
+        return Axios.get(url).then((response) => {
+            let processedMenus: Menus = {};
+            let responseMenus: Menus = response.data;
+
+            Object.keys(responseMenus).forEach(menu => {
+                let menuItems = responseMenus[menu];
+
                 let parentItems = menuItems.filter(menuItem => {
                     return menuItem['menu_item_parent'] === "0";
                 })
@@ -210,31 +240,19 @@ export class Provider extends React.Component {
                 });
 
                 processedMenus[menu] = parentItems;
-            };
 
-            self.setState((prevState) => {
-                return {
-                    menus: processedMenus,
-                    loadingComponents: {
-                        ...prevState.loadingComponents,
-                        menus: false
-                    }
-                }
             });
-        }).catch(function (error) {
-            self.setState((prevState) => {
-                return {
-                    menus: [],
-                    loadingComponents: {
-                        ...prevState.loadingComponents,
-                        menus: false
-                    }
-                }
+            self.setState({
+                menus: processedMenus,
+            });
+        }).catch(() => {
+            self.setState({
+                menus: {}
             })
         });
     }
 
-    formatComicSlug(longSlug) {
+    formatComicSlug(longSlug: string) {
         return longSlug.split('/').reverse()[1];
     }
 
