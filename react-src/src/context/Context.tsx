@@ -1,43 +1,75 @@
-import React from 'react';
+import * as React from 'react';
 import Axios from 'axios';
 
-type MenuItem = {
+import type { RouteMatch } from 'react-router-dom';
+
+export type TMenuItem = {
+    url: string,
+    title: string,
     ID: string,
     menu_item_parent: string,
-    children: Array<MenuItem>
+    children: Array<TMenuItem>
 };
-type Menu = Array<MenuItem>;
-type Menus = Record<string, Menu>;
-type Post = any;
-type Comic = any;
-
-interface Props {
-    router: {
-        route: {
-            path: string
-        },
-        params: {
-            term: string,
-            slug: string,
-            '*': string
-        },
-        pathname: string
+export type TMenu = Array<TMenuItem>;
+export type TMenus = Record<string, TMenu>;
+export interface Post {
+    type: string,
+    _embedded: {
+        author: Array<{
+            name: string
+        }>,
+        'wp:featuredmedia': Array<{
+            source_url: string
+        }>,
+        'wp:term': Array<
+            Array<{
+                slug: string
+            }>
+        >
     },
-    children: React.ReactNode
+    date: string,
+    slug: string,
+    content: {
+        rendered: string
+    },
+    title: {
+        rendered: string
+    },
+    id: string
 };
 
-interface State {
+export interface ComicPost extends Post {
+    type: 'comic'
+}
+
+export type Comic = {
+    archivePage: string,
+    comicSlug: string,
+    name: string,
+    firstPage: string,
+    lastPage: string
+};
+
+export interface IProps {
+    router?: RouteMatch | null,
+    children?: React.ReactNode,
+    index?: number,
+    duration?: number,
+    depend?: React.ReactNode | Post | Post[]
+};
+
+export interface IContextState {
     contextType: string,
     term: string,
     slug: string,
-    route: string,
-    menus: Menus,
-    posts: Array<Post>,
+    route: string | undefined,
+    menus: TMenus,
+    posts: Array<Post | ComicPost>,
     currentPage: number,
     totalPages: number,
     comics: Array<Comic>,
     currentComic: {
-        comicFullSlug: string,
+        comicFullSlug: string | undefined,
         comicSlug: string
     },
     postsNextClicked: Function,
@@ -45,8 +77,7 @@ interface State {
     getComics: Function
 };
 
-
-const storeContext = React.createContext<Readonly<State>>(
+const storeContext = React.createContext<Readonly<IContextState>>(
     {
         contextType: '',
         term: '',
@@ -61,31 +92,31 @@ const storeContext = React.createContext<Readonly<State>>(
             comicFullSlug: '',
             comicSlug: ''
         },
-        postsNextClicked: ()=>{},
-        postsPreviousClicked: ()=>{},
-        getComics: ()=>{},
+        postsNextClicked: () => { },
+        postsPreviousClicked: () => { },
+        getComics: () => { },
     }
 );
 export const Consumer = storeContext.Consumer;
 
 
-export class Provider extends React.Component<Props, State> {
-    constructor(props: Props) {
+export class Provider extends React.Component<IProps, IContextState> {
+    constructor(props: IProps) {
         super(props);
 
         this.state = {
-            contextType: this.getContextType(props.router.route.path),
-            term: props.router.params.term ? props.router.params.term : '',
-            slug: props.router.params.slug ? props.router.params.slug : '',
-            route: props.router.route.path,
+            contextType: this.getContextType(props.router ? props.router.route.path : ''),
+            term: props.router ? (props.router.params.term ? props.router.params.term : '') : '',
+            slug: props.router ? (props.router.params.slug ? props.router.params.slug : '') : '',
+            route: props.router ? props.router.route.path : '',
             menus: {},
             posts: [],
             currentPage: 1,
             totalPages: 0,
             comics: [],
             currentComic: {
-                comicFullSlug: props.router.params['*'],
-                comicSlug: props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '',
+                comicFullSlug: props.router ? props.router.params['*'] : '',
+                comicSlug: props.router ? (props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '') : '',
             },
 
             //global methods
@@ -95,7 +126,7 @@ export class Provider extends React.Component<Props, State> {
         };
     }
 
-    getContextType(path: string): string {
+    getContextType(path: string | undefined): string {
         let contextType = '';
         switch (path) {
             case '/':
@@ -121,24 +152,32 @@ export class Provider extends React.Component<Props, State> {
     }
 
     componentDidUpdate(prevProps: any) {
-        if (prevProps.router.pathname !== this.props.router.pathname) {
-            if (this.props.router.route.path) {
-                this.setState({
-                    currentPage: 1,
-                    contextType: this.getContextType(this.props.router.route.path),
-                    term: this.props.router.params.term ? this.props.router.params.term : '',
-                    slug: this.props.router.params.slug ? this.props.router.params.slug : '',
-                    route: this.props.router.route.path,
-                    currentComic: {
-                        comicFullSlug: this.props.router.params['*'],
-                        comicSlug: this.props.router.params['*'] ? this.formatComicSlug(this.props.router.params['*']) : ''
-                    }
-                }, () => {
-                    this.getPosts(this.buildUrl());
-                })
-            }
-
+        if (!this.props.router) {
+            return;
         }
+
+        if (prevProps.router.pathname === this.props.router.pathname) {
+            return;
+        }
+
+        if (!this.props.router.route.path) {
+            return;
+        }
+
+        this.setState({
+            currentPage: 1,
+            contextType: this.getContextType(this.props.router.route.path),
+            term: this.props.router.params.term ? this.props.router.params.term : '',
+            slug: this.props.router.params.slug ? this.props.router.params.slug : '',
+            route: this.props.router.route.path,
+            currentComic: {
+                comicFullSlug: this.props.router.params['*'],
+                comicSlug: this.props.router.params['*'] ? this.formatComicSlug(this.props.router.params['*']) : ''
+            }
+        }, () => {
+            this.getPosts(this.buildUrl());
+        })
+
     }
 
     buildUrl(): string {
@@ -215,8 +254,8 @@ export class Provider extends React.Component<Props, State> {
         let self = this;
 
         return Axios.get(url).then((response) => {
-            let processedMenus: Menus = {};
-            let responseMenus: Menus = response.data;
+            let processedMenus: TMenus = {};
+            let responseMenus: TMenus = response.data;
 
             Object.keys(responseMenus).forEach(menu => {
                 let menuItems = responseMenus[menu];
@@ -252,7 +291,7 @@ export class Provider extends React.Component<Props, State> {
         });
     }
 
-    formatComicSlug(longSlug: string) {
+    formatComicSlug(longSlug: string): string {
         return longSlug.split('/').reverse()[1];
     }
 

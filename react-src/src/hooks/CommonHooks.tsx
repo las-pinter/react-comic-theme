@@ -1,4 +1,6 @@
-import { matchRoutes, useLocation } from 'react-router-dom'
+import { matchRoutes, useLocation } from 'react-router-dom';
+
+import type { RouteMatch } from 'react-router-dom';
 
 const routes = [
     { path: '/' },
@@ -8,9 +10,10 @@ const routes = [
     { path: '/comic/*' }
 ]
 
-const GetCurrentRouteData = () => {
-    const location = useLocation()
-    const matches = matchRoutes(routes, location)
+const GetCurrentRouteData = (): RouteMatch | null => {
+    const location = useLocation();
+    const matches = matchRoutes(routes, location);
+
     if (matches) {
         return matches[0];
     }

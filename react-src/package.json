@@ -49,6 +49,7 @@
     "homepage": "/wp-content/themes/comic-theme",
     "devDependencies": {
         "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+        "@types/react-transition-group": "^4.4.10",
         "dotenv-cli": "^7.3.0"
     }
 }
