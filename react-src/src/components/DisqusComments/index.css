@@ -1,4 +1,7 @@
 #disqus {
     width: 100%;
     transition: all linear 0.3s;
+    background: var(--cmx-foreground-color);
+    padding: 15px;
+    box-sizing: border-box;
 }

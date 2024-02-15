@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import DisqusComments from '../DisqusComments';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
-import PostMeta from '.';
+import PostMeta from './PostMeta';
 
 import './index.css';
 import Fader from '../../effects/Fader';
@@ -58,15 +58,13 @@ const ThePost = ({ index, ctxState }: IConsumerProps): JSX.Element => {
                 </Fader>
             </div>
             {
-                (() => {
-                    if (ctxState.contextType !== 'mainPage') {
-                        return (
-                            <Fader depend={ctxState.posts}>
-                                <DisqusComments post={post} display={true} />
-                            </Fader>
-                        );
-                    }
-                })()
+                ctxState.contextType !== 'mainPage'
+                    ?
+                    <Fader depend={ctxState.posts}>
+                        <DisqusComments post={post} display={true} />
+                    </Fader>
+                    :
+                    <></>
             }
 
         </div>
