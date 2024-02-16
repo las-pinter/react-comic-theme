@@ -7,12 +7,12 @@ import PostMeta from './PostMeta';
 import './index.css';
 import Fader from '../../effects/Fader';
 
-const ThePost = ({ index, ctxState }: IConsumerProps): JSX.Element => {
-    if (ctxState.posts.length === 0 || index === undefined) {
+const ThePost = ({ index, context }: IConsumerProps): JSX.Element => {
+    if (context.posts.length === 0 || index === undefined) {
         return <></>;
     }
 
-    const post = ctxState.posts[index];
+    const post = context.posts[index];
 
     let linkPrefix = '';
     switch (post.type) {
@@ -28,11 +28,11 @@ const ThePost = ({ index, ctxState }: IConsumerProps): JSX.Element => {
     let linkSlug = post.slug;
     let theContent = '';
 
-    switch (ctxState.contextType) {
+    switch (context.contextType) {
         case 'comic':
             theContent = post.content.rendered;
             linkPrefix = '/comic/';
-            linkSlug = ctxState.currentComic.comicFullSlug ? ctxState.currentComic.comicFullSlug : post.slug;
+            linkSlug = context.currentComic.comicFullSlug ? context.currentComic.comicFullSlug : post.slug;
             break;
         case 'mainPage':
         case 'post':
@@ -47,7 +47,7 @@ const ThePost = ({ index, ctxState }: IConsumerProps): JSX.Element => {
         <div className="post-wrapper container-vertical">
 
             <div id={'post-id-' + post.id} className={'post-item'}>
-                <Fader depend={ctxState.posts}>
+                <Fader depend={context.posts}>
                     <h1>
                         <Link to={linkPrefix + linkSlug}>
                             {post.title.rendered}
@@ -58,9 +58,9 @@ const ThePost = ({ index, ctxState }: IConsumerProps): JSX.Element => {
                 </Fader>
             </div>
             {
-                ctxState.contextType !== 'mainPage'
+                context.contextType !== 'mainPage'
                     ?
-                    <Fader depend={ctxState.posts}>
+                    <Fader depend={context.posts}>
                         <DisqusComments post={post} display={true} />
                     </Fader>
                     :

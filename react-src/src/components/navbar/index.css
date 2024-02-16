@@ -1,45 +1,38 @@
 .navigation-bar-bars {
     display: none;
+    visibility: hidden;
+    opacity: 0;
     width: 40px;
     height: 40px;
     font-size: 40px;
     padding: 6px;
     color: var(--cmx-accent-color);
     cursor: pointer;
-
-    @media screen and (max-width: 768px) {
-        display: block;
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        cursor: pointer;
-    }
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
 }
 
 .navbar {
     align-items: center;
     max-width: var(--cmx-content-width);
-    transition: all linear 0.3s;
+    visibility: visible;
 }
 
 .menu {
     text-align: center;
     column-gap: 20px;
-    transition: all linear 0.3s;
     margin-block-start: 0;
     margin-block-end: 0;
     margin-inline-start: 0;
     margin-inline-end: 0;
     padding-inline-start: 0px;
+    transition: all linear 0.3s;
 }
 
 .menu-item {
     list-style: none;
-    transition: all linear 2s;
-
-    @media screen and (max-width: 768px) {
-        display: none;
-    }
 }
 
 .menu-item a {
@@ -51,13 +44,72 @@
 }
 
 .dropdown-menu {
-    transition: all linear 0.3s;
     padding: 10px;
     position: absolute;
     z-index: 1;
     background: var(--cmx-container-background);
     box-shadow: var(--cmx-container-box-shadow);
     border: var(--cmx-container-border);
+}
+
+.overlay-navbar-wrapper {
+    position: absolute;
+}
+
+.overlay-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    opacity: 0;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    z-index: 1;
+    background: hsla(0, 0%, 0%, 0.71);
+    backdrop-filter: blur(5px);
+    text-align: center;
+    row-gap: 80px;
+}
+
+.overlay-navigation-bar-bars {
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+    padding: 6px;
+    color: var(--cmx-accent-color);
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+}
+
+.menu-item-no-dropdown {
+    font-size: 36pt;
+}
+
+.menu-item-no-dropdown-submenu {
+    margin-top: 40px;
+    row-gap: 60px;
+}
+
+.menu-item-no-dropdown-submenu .menu-item-no-dropdown {
+    font-size: 26pt;
+}
+
+@media screen and (max-width: 768px) {
+    .navigation-bar-bars {
+        display: block;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .menu {
+        visibility: hidden;
+    }
 }
 
 @media screen and (min-width: 1025px) {

@@ -1,0 +1,85 @@
+.fader-appear {
+    opacity: 0;
+}
+
+.fader-appear-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in-out,
+}
+
+.fader-appear-done {
+    opacity: 1;
+}
+
+.fader-enter {
+    opacity: 0;
+}
+
+.fader-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in-out,
+}
+
+.fader-enter-done {
+    opacity: 1;
+}
+
+.fader-exit {
+    opacity: 1;
+}
+
+.fader-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in-out,
+}
+
+.fader-exit-done {
+    opacity: 0;
+}
+
+.fadeinout-appear {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.fadeinout-appear-active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 300ms ease-in-out,
+}
+
+.fadeinout-appear-done {
+    opacity: 1;
+    visibility: visible;
+}
+
+.fadeinout-enter {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.fadeinout-enter-active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 300ms ease-in-out,
+}
+
+.fadeinout-enter-done {
+    opacity: 1;
+    visibility: visible;
+}
+
+.fadeinout-exit {
+    opacity: 1;
+    visibility: visible;
+}
+
+.fadeinout-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in-out,
+}
+
+.fadeinout-exit-done {
+    opacity: 0;
+    visibility: hidden;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import DropdownMenu from "./DropdownMenu";
@@ -10,7 +10,7 @@ interface IMenuItemProps {
     item: TMenuItem
 }
 
-const MenuItem = ({ item }: IMenuItemProps): JSX.Element => {
+export const MenuItem = ({ item }: IMenuItemProps): JSX.Element => {
     const [dropdown, setDropdown] = useState(false);
 
     if (item.children.length === 0) {
@@ -38,6 +38,35 @@ const MenuItem = ({ item }: IMenuItemProps): JSX.Element => {
             </div>
         )
     }
+};
+
+export const MenuItemNoDropdown = ({ item }: IMenuItemProps): JSX.Element => {
+    return (
+        <div className="menu-item-no-dropdown">
+            <Link to={item.url} >
+                {item.title}
+            </Link>
+            {
+                item.children.length !== 0
+                    ?
+                    <div className="menu-item-no-dropdown-submenu container-vertical">
+                        {
+                            item.children.map((item, i) => {
+                                return (
+                                    <div key={"menu-item-no-dropdown-" + item.title} className="menu-item-no-dropdown">
+                                        <Link to={item.url} >
+                                            {item.title}
+                                        </Link>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    :
+                    <></>
+            }
+        </div>
+    )
 };
 
 export default MenuItem;

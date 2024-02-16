@@ -5,14 +5,14 @@ import {
 } from '../context/Context';
 
 export interface IConsumerProps extends IProps {
-    ctxState: IContextState
+    context: IContextState
 }
 
-const WithConsumer = (WrappedComponent: ({ ctxState }: IConsumerProps) => JSX.Element) => {
+const WithConsumer = (WrappedComponent: ({ context }: IConsumerProps) => JSX.Element) => {
     return function (props: IProps) {
         return (
             <Consumer>
-                {ctxState => <WrappedComponent {...props} ctxState={ctxState} />}
+                {context => <WrappedComponent {...props} context={context} />}
             </Consumer>
         );
     };

@@ -1,36 +1,36 @@
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
-const Pager = ({ ctxState }: IConsumerProps): JSX.Element => {
+const Pager = ({ context }: IConsumerProps): JSX.Element => {
     function postsNextClicked() {
-        ctxState.postsNextClicked();
+        context.postsNextClicked();
     }
 
     function postsPreviousClicked() {
-        ctxState.postsPreviousClicked();
+        context.postsPreviousClicked();
     }
 
     let thePager = <></>;
 
-    if (ctxState.totalPages > 1) {
+    if (context.totalPages > 1) {
         thePager = (
             <div className="pager">
                 <button
-                    disabled={ctxState.currentPage <= 1}
+                    disabled={context.currentPage <= 1}
                     onClick={postsPreviousClicked}
                 >
                     Previous
                 </button>
                 <button
-                    disabled={ctxState.currentPage >= ctxState.totalPages}
+                    disabled={context.currentPage >= context.totalPages}
                     onClick={postsNextClicked}
                 >
                     Next
                 </button>
                 <div className="pager-text">
                     Page{' '}
-                    <span dangerouslySetInnerHTML={{ __html: ctxState.currentPage.toString() }} />
+                    <span dangerouslySetInnerHTML={{ __html: context.currentPage.toString() }} />
                     {' '}/{' '}
-                    <span dangerouslySetInnerHTML={{ __html: ctxState.totalPages.toString() }} />
+                    <span dangerouslySetInnerHTML={{ __html: context.totalPages.toString() }} />
                 </div>
             </div>
         );

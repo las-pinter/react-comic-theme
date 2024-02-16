@@ -14,7 +14,7 @@ import { Post, ComicPost } from '../../context/Context';
 
 import './index.css';
 
-const TheComic = ({ ctxState }: IConsumerProps): JSX.Element => {
+const TheComic = ({ context }: IConsumerProps): JSX.Element => {
     const [comicNavLinks, setComicNavLinks] = useState<TComicNavigatorProps>({
         firstPage: '',
         previousPage: '',
@@ -23,11 +23,11 @@ const TheComic = ({ ctxState }: IConsumerProps): JSX.Element => {
     });
 
     useEffect(() => {
-        if (ctxState.posts.length === 0) {
+        if (context.posts.length === 0) {
             return;
         }
 
-        const comicPost: ComicPost | Post = ctxState.posts[0];
+        const comicPost: ComicPost | Post = context.posts[0];
 
         if (comicPost.type !== 'comic') {
             return;
@@ -58,9 +58,9 @@ const TheComic = ({ ctxState }: IConsumerProps): JSX.Element => {
                 lastPage: values[3]
             });
         });
-    }, [ctxState.posts]);
+    }, [context.posts]);
 
-    const comicPost: ComicPost = ctxState.posts[0] as ComicPost;
+    const comicPost: ComicPost = context.posts[0] as ComicPost;
 
     if (comicPost.type !== 'comic') {
         return <></>;

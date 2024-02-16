@@ -1,8 +1,8 @@
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import ThePost from '../ThePost';
 
-const ThePosts = ({ ctxState }: IConsumerProps): JSX.Element => {
-    const thePosts = ctxState.posts;
+const ThePosts = ({ context }: IConsumerProps): JSX.Element => {
+    const thePosts = context.posts;
     let results = <></>;
 
     if (thePosts.length === 0) {

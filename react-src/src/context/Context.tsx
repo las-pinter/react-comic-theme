@@ -55,7 +55,6 @@ export interface IProps {
     children?: React.ReactNode,
     index?: number,
     duration?: number,
-    depend?: React.ReactNode | Post | Post[]
 };
 
 export interface IContextState {

@@ -1,12 +1,12 @@
 import Moment from 'react-moment';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
-const PostMeta = ({ index, ctxState }: IConsumerProps): JSX.Element => {
+const PostMeta = ({ index, context }: IConsumerProps): JSX.Element => {
     if (index === undefined) {
         return <></>;
     }
 
-    const post = ctxState.posts[index];
+    const post = context.posts[index];
 
     let theMeta: JSX.Element = <></>;
     if (post.type === 'post' || post.type === 'comic') {

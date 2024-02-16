@@ -8,16 +8,16 @@ import ComicSelectorNavigator from './ComicSelectorNavigator';
 
 import './index.css';
 
-const ComicSelector = ({ ctxState }: IConsumerProps): JSX.Element => {
+const ComicSelector = ({ context }: IConsumerProps): JSX.Element => {
     useEffect(() => {
-        ctxState.getComics();
+        context.getComics();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
         <div className="comic-selector container-horizontal">
             {
-                ctxState.comics.map((item, i) => {
+                context.comics.map((item, i) => {
                     return (
                         <div key={item.comicSlug + '_' + i} className={"comic-selector-comic container-vertical " + item.comicSlug}>
                             <div className="comic-name">{item.name}</div>

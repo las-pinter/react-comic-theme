@@ -6,11 +6,11 @@ import { TMenu } from '../../context/Context';
 
 import './index.css';
 
-const Footer = ({ ctxState }: IConsumerProps): JSX.Element => {
+const Footer = ({ context }: IConsumerProps): JSX.Element => {
     let menuList: TMenu = []
 
-    if (ctxState.menus['top']) {
-        menuList = ctxState.menus['top'];
+    if (context.menus['top']) {
+        menuList = context.menus['top'];
     }
 
     return (

@@ -10,13 +10,13 @@ import Post from './Post';
 import "./index.css";
 import Fader from '../effects/Fader';
 
-const PageRouter = ({ ctxState }: IConsumerProps): JSX.Element => {
+const PageRouter = ({ context }: IConsumerProps): JSX.Element => {
     return (
-        <Fader depend={ctxState.contextType}>
+        <Fader depend={context.contextType}>
             <div className="content-wrapper container-vertical">
                 {
                     (() => {
-                        switch (ctxState.contextType) {
+                        switch (context.contextType) {
                             case 'mainPage':
                                 return (<MainPage />);
                             case 'page':
