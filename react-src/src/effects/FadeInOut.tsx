@@ -3,10 +3,10 @@ import React, {
 } from 'react';
 
 import { CSSTransition } from 'react-transition-group';
-import { IProps } from '../context/Context';
 
-interface IFadeInOutProps extends IProps {
-    show: boolean
+interface IFadeInOutProps {
+    show: boolean,
+    children?: React.ReactNode
 }
 
 const FadeInOut = (props: IFadeInOutProps): JSX.Element => {

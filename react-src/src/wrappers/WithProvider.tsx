@@ -1,19 +1,21 @@
 import GetCurrentRouteData from '../hooks/CommonHooks';
 import { Provider } from '../context/Context';
 
-import type { IProps } from '../context/Context';
+interface IWithProviderProps {
+    contextType: string
+}
 
-const WithProvider = (WrappedComponent: (props: IProps) => JSX.Element) => {
-    return function (props: IProps) {
+const WithProvider = (WrappedComponent: (props: any) => JSX.Element) => {
+    return (props: IWithProviderProps) => {
         const routeData = GetCurrentRouteData();
         return (
             <>
-                <Provider router={routeData}>
+                <Provider router={routeData} contextType={props.contextType}>
                     <WrappedComponent {...props} />
                 </Provider>
             </>
         );
-    };
+    }
 }
 
 export default WithProvider;

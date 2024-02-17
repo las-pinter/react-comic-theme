@@ -6,12 +6,12 @@ import React, {
 import { v4 as uuidv4 } from 'uuid';
 
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
-import { IProps } from '../context/Context';
 
 import './index.css';
 
-interface IFaderProps extends IProps {
-    depend: any
+interface IFaderProps {
+    depend: any,
+    children?: React.ReactNode,
 }
 
 const Fader = (props: IFaderProps): JSX.Element => {

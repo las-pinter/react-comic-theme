@@ -7,7 +7,11 @@ import PostMeta from './PostMeta';
 import './index.css';
 import Fader from '../../effects/Fader';
 
-const ThePost = ({ index, context }: IConsumerProps): JSX.Element => {
+interface IThePostProps extends IConsumerProps{
+    index: number
+}
+
+const ThePost = ({ index, context }: IThePostProps): JSX.Element => {
     if (context.posts.length === 0 || index === undefined) {
         return <></>;
     }

@@ -1,15 +1,13 @@
 import {
-    Consumer,
-    IContextState,
-    IProps
+    Consumer, IContextState,
 } from '../context/Context';
 
-export interface IConsumerProps extends IProps {
+export interface IConsumerProps {
     context: IContextState
 }
 
-const WithConsumer = (WrappedComponent: ({ context }: IConsumerProps) => JSX.Element) => {
-    return function (props: IProps) {
+const WithConsumer = (WrappedComponent: (props: any) => JSX.Element) => {
+    return (props: any) => {
         return (
             <Consumer>
                 {context => <WrappedComponent {...props} context={context} />}

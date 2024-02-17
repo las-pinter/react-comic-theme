@@ -14,7 +14,9 @@ import { Post, ComicPost } from '../../context/Context';
 
 import './index.css';
 
-const TheComic = ({ context }: IConsumerProps): JSX.Element => {
+interface ITheComicProps extends IConsumerProps {}
+
+const TheComic = ({ context }: ITheComicProps): JSX.Element => {
     const [comicNavLinks, setComicNavLinks] = useState<TComicNavigatorProps>({
         firstPage: '',
         previousPage: '',
@@ -61,6 +63,10 @@ const TheComic = ({ context }: IConsumerProps): JSX.Element => {
     }, [context.posts]);
 
     const comicPost: ComicPost = context.posts[0] as ComicPost;
+
+    if (!comicPost) {
+        return <></>;
+    }
 
     if (comicPost.type !== 'comic') {
         return <></>;

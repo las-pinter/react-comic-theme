@@ -1,7 +1,9 @@
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import ThePost from '../ThePost';
 
-const ThePosts = ({ context }: IConsumerProps): JSX.Element => {
+interface IThePostsProps extends IConsumerProps {}
+
+const ThePosts = ({ context }: IThePostsProps): JSX.Element => {
     const thePosts = context.posts;
     let results = <></>;
 
@@ -10,7 +12,7 @@ const ThePosts = ({ context }: IConsumerProps): JSX.Element => {
     } else {
         results = <>
             {
-                thePosts.map(function (item, i) {
+                thePosts.map(function (_, i) {
                     return <ThePost key={'post-list-' + i} index={i}></ThePost>
                 })
             }

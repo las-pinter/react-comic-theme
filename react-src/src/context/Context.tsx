@@ -51,7 +51,8 @@ export type Comic = {
 };
 
 export interface IProps {
-    router?: RouteMatch | null,
+    contextType: string,
+    router: RouteMatch | null,
     children?: React.ReactNode,
     index?: number,
     duration?: number,
@@ -104,7 +105,7 @@ export class Provider extends React.Component<IProps, IContextState> {
         super(props);
 
         this.state = {
-            contextType: this.getContextType(props.router ? props.router.route.path : ''),
+            contextType: props.contextType,
             term: props.router ? (props.router.params.term ? props.router.params.term : '') : '',
             slug: props.router ? (props.router.params.slug ? props.router.params.slug : '') : '',
             route: props.router ? props.router.route.path : '',
@@ -123,26 +124,6 @@ export class Provider extends React.Component<IProps, IContextState> {
             postsPreviousClicked: this.postsPreviousClicked.bind(this),
             getComics: this.getComics.bind(this),
         };
-    }
-
-    getContextType(path: string | undefined): string {
-        let contextType = '';
-        switch (path) {
-            case '/':
-                contextType = 'mainPage';
-                break;
-            case '/page/:slug':
-                contextType = 'page';
-                break;
-            case '/comic/*':
-                contextType = 'comic';
-                break;
-            case '/:slug':
-            default:
-                contextType = 'post';
-                break;
-        }
-        return contextType;
     }
 
     componentDidMount() {
@@ -165,7 +146,7 @@ export class Provider extends React.Component<IProps, IContextState> {
 
         this.setState({
             currentPage: 1,
-            contextType: this.getContextType(this.props.router.route.path),
+            contextType: this.props.contextType,
             term: this.props.router.params.term ? this.props.router.params.term : '',
             slug: this.props.router.params.slug ? this.props.router.params.slug : '',
             route: this.props.router.route.path,

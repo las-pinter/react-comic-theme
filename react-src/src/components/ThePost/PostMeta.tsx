@@ -1,7 +1,11 @@
 import Moment from 'react-moment';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
-const PostMeta = ({ index, context }: IConsumerProps): JSX.Element => {
+interface IPostMetaProps extends IConsumerProps {
+    index: number
+}
+
+const PostMeta = ({ index, context }: IPostMetaProps): JSX.Element => {
     if (index === undefined) {
         return <></>;
     }

@@ -12,7 +12,9 @@ import DisqusComments from '../DisqusComments';
 import './index.css';
 import Fader from '../../effects/Fader';
 
-const ThePage = ({ context }: IConsumerProps): JSX.Element => {
+interface IThePageProps extends IConsumerProps{}
+
+const ThePage = ({ context }: IThePageProps): JSX.Element => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

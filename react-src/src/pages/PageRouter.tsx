@@ -1,16 +1,17 @@
 import WithHeadFoot from '../wrappers/WithHeadFoot';
 import WithProvider from '../wrappers/WithProvider';
-import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
 import MainPage from './MainPage';
 import Page from './Page';
 import Comic from './Comic';
 import Post from './Post';
 
-import "./index.css";
 import Fader from '../effects/Fader';
+import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
-const PageRouter = ({ context }: IConsumerProps): JSX.Element => {
+interface IPageRouterProps extends IConsumerProps{}
+
+const PageRouter = ({ context }: IPageRouterProps): JSX.Element => {
     return (
         <Fader depend={context.contextType}>
             <div className="content-wrapper container-vertical">

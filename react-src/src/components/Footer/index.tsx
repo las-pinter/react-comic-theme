@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
-
 import { TMenu } from '../../context/Context';
 
 import './index.css';
 
-const Footer = ({ context }: IConsumerProps): JSX.Element => {
+interface IFooterProps extends IConsumerProps{}
+
+const Footer = ({ context }: IFooterProps): JSX.Element => {
     let menuList: TMenu = []
 
     if (context.menus['top']) {
