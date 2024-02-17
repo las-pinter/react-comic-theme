@@ -1,19 +1,11 @@
-import
-{
-    useEffect,
-} from 'react';
-
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import ComicSelectorNavigator from './ComicSelectorNavigator';
 
 import './index.css';
 
-const ComicSelector = ({ context }: IConsumerProps): JSX.Element => {
-    useEffect(() => {
-        context.getComics();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+interface IComicSelectorProps extends IConsumerProps { }
 
+const ComicSelector = ({ context }: IComicSelectorProps): JSX.Element => {   
     return (
         <div className="comic-selector container-horizontal">
             {

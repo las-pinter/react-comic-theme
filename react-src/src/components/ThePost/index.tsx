@@ -1,70 +1,65 @@
 import { Link } from 'react-router-dom';
 
 import DisqusComments from '../DisqusComments';
-import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import PostMeta from './PostMeta';
-
-import './index.css';
 import Fader from '../../effects/Fader';
 
-interface IThePostProps extends IConsumerProps{
-    index: number
+import './index.css';
+
+export interface IPost {
+    type: string,
+    _embedded: {
+        author: Array<{
+            name: string
+        }>,
+        'wp:featuredmedia': Array<{
+            source_url: string
+        }>,
+        'wp:term': Array<
+            Array<{
+                slug: string
+            }>
+        >
+    },
+    date: string,
+    slug: string,
+    content: {
+        rendered: string
+    },
+    title: {
+        rendered: string
+    },
+    id: string
+};
+
+interface IThePostProps {
+    post: IPost,
+    displayComments: boolean
 }
 
-const ThePost = ({ index, context }: IThePostProps): JSX.Element => {
-    if (context.posts.length === 0 || index === undefined) {
+export const ThePost = ({ post, displayComments }: IThePostProps): JSX.Element => {
+    if (!post) {
         return <></>;
-    }
-
-    const post = context.posts[index];
-
-    let linkPrefix = '';
-    switch (post.type) {
-        case 'comic':
-            linkPrefix = '/comic/';
-            break;
-        case 'post':
-        default:
-            linkPrefix = '/';
-            break;
-    }
-
-    let linkSlug = post.slug;
-    let theContent = '';
-
-    switch (context.contextType) {
-        case 'comic':
-            theContent = post.content.rendered;
-            linkPrefix = '/comic/';
-            linkSlug = context.currentComic.comicFullSlug ? context.currentComic.comicFullSlug : post.slug;
-            break;
-        case 'mainPage':
-        case 'post':
-            theContent = post.content.rendered;
-            break;
-        default:
-            theContent = '';
-            break;
     }
 
     return (
         <div className="post-wrapper container-vertical">
 
             <div id={'post-id-' + post.id} className={'post-item'}>
-                <Fader depend={context.posts}>
+                <Fader depend={post}>
                     <h1>
-                        <Link to={linkPrefix + linkSlug}>
+                        <Link to={'/' + post.slug}>
                             {post.title.rendered}
                         </Link>
                     </h1>
-                    <PostMeta index={index} />
-                    <div className="post-content" dangerouslySetInnerHTML={{ __html: theContent }} />
+                    <PostMeta post={post} />
+                    <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
                 </Fader>
             </div>
             {
-                context.contextType !== 'mainPage'
+                displayComments
                     ?
-                    <Fader depend={context.posts}>
+                    <Fader depend={post}>
                         <DisqusComments post={post} display={true} />
                     </Fader>
                     :
@@ -75,4 +70,35 @@ const ThePost = ({ index, context }: IThePostProps): JSX.Element => {
     );
 };
 
-export default WithConsumer(ThePost);
+interface ITheComicPostProps {
+    post: IPost,
+    comicFullSlug: string
+}
+
+export const TheComicPost = ({ post, comicFullSlug }: ITheComicPostProps): JSX.Element => {
+    if (!post) {
+        return <></>;
+    }
+    
+    return (
+        <div className="post-wrapper container-vertical">
+
+            <div id={'post-id-' + post.id} className={'post-item'}>
+                <Fader depend={post}>
+                    <h1>
+                        <Link to={'/comic/' + comicFullSlug}>
+                            {post.title.rendered}
+                        </Link>
+                    </h1>
+                    <PostMeta index={post} />
+                    <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+                </Fader>
+            </div>
+            <Fader depend={post}>
+                <DisqusComments post={post} display={true} />
+            </Fader>
+        </div>
+    );
+};
+
+export default ThePost;

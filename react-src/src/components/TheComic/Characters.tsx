@@ -1,16 +1,13 @@
-import {
-    useEffect,
-    useState
-} from "react";
+import { useEffect, useState } from "react";
 import Axios from 'axios';
 
 import CharacterItem, { TCharacter } from "./CharacterItem";
-import { ComicPost } from "../../context/Context";
+import { IComicPost } from ".";
 
 import './index.css';
 
 interface ICharactersProps {
-    comicPost: ComicPost
+    comicPost: IComicPost
 }
 
 const Characters = ({ comicPost }: ICharactersProps) => {

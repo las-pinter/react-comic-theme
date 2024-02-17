@@ -12,35 +12,6 @@ export type TMenuItem = {
 };
 export type TMenu = Array<TMenuItem>;
 export type TMenus = Record<string, TMenu>;
-export interface Post {
-    type: string,
-    _embedded: {
-        author: Array<{
-            name: string
-        }>,
-        'wp:featuredmedia': Array<{
-            source_url: string
-        }>,
-        'wp:term': Array<
-            Array<{
-                slug: string
-            }>
-        >
-    },
-    date: string,
-    slug: string,
-    content: {
-        rendered: string
-    },
-    title: {
-        rendered: string
-    },
-    id: string
-};
-
-export interface ComicPost extends Post {
-    type: 'comic'
-}
 
 export type Comic = {
     archivePage: string,
@@ -64,17 +35,11 @@ export interface IContextState {
     slug: string,
     route: string | undefined,
     menus: TMenus,
-    posts: Array<Post | ComicPost>,
-    currentPage: number,
-    totalPages: number,
     comics: Array<Comic>,
     currentComic: {
-        comicFullSlug: string | undefined,
+        comicFullSlug: string,
         comicSlug: string
-    },
-    postsNextClicked: Function,
-    postsPreviousClicked: Function,
-    getComics: Function
+    }
 };
 
 const storeContext = React.createContext<Readonly<IContextState>>(
@@ -84,17 +49,11 @@ const storeContext = React.createContext<Readonly<IContextState>>(
         slug: '',
         route: '',
         menus: {},
-        posts: [],
-        currentPage: 1,
-        totalPages: 0,
         comics: [],
         currentComic: {
             comicFullSlug: '',
             comicSlug: ''
-        },
-        postsNextClicked: () => { },
-        postsPreviousClicked: () => { },
-        getComics: () => { },
+        }
     }
 );
 export const Consumer = storeContext.Consumer;
@@ -110,25 +69,17 @@ export class Provider extends React.Component<IProps, IContextState> {
             slug: props.router ? (props.router.params.slug ? props.router.params.slug : '') : '',
             route: props.router ? props.router.route.path : '',
             menus: {},
-            posts: [],
-            currentPage: 1,
-            totalPages: 0,
             comics: [],
             currentComic: {
-                comicFullSlug: props.router ? props.router.params['*'] : '',
+                comicFullSlug: props.router ? (props.router.params['*'] ? props.router.params['*'] : '') : '',
                 comicSlug: props.router ? (props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '') : '',
-            },
-
-            //global methods
-            postsNextClicked: this.postsNextClicked.bind(this),
-            postsPreviousClicked: this.postsPreviousClicked.bind(this),
-            getComics: this.getComics.bind(this),
+            }
         };
     }
 
     componentDidMount() {
-        this.getPosts(this.buildUrl());
         this.getMenus();
+        this.getComics();
     }
 
     componentDidUpdate(prevProps: any) {
@@ -145,75 +96,29 @@ export class Provider extends React.Component<IProps, IContextState> {
         }
 
         this.setState({
-            currentPage: 1,
             contextType: this.props.contextType,
             term: this.props.router.params.term ? this.props.router.params.term : '',
             slug: this.props.router.params.slug ? this.props.router.params.slug : '',
             route: this.props.router.route.path,
             currentComic: {
-                comicFullSlug: this.props.router.params['*'],
+                comicFullSlug: this.props.router.params['*'] ? this.props.router.params['*'] : '',
                 comicSlug: this.props.router.params['*'] ? this.formatComicSlug(this.props.router.params['*']) : ''
             }
-        }, () => {
-            this.getPosts(this.buildUrl());
-        })
-
+        });
     }
 
     buildUrl(): string {
         let url = '/wp-json/wp/v2/';
         switch (this.state.contextType) {
-            case 'page':
-                url += 'pages/?slug=';
-                url += this.state.slug + '&_embed'
-                break;
             case 'comic':
                 url += 'comic?slug=';
                 url += this.state.currentComic.comicSlug;
                 url += '&_embed';
                 break;
-            case 'post':
-            default:
-                url += this.state.slug ? 'posts/?slug=' + this.state.slug + '&_embed' : 'posts/?page=' + this.state.currentPage + '&per_page=3&_embed';
-                break;
         }
 
         return url;
     }
-
-    getPosts(url: string) {
-        let self = this;
-
-        return Axios.get(url).then((response) => {
-            self.setState(() => {
-                return {
-                    posts: response.data,
-                    totalPages: response.headers['x-wp-totalpages']
-                }
-            });
-        }).catch((error) => {
-        });
-    }
-
-    postsNextClicked() {
-        let newPage = this.state.currentPage + 1;
-        this.setState({
-            currentPage: newPage
-        }, () => {
-            this.getPosts(this.buildUrl());
-        })
-    }
-
-
-    postsPreviousClicked() {
-        let newPage = this.state.currentPage - 1;
-        this.setState({
-            currentPage: newPage
-        }, () => {
-            this.getPosts(this.buildUrl());
-        });
-    }
-
     getComics() {
         let url = '/wp-json/comics/v1/comics';
         let self = this;

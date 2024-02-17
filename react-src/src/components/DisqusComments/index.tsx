@@ -1,11 +1,13 @@
 import { DiscussionEmbed } from 'disqus-react';
 
-import { Post } from '../../context/Context';
+import { IPost } from '../ThePost';
+import { IComicPost } from '../TheComic';
+import { IPage } from '../ThePage';
 
 import './index.css';
 
 interface IDisqusCommentsProps {
-    post: Post
+    post: IPost | IComicPost | IPage,
     display: boolean
 }
 

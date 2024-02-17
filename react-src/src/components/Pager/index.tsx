@@ -1,36 +1,41 @@
-import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
+interface IPagerProps {
+    currentPage: number,
+    totalPages: number,
+    nextClickedCallback: Function,
+    previousClickedCallback: Function
+}
 
-const Pager = ({ context }: IConsumerProps): JSX.Element => {
-    function postsNextClicked() {
-        context.postsNextClicked();
+const Pager = ({ currentPage, totalPages, nextClickedCallback, previousClickedCallback }: IPagerProps): JSX.Element => {
+    const postsNextClicked = () => {
+        nextClickedCallback();
     }
 
-    function postsPreviousClicked() {
-        context.postsPreviousClicked();
+    const postsPreviousClicked = () => {
+        previousClickedCallback();
     }
 
     let thePager = <></>;
 
-    if (context.totalPages > 1) {
+    if (totalPages > 1) {
         thePager = (
             <div className="pager">
                 <button
-                    disabled={context.currentPage <= 1}
+                    disabled={currentPage <= 1}
                     onClick={postsPreviousClicked}
                 >
                     Previous
                 </button>
                 <button
-                    disabled={context.currentPage >= context.totalPages}
+                    disabled={currentPage >= totalPages}
                     onClick={postsNextClicked}
                 >
                     Next
                 </button>
                 <div className="pager-text">
                     Page{' '}
-                    <span dangerouslySetInnerHTML={{ __html: context.currentPage.toString() }} />
+                    <span dangerouslySetInnerHTML={{ __html: currentPage.toString() }} />
                     {' '}/{' '}
-                    <span dangerouslySetInnerHTML={{ __html: context.totalPages.toString() }} />
+                    <span dangerouslySetInnerHTML={{ __html: totalPages.toString() }} />
                 </div>
             </div>
         );
@@ -39,4 +44,4 @@ const Pager = ({ context }: IConsumerProps): JSX.Element => {
     return thePager;
 }
 
-export default WithConsumer(Pager);
+export default Pager;

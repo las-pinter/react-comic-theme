@@ -1,10 +1,11 @@
-import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
-import ThePost from '../ThePost';
+import ThePost, { IPost } from '../ThePost';
 
-interface IThePostsProps extends IConsumerProps {}
+interface IThePostsProps {
+    posts: Array<IPost>,
+}
 
-const ThePosts = ({ context }: IThePostsProps): JSX.Element => {
-    const thePosts = context.posts;
+const ThePosts = ({ posts }: IThePostsProps): JSX.Element => {
+    const thePosts = posts;
     let results = <></>;
 
     if (thePosts.length === 0) {
@@ -12,8 +13,8 @@ const ThePosts = ({ context }: IThePostsProps): JSX.Element => {
     } else {
         results = <>
             {
-                thePosts.map(function (_, i) {
-                    return <ThePost key={'post-list-' + i} index={i}></ThePost>
+                thePosts.map(function (post, i) {
+                    return <ThePost key={'post-list-' + i} post={post} displayComments={false}></ThePost>
                 })
             }
         </>
@@ -22,4 +23,4 @@ const ThePosts = ({ context }: IThePostsProps): JSX.Element => {
     return (results);
 };
 
-export default WithConsumer(ThePosts);
+export default ThePosts;

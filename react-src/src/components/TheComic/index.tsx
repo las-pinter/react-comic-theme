@@ -4,19 +4,24 @@ import {
 } from 'react';
 import Axios from 'axios';
 
-import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import ComicNavigator, { TComicNavigatorProps } from './ComicNavigator';
 import Characters from './Characters';
 import ComicTitle from './ComicTitle';
 
 import Fader from '../../effects/Fader';
-import { Post, ComicPost } from '../../context/Context';
+import { IPost } from '../ThePost';
 
 import './index.css';
 
-interface ITheComicProps extends IConsumerProps {}
+export interface IComicPost extends IPost {
+    type: 'comic'
+}
 
-const TheComic = ({ context }: ITheComicProps): JSX.Element => {
+interface ITheComicProps {
+    comicPost: IComicPost
+}
+
+const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
     const [comicNavLinks, setComicNavLinks] = useState<TComicNavigatorProps>({
         firstPage: '',
         previousPage: '',
@@ -25,13 +30,7 @@ const TheComic = ({ context }: ITheComicProps): JSX.Element => {
     });
 
     useEffect(() => {
-        if (context.posts.length === 0) {
-            return;
-        }
-
-        const comicPost: ComicPost | Post = context.posts[0];
-
-        if (comicPost.type !== 'comic') {
+        if (!comicPost) {
             return;
         }
 
@@ -60,15 +59,9 @@ const TheComic = ({ context }: ITheComicProps): JSX.Element => {
                 lastPage: values[3]
             });
         });
-    }, [context.posts]);
-
-    const comicPost: ComicPost = context.posts[0] as ComicPost;
+    }, [comicPost]);
 
     if (!comicPost) {
-        return <></>;
-    }
-
-    if (comicPost.type !== 'comic') {
         return <></>;
     }
 
@@ -98,4 +91,4 @@ const TheComic = ({ context }: ITheComicProps): JSX.Element => {
     );
 };
 
-export default WithConsumer(TheComic);
+export default TheComic;

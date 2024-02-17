@@ -6,7 +6,7 @@ export interface IConsumerProps {
     context: IContextState
 }
 
-const WithConsumer = (WrappedComponent: (props: any) => JSX.Element) => {
+const WithConsumer = (WrappedComponent: (props: IConsumerProps) => JSX.Element) => {
     return (props: any) => {
         return (
             <Consumer>

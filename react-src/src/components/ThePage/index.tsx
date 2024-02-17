@@ -1,54 +1,44 @@
-import {
-    useEffect,
-    useState
-} from 'react';
 import { Link } from 'react-router-dom';
 
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
 import ComicArchive from '../ComicArchive';
 import DisqusComments from '../DisqusComments';
+import { IPost } from '../ThePost';
 
-import './index.css';
 import Fader from '../../effects/Fader';
 
-interface IThePageProps extends IConsumerProps{}
+import './index.css';
 
-const ThePage = ({ context }: IThePageProps): JSX.Element => {
-    const [loading, setLoading] = useState(true);
+export interface IPage extends IPost { }
 
-    useEffect(() => {
-        setLoading(true);
-        context.getComics().then(() => {
-            setLoading(false);
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+interface IThePageProps extends IConsumerProps {
+    page?: IPage
+}
 
-    if (context.posts.length === 0 || loading) {
+const ThePage = ({ page, context }: IThePageProps): JSX.Element => {
+    if (!page) {
         return <></>;
     }
 
-    const page = context.posts[0]
+    let theContent = <></>;
     const comicArchive = context.comics.find(comic => comic.archivePage === page.slug);
-
-    let content = <></>;
     if (comicArchive) {
-        content = <ComicArchive comicSlug={comicArchive.comicSlug} />;
+        theContent = (<ComicArchive comicSlug={comicArchive.comicSlug} />);
     } else {
-        content = <div className="page-content" dangerouslySetInnerHTML={{ __html: page.content.rendered }}></div>;
+        theContent = (<div className="page-content" dangerouslySetInnerHTML={{ __html: page.content.rendered }}></div>);
     }
 
     return (
         <div className="page-wrapper container-vertical">
             <div id={'page-id-' + page.id} className="page-item">
-                <Fader depend={context.posts}>
+                <Fader depend={page}>
                     <h1><Link to={'/page/' + page.slug}>{page.title.rendered}</Link></h1>
-                    {content}
+                    {theContent}
                 </Fader>
             </div>
 
-            <Fader depend={context.posts}>
+            <Fader depend={page}>
                 <DisqusComments post={page} display={true} />
             </Fader>
         </div>
