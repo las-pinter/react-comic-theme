@@ -46,13 +46,15 @@ export const ThePost = ({ post, displayComments }: IThePostProps): JSX.Element =
         <div className="post-wrapper container-vertical">
             <div id={'post-id-' + post.id} className={'post-item'}>
                 <Fader depend={post}>
-                    <h1>
-                        <Link to={'/' + post.slug}>
-                            {post.title.rendered}
-                        </Link>
-                    </h1>
-                    <PostMeta post={post} />
-                    <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+                    <div className="post-content-wrapper">
+                        <h1>
+                            <Link to={'/' + post.slug}>
+                                {post.title.rendered}
+                            </Link>
+                        </h1>
+                        <PostMeta post={post} />
+                        <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+                    </div>
                 </Fader>
             </div>
             {
@@ -77,18 +79,20 @@ export const TheComicPost = ({ post, comicFullSlug }: ITheComicPostProps): JSX.E
     if (!post) {
         return <></>;
     }
-    
+
     return (
         <div className="post-wrapper container-vertical">
             <div id={'post-id-' + post.id} className={'post-item'}>
                 <Fader depend={post}>
-                    <h1>
-                        <Link to={'/comic/' + comicFullSlug}>
-                            {post.title.rendered}
-                        </Link>
-                    </h1>
-                    <PostMeta index={post} />
-                    <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+                    <div className="post-content-wrapper">
+                            <h1>
+                                <Link to={'/comic/' + comicFullSlug}>
+                                    {post.title.rendered}
+                                </Link>
+                            </h1>
+                            <PostMeta index={post} />
+                            <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+                    </div>
                 </Fader>
             </div>
             <Fader depend={post}>

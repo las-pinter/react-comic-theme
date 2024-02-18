@@ -7,12 +7,13 @@ import Comic from './Comic';
 import Post from './Post';
 
 import Fader from '../effects/Fader';
+import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
-interface IPageRouterProps {
-    contextType: string
+interface IPageRouterProps extends IConsumerProps{
+    contextType?: string
 }
 
-const PageRouter = ({ contextType }: IPageRouterProps): JSX.Element => {
+const PageRouter = ({ context, contextType }: IPageRouterProps): JSX.Element => {
     return (
         <Fader depend={contextType}>
             <div className="content-wrapper container-vertical">
@@ -37,4 +38,4 @@ const PageRouter = ({ contextType }: IPageRouterProps): JSX.Element => {
     )
 }
 
-export default WithProvider(WithHeadFoot(PageRouter));
+export default WithProvider(WithHeadFoot(WithConsumer(PageRouter)));

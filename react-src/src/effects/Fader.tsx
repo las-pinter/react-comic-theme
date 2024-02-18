@@ -14,15 +14,21 @@ interface IFaderProps {
 }
 
 const Fader = (props: IFaderProps): JSX.Element => {
+    const {
+        children,
+        depend: _depend,
+        ...childProps
+    } = props;
+
     const nodeRef = useRef<any>(null);
-    const [theContent, setTheContent] = useState<React.ReactNode | null>(null);
+    const [theContent, setTheContent] = useState<React.ReactNode | null>(<></>);
     const [theKey, setTheKey] = useState(true);
 
     useEffect(() => {
         if (props.children === undefined) {
             return;
         }
-        setTheContent(props.children ? props.children : '');
+        setTheContent(props.children ? props.children : <></>);
         setTheKey((prev) => {
             return !prev
         });
@@ -32,18 +38,21 @@ const Fader = (props: IFaderProps): JSX.Element => {
     return (
         <SwitchTransition mode={"out-in"}>
             <CSSTransition
+                {...childProps}
                 classNames="fader"
                 timeout={3000}
                 nodeRef={nodeRef}
                 appear={true}
                 addEndListener={(done: () => void) => {
                     nodeRef.current?.addEventListener("transitionend", done, false);
-                  }}
+                }}
                 key={theKey.toString()}
             >
-                <div ref={nodeRef}>
-                    {theContent}
-                </div>
+                {
+                    React.cloneElement(React.Children.only(theContent) as React.ReactElement<any>, {
+                        ref: nodeRef
+                    })
+                }
             </CSSTransition>
         </SwitchTransition>
     );

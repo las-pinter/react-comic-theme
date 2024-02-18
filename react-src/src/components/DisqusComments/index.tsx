@@ -1,3 +1,4 @@
+import { ForwardedRef, forwardRef } from 'react';
 import { DiscussionEmbed } from 'disqus-react';
 
 import { IPost } from '../ThePost';
@@ -11,12 +12,13 @@ interface IDisqusCommentsProps {
     display: boolean
 }
 
-const DisqusComments = ({ post, display }: IDisqusCommentsProps): JSX.Element => {
+const DisqusComments = forwardRef((props: IDisqusCommentsProps, ref: ForwardedRef<any>): JSX.Element => {
     return (
         <div
+            ref={ref}
             id="disqus"
             style={{
-                display: display ? "block" : "none"
+                display: props.display ? "block" : "none"
             }}
         >
             <DiscussionEmbed
@@ -24,13 +26,13 @@ const DisqusComments = ({ post, display }: IDisqusCommentsProps): JSX.Element =>
                 config={
                     {
                         url: window.location.href,
-                        identifier: post.id.toString(),
-                        title: post.title.rendered
+                        identifier: props.post.id.toString(),
+                        title: props.post.title.rendered
                     }
                 }
             />
         </div>
     );
-}
+});
 
 export default DisqusComments;

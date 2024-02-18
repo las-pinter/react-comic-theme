@@ -5,7 +5,7 @@ import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
 import "./index.css";
 
-interface IPageProps extends IConsumerProps { }
+interface IPageProps extends IConsumerProps {}
 
 const Page = ({ context }: IPageProps): JSX.Element => {
     const [page, setPage] = useState<IPage | null>(null);

@@ -33,8 +33,10 @@ const ThePage = ({ page, context }: IThePageProps): JSX.Element => {
         <div className="page-wrapper container-vertical">
             <div id={'page-id-' + page.id} className="page-item">
                 <Fader depend={page}>
-                    <h1><Link to={'/page/' + page.slug}>{page.title.rendered}</Link></h1>
-                    {theContent}
+                    <div className="page-content-wrapper">
+                        <h1><Link to={'/page/' + page.slug}>{page.title.rendered}</Link></h1>
+                        {theContent}
+                    </div>
                 </Fader>
             </div>
             <Fader depend={page}>
