@@ -27,7 +27,7 @@ const Page = ({ context }: IPageProps): JSX.Element => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [context.slug]);
 
-    if (!page || !context.slug) {
+    if (!page) {
         return <></>;
     }
 

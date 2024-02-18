@@ -3,7 +3,6 @@ import React, {
     useRef,
     useState
 } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
 
@@ -17,14 +16,16 @@ interface IFaderProps {
 const Fader = (props: IFaderProps): JSX.Element => {
     const nodeRef = useRef<any>(null);
     const [theContent, setTheContent] = useState<React.ReactNode | null>(null);
-    const [contentUUID, setContentUUID] = useState("0");
+    const [theKey, setTheKey] = useState(true);
 
     useEffect(() => {
         if (props.children === undefined) {
             return;
         }
         setTheContent(props.children ? props.children : '');
-        setContentUUID(uuidv4());
+        setTheKey((prev) => {
+            return !prev
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.depend]);
 
@@ -38,7 +39,7 @@ const Fader = (props: IFaderProps): JSX.Element => {
                 addEndListener={(done: () => void) => {
                     nodeRef.current?.addEventListener("transitionend", done, false);
                   }}
-                key={contentUUID}
+                key={theKey.toString()}
             >
                 <div ref={nodeRef}>
                     {theContent}

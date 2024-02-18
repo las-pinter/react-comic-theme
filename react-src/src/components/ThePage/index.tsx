@@ -24,9 +24,9 @@ const ThePage = ({ page, context }: IThePageProps): JSX.Element => {
     let theContent = <></>;
     const comicArchive = context.comics.find(comic => comic.archivePage === page.slug);
     if (comicArchive) {
-        theContent = (<ComicArchive comicSlug={comicArchive.comicSlug} />);
+        theContent = <ComicArchive comicSlug={comicArchive.comicSlug} />;
     } else {
-        theContent = (<div className="page-content" dangerouslySetInnerHTML={{ __html: page.content.rendered }}></div>);
+        theContent = <div className="page-content" dangerouslySetInnerHTML={{ __html: page.content.rendered }}></div>;
     }
 
     return (
@@ -37,7 +37,6 @@ const ThePage = ({ page, context }: IThePageProps): JSX.Element => {
                     {theContent}
                 </Fader>
             </div>
-
             <Fader depend={page}>
                 <DisqusComments post={page} display={true} />
             </Fader>

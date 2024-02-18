@@ -44,7 +44,6 @@ export const ThePost = ({ post, displayComments }: IThePostProps): JSX.Element =
 
     return (
         <div className="post-wrapper container-vertical">
-
             <div id={'post-id-' + post.id} className={'post-item'}>
                 <Fader depend={post}>
                     <h1>
@@ -65,7 +64,6 @@ export const ThePost = ({ post, displayComments }: IThePostProps): JSX.Element =
                     :
                     <></>
             }
-
         </div>
     );
 };
@@ -82,7 +80,6 @@ export const TheComicPost = ({ post, comicFullSlug }: ITheComicPostProps): JSX.E
     
     return (
         <div className="post-wrapper container-vertical">
-
             <div id={'post-id-' + post.id} className={'post-item'}>
                 <Fader depend={post}>
                     <h1>
