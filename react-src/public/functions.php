@@ -1,4 +1,5 @@
 <?php
+@require('admin.php');
 
 function custom_theme_setup()
 {
