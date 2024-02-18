@@ -1,3 +1,6 @@
+import { useRef } from 'react';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
+
 import WithHeadFoot from '../wrappers/WithHeadFoot';
 import WithProvider from '../wrappers/WithProvider';
 
@@ -6,35 +9,47 @@ import Page from './Page';
 import Comic from './Comic';
 import Post from './Post';
 
-import Fader from '../effects/FadeSwitchLoader';
 import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
-interface IPageRouterProps extends IConsumerProps{
+interface IPageRouterProps extends IConsumerProps {
     contextType?: string
 }
 
 const PageRouter = ({ context, contextType }: IPageRouterProps): JSX.Element => {
+    const nodeRef = useRef<any>(null);
+
     return (
-        <Fader depend={contextType}>
-            <div className="content-wrapper container-vertical">
-                {
-                    (() => {
-                        switch (contextType) {
-                            case 'mainPage':
-                                return (<MainPage />);
-                            case 'page':
-                                return (<Page />);
-                            case 'comic':
-                                return (<Comic />);
-                            case 'post':
-                                return (<Post />);
-                            default:
-                                return (<></>);
-                        }
-                    })()
-                }
-            </div>
-        </Fader>
+        <SwitchTransition mode={"out-in"}>
+            <CSSTransition
+                classNames="fader"
+                timeout={3000}
+                nodeRef={nodeRef}
+                appear={true}
+                addEndListener={(done: () => void) => {
+                    nodeRef.current?.addEventListener("transitionend", done, false);
+                }}
+                key={contextType}
+            >
+                <div ref={nodeRef} className="content-wrapper container-vertical">
+                    {
+                        (() => {
+                            switch (contextType) {
+                                case 'mainPage':
+                                    return (<MainPage />);
+                                case 'page':
+                                    return (<Page slug={context.slug} />);
+                                case 'comic':
+                                    return (<Comic />);
+                                case 'post':
+                                    return (<Post />);
+                                default:
+                                    return (<></>);
+                            }
+                        })()
+                    }
+                </div>
+            </CSSTransition>
+        </SwitchTransition>
     )
 }
 

@@ -1,3 +1,5 @@
+import "./index.css";
+
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 
@@ -7,7 +9,6 @@ import ComicSelector from '../components/ComicSelector';
 import Sidebar from '../components/Sidebar';
 import { IPost } from '../components/ThePost';
 
-import "./index.css";
 
 const MainPage = (): JSX.Element => {
     const [postsCurrentPage, setPostsCurrentPage] = useState(1);

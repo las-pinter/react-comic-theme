@@ -1,3 +1,5 @@
+import './index.css';
+
 import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 
@@ -6,8 +8,6 @@ import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
 import MenuItem from "./MenuItem";
 import OverlayNavbar from "./OverlayNavbar";
-
-import './index.css';
 
 const Navbar = ({ context }: IConsumerProps): JSX.Element => {
     const [overlayNavbarVisible, setOverlayNavbarVisible] = useState(false);

@@ -1,7 +1,7 @@
+import './index.css';
+
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import ComicSelectorNavigator from './ComicSelectorNavigator';
-
-import './index.css';
 
 interface IComicSelectorProps extends IConsumerProps { }
 

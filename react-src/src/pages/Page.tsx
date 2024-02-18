@@ -1,13 +1,15 @@
+import "./index.css";
+
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import ThePage, { IPage } from '../components/ThePage';
-import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
-import "./index.css";
 
-interface IPageProps extends IConsumerProps {}
+interface IPageProps {
+    slug:string
+}
 
-const Page = ({ context }: IPageProps): JSX.Element => {
+const Page = ({ slug }: IPageProps): JSX.Element => {
     const [page, setPage] = useState<IPage | null>(null);
 
     const getPage = (slug: string) => {
@@ -19,13 +21,13 @@ const Page = ({ context }: IPageProps): JSX.Element => {
     }
 
     useEffect(() => {
-        if (!context.slug) {
+        if (!slug) {
             return;
         }
 
-        getPage(context.slug);
+        getPage(slug);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [context.slug]);
+    }, [slug]);
 
     if (!page) {
         return <></>;
@@ -38,4 +40,4 @@ const Page = ({ context }: IPageProps): JSX.Element => {
     )
 
 }
-export default WithConsumer(Page);
+export default Page;

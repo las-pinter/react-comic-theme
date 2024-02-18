@@ -1,10 +1,11 @@
+import "./index.css";
+
 import { useEffect, useState } from 'react';
 import ThePost, { IPost } from '../components/ThePost';
 import Axios from 'axios';
 
 import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
-import "./index.css";
 
 interface IPostProps extends IConsumerProps {}
 

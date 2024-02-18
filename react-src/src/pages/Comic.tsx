@@ -1,10 +1,11 @@
+import "./index.css";
+
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 
 import TheComic, { IComicPost } from '../components/TheComic';
 import { TheComicPost } from '../components/ThePost';
 
-import "./index.css";
 import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
 interface IComicProps extends IConsumerProps {}

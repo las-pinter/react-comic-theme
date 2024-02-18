@@ -1,8 +1,8 @@
+import './index.css';
+
 import { Link } from "react-router-dom";
 
 import { TMenuItem } from "../../context/Context";
-
-import './index.css';
 
 interface IDropdownMenuProps {
     items: Array<TMenuItem>,

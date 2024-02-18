@@ -1,12 +1,9 @@
-import React, {
-    useState,
-    useEffect
-} from 'react';
+import './index.css';
+
+import { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 import ArchiveChapter from './ArchiveChapter';
-
-import './index.css';
 
 interface IComicArchiveProps {
     comicSlug: string

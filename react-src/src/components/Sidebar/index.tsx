@@ -1,7 +1,7 @@
+import './index.css'
+
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
-
-import './index.css'
 
 interface ISidebadProps {
     sidebarId: string

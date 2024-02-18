@@ -1,10 +1,12 @@
+import './index.css';
+
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 import DisqusComments from '../DisqusComments';
 import PostMeta from './PostMeta';
-import Fader from '../../effects/FadeSwitchLoader';
 
-import './index.css';
 
 export interface IPost {
     type: string,
@@ -38,6 +40,8 @@ interface IThePostProps {
 }
 
 export const ThePost = ({ post, displayComments }: IThePostProps): JSX.Element => {
+    const nodeRef = useRef<any>(null);
+
     if (!post) {
         return <></>;
     }
@@ -45,17 +49,28 @@ export const ThePost = ({ post, displayComments }: IThePostProps): JSX.Element =
     return (
         <div className="post-wrapper container-vertical">
             <div id={'post-id-' + post.id} className={'post-item'}>
-                <Fader depend={post}>
-                    <div className="post-content-wrapper">
-                        <h1>
-                            <Link to={'/' + post.slug}>
-                                {post.title.rendered}
-                            </Link>
-                        </h1>
-                        <PostMeta post={post} />
-                        <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
-                    </div>
-                </Fader>
+                <SwitchTransition mode={"out-in"}>
+                    <CSSTransition
+                        classNames="fader"
+                        timeout={3000}
+                        nodeRef={nodeRef}
+                        appear={true}
+                        addEndListener={(done: () => void) => {
+                            nodeRef.current?.addEventListener("transitionend", done, false);
+                        }}
+                        key={post.slug}
+                    >
+                        <div ref={nodeRef} className="post-content-wrapper">
+                            <h1>
+                                <Link to={'/' + post.slug}>
+                                    {post.title.rendered}
+                                </Link>
+                            </h1>
+                            <PostMeta post={post} />
+                            <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+                        </div>
+                    </CSSTransition>
+                </SwitchTransition>
             </div>
             {
                 displayComments
@@ -74,6 +89,8 @@ interface ITheComicPostProps {
 }
 
 export const TheComicPost = ({ post, comicFullSlug }: ITheComicPostProps): JSX.Element => {
+    const nodeRef = useRef<any>(null);
+
     if (!post) {
         return <></>;
     }
@@ -81,17 +98,28 @@ export const TheComicPost = ({ post, comicFullSlug }: ITheComicPostProps): JSX.E
     return (
         <div className="post-wrapper container-vertical">
             <div id={'post-id-' + post.id} className={'post-item'}>
-                <Fader depend={post}>
-                    <div className="post-content-wrapper">
-                        <h1>
-                            <Link to={'/comic/' + comicFullSlug}>
-                                {post.title.rendered}
-                            </Link>
-                        </h1>
-                        <PostMeta index={post} />
-                        <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
-                    </div>
-                </Fader>
+                <SwitchTransition mode={"out-in"}>
+                    <CSSTransition
+                        classNames="fader"
+                        timeout={3000}
+                        nodeRef={nodeRef}
+                        appear={true}
+                        addEndListener={(done: () => void) => {
+                            nodeRef.current?.addEventListener("transitionend", done, false);
+                        }}
+                        key={comicFullSlug}
+                    >
+                        <div ref={nodeRef} className="post-content-wrapper">
+                            <h1>
+                                <Link to={'/comic/' + comicFullSlug}>
+                                    {post.title.rendered}
+                                </Link>
+                            </h1>
+                            <PostMeta index={post} />
+                            <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+                        </div>
+                    </CSSTransition>
+                </SwitchTransition>
             </div>
             <DisqusComments post={post} display={true} />
         </div>

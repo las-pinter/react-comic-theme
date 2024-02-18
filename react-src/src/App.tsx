@@ -1,4 +1,6 @@
-import * as React from 'react';
+import './index.css';
+import './effects.css';
+
 import {
     BrowserRouter as Router,
     Navigate,
@@ -6,9 +8,8 @@ import {
     Routes
 } from 'react-router-dom';
 
-import './index.css';
-
 import PageRouter from './pages/PageRouter';
+
 
 const App = () => {
     return (

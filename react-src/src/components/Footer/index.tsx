@@ -1,9 +1,9 @@
+import './index.css';
+
 import { Link } from 'react-router-dom';
 
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import { TMenu } from '../../context/Context';
-
-import './index.css';
 
 interface IFooterProps extends IConsumerProps{}
 

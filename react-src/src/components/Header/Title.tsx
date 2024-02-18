@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-
 import './index.css'
+
+import { Link } from 'react-router-dom';
 
 const Title = (): JSX.Element => {
     return (

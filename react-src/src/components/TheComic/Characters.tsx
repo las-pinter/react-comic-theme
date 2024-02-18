@@ -1,10 +1,10 @@
+import './index.css';
+
 import { useEffect, useState } from "react";
 import Axios from 'axios';
 
 import CharacterItem, { TCharacter } from "./CharacterItem";
 import { IComicPost } from ".";
-
-import './index.css';
 
 interface ICharactersProps {
     comicPost: IComicPost

@@ -1,9 +1,10 @@
+import './index.css';
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import DropdownMenu from "./DropdownMenu";
 
-import './index.css';
 import { TMenuItem } from "../../context/Context";
 
 interface IMenuItemProps {

@@ -1,14 +1,15 @@
+import './index.css';
+
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
+
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
 import ComicArchive from '../ComicArchive';
 import DisqusComments from '../DisqusComments';
 import { IPost } from '../ThePost';
-
-import Fader from '../../effects/FadeSwitchLoader';
-
-import './index.css';
 
 export interface IPage extends IPost { }
 
@@ -17,6 +18,8 @@ interface IThePageProps extends IConsumerProps {
 }
 
 const ThePage = ({ page, context }: IThePageProps): JSX.Element => {
+    const nodeRef = useRef<any>(null);
+
     if (!page) {
         return <></>;
     }
@@ -32,12 +35,23 @@ const ThePage = ({ page, context }: IThePageProps): JSX.Element => {
     return (
         <div className="page-wrapper container-vertical">
             <div id={'page-id-' + page.id} className="page-item">
-                <Fader depend={page}>
-                    <div className="page-content-wrapper">
-                        <h1><Link to={'/page/' + page.slug}>{page.title.rendered}</Link></h1>
-                        {theContent}
-                    </div>
-                </Fader>
+                <SwitchTransition mode={"out-in"}>
+                    <CSSTransition
+                        classNames="fader"
+                        timeout={3000}
+                        nodeRef={nodeRef}
+                        appear={true}
+                        addEndListener={(done: () => void) => {
+                            nodeRef.current?.addEventListener("transitionend", done, false);
+                        }}
+                        key={page.slug}
+                    >
+                        <div ref={nodeRef} className="page-content-wrapper">
+                            <h1><Link to={'/page/' + page.slug}>{page.title.rendered}</Link></h1>
+                            {theContent}
+                        </div>
+                    </CSSTransition>
+                </SwitchTransition>
             </div>
             <DisqusComments post={page} display={true} />
         </div>

@@ -1,7 +1,7 @@
+import './index.css'
+
 import Navbar from '../Navbar'
 import Title from './Title';
-
-import './index.css'
 
 const Header = (): JSX.Element => {
     return (

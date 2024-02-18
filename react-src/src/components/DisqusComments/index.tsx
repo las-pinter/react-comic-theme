@@ -1,11 +1,11 @@
+import './index.css';
+
 import { ForwardedRef, forwardRef } from 'react';
 import { DiscussionEmbed } from 'disqus-react';
 
 import { IPost } from '../ThePost';
 import { IComicPost } from '../TheComic';
 import { IPage } from '../ThePage';
-
-import './index.css';
 
 interface IDisqusCommentsProps {
     post: IPost | IComicPost | IPage,

@@ -1,7 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
 import './index.css';
+
+import { Link } from "react-router-dom";
 
 interface IComicSelectorNavigatorProps {
     link: string,

@@ -1,17 +1,15 @@
-import {
-    useEffect,
-    useState
-} from 'react';
+import './index.css';
+
+import { useEffect, useRef, useState } from 'react';
 import Axios from 'axios';
+
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 import ComicNavigator, { TComicNavigatorProps } from './ComicNavigator';
 import Characters from './Characters';
 import ComicTitle from './ComicTitle';
 
-import Fader from '../../effects/FadeSwitchLoader';
 import { IPost } from '../ThePost';
-
-import './index.css';
 
 export interface IComicPost extends IPost {
     type: 'comic'
@@ -22,6 +20,8 @@ interface ITheComicProps {
 }
 
 const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
+    const nodeRef = useRef<any>(null);
+
     const [comicNavLinks, setComicNavLinks] = useState<TComicNavigatorProps>({
         firstPage: '',
         previousPage: '',
@@ -79,9 +79,20 @@ const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
                 <ComicNavigator comicNavLinks={comicNavLinks} />
             </div>
             <div id="the-comic">
-                <Fader depend={comicPost}>
-                    <img src={comicImageUrl} alt={comicPost.title.rendered} title={comicPost.title.rendered} />
-                </Fader>
+                <SwitchTransition mode={"out-in"}>
+                    <CSSTransition
+                        classNames="fader"
+                        timeout={3000}
+                        nodeRef={nodeRef}
+                        appear={true}
+                        addEndListener={(done: () => void) => {
+                            nodeRef.current?.addEventListener("transitionend", done, false);
+                        }}
+                        key={comicImageUrl}
+                    >
+                        <img ref={nodeRef} src={comicImageUrl} alt={comicPost.title.rendered} title={comicPost.title.rendered} />
+                    </CSSTransition>
+                </SwitchTransition>
             </div>
             <div className="navigator-bottom">
                 <ComicNavigator comicNavLinks={comicNavLinks} />
