@@ -60,9 +60,7 @@ export const ThePost = ({ post, displayComments }: IThePostProps): JSX.Element =
             {
                 displayComments
                     ?
-                    <Fader depend={post}>
-                        <DisqusComments post={post} display={true} />
-                    </Fader>
+                    <DisqusComments post={post} display={true} />
                     :
                     <></>
             }
@@ -85,19 +83,17 @@ export const TheComicPost = ({ post, comicFullSlug }: ITheComicPostProps): JSX.E
             <div id={'post-id-' + post.id} className={'post-item'}>
                 <Fader depend={post}>
                     <div className="post-content-wrapper">
-                            <h1>
-                                <Link to={'/comic/' + comicFullSlug}>
-                                    {post.title.rendered}
-                                </Link>
-                            </h1>
-                            <PostMeta index={post} />
-                            <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+                        <h1>
+                            <Link to={'/comic/' + comicFullSlug}>
+                                {post.title.rendered}
+                            </Link>
+                        </h1>
+                        <PostMeta index={post} />
+                        <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
                     </div>
                 </Fader>
             </div>
-            <Fader depend={post}>
-                <DisqusComments post={post} display={true} />
-            </Fader>
+            <DisqusComments post={post} display={true} />
         </div>
     );
 };

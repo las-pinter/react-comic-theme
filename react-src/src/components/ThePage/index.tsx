@@ -39,9 +39,7 @@ const ThePage = ({ page, context }: IThePageProps): JSX.Element => {
                     </div>
                 </Fader>
             </div>
-            <Fader depend={page}>
-                <DisqusComments post={page} display={true} />
-            </Fader>
+            <DisqusComments post={page} display={true} />
         </div>
     );
 };
