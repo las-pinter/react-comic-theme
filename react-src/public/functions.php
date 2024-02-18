@@ -1,5 +1,6 @@
 <?php
 @require('admin.php');
+@require('rest/settings.php');
 
 function custom_theme_setup()
 {

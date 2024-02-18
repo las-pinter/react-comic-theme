@@ -54,4 +54,27 @@ jQuery(document).ready(function ($) {
         // Open the uploader dialog
         mediaUploader.open();
     });
+
+    jQuery('.comic-theme-admin-option-selector').on('change', function (e) {
+        setting_name = $(this).attr('id');
+
+        // Prevents the default action from occuring.
+        e.preventDefault();
+
+        jQuery.ajax({
+            type: "POST",
+            url: ajax_localize.ajax_url,
+            data: {
+                action: ajax_localize.ajax_action_name,
+                data_type: "text",
+                setting_name: setting_name,
+                value: $(this).val()
+            },
+            success: function (data) {
+            },
+            error: function (errorThrown) {
+                alert(errorThrown);
+            }
+        });
+    });
 });

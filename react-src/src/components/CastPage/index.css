@@ -1,0 +1,55 @@
+.character-group {
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.comic-character-list {
+    background: var(--cmx-container-background);
+    box-shadow: var(--cmx-container-box-shadow);
+    border: var(--cmx-container-border);
+    padding: 15px 15px 15px 15px;
+    box-sizing: border-box;
+    width: 100%;
+    align-content: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.comic-character-item {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.comic-character-name {
+    text-align: center;
+}
+
+.comic-character-thumbnail {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.character-group-level-0 .comic-character-thumbnail {
+    width: 250px;
+    height: 250px;
+}
+
+.character-group-level-1 .comic-character-thumbnail {
+    width: 200px;
+    height: 200px;
+}
+
+.character-group-level-2 .comic-character-thumbnail {
+    width: 100px;
+    height: 100px;
+}
+
+.comic-character-thumbnail img {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}

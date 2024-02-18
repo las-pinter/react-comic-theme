@@ -8,6 +8,7 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
 import ComicArchive from '../ComicArchive';
+import CastPage from '../CastPage';
 import DisqusComments from '../DisqusComments';
 import { IPost } from '../ThePost';
 
@@ -26,8 +27,12 @@ const ThePage = ({ page, context }: IThePageProps): JSX.Element => {
 
     let theContent = <></>;
     const comicArchive = context.comics.find(comic => comic.archivePage === page.slug);
+    const castPage = context.castPageSlug === page.slug;
+
     if (comicArchive) {
         theContent = <ComicArchive comicSlug={comicArchive.comicSlug} />;
+    } else if (castPage) {
+        theContent = <CastPage />;
     } else {
         theContent = <div className="page-content" dangerouslySetInnerHTML={{ __html: page.content.rendered }}></div>;
     }

@@ -67,20 +67,72 @@ class Comic_Theme_Settings
         wp_enqueue_media();
 
         $general_settings = get_option('comic_theme_general_settings');
-        
+
 ?>
-        <h1>Comic Theme General Settings</h1>
+        <div class="wrap">
+            <h1>Comic Theme General Settings</h1>
 
-        <h2>Comic Logo Settings</h2>
+            <h2>Cast Page Settings</h2>
+            <h3>Cast Page<h3>
+            <?php
+                $current_cast_page = $general_settings['cast_page'] ?? '';
+                $pages = get_pages();
+            ?>
+            <select class="comic-theme-admin-option-selector" id="cast_page">
+                <option value="-1">None</option>
+                <?php
+                    foreach ($pages as $page) {
+                ?>
+                    <option class="level-0" value="<?php echo $page->post_name ?>" <?php echo $page->post_name == $current_cast_page ? 'selected="selected"' : '' ?>><?php echo $page->post_title ?></option>
+                <?php
+                    }
+                ?>
+            </select>
 
-        <h2>Test Image</h2>
+            <h3>Character Group Order</h3>
+            <?php
+                $characters = get_terms(array(
+                    'taxonomy'   => 'characters',
+                    'hide_empty' => false,
+                ));
+    
+                $character_groups = [];
+    
+                foreach ($characters as $character) {
+                    $character_group = get_term_meta($character->term_id, 'character_group', true);
+
+                    $character_group = $character_group != '' ? $character_group : 'Unknown';
+
+                    if (!in_array($character_group, $character_groups)) {
+                        $character_groups[] = $character_group;
+                    }
+                }
+
+                foreach ($character_groups as $index => $_) {
+            ?>
+                <select class="comic-theme-admin-option-selector" id="<?php echo "character_group_order_" . $index ?>">
+                    <option value="-1">None</option>
+                    <?php
+                        foreach ($character_groups as $character_group) {
+                            $current_group_setting = $general_settings["character_group_order_" . $index] ?? '';
+                    ?>
+                        <option class="level-0" value="<?php echo $character_group ?>" <?php echo $character_group == $current_group_setting ? 'selected="selected"' : '' ?>><?php echo $character_group ?></option>
+                    <?php
+                        }
+                    ?>
+                </select>
+            <?php
+                }
+            ?>
+
+            <h2>Comic Logo Settings</h2>
+
+                <h3>Main Logo</h3>
+                    <div class="comic-theme-admin-image-selector" id="comic_theme_main_logo">
+                        <img src="<?php echo $general_settings['comic_theme_main_logo'] ?? '' ?>">
+                    </div>
+            <h2>Comic Selector Settings</h2>
         </div>
-
-        <div class="comic-theme-admin-image-selector" id="comic_theme_test_image_url">
-            <img src="<?php echo $general_settings['comic_theme_test_image_url'] ?>">
-        </div>
-
-        <h2>Comic Selector Settings</h2>
 <?php
     }
 
@@ -141,6 +193,13 @@ class Comic_Theme_Settings
                     $image_url = $this->ajax_input_changer($_POST['image_url']);
                     $settings = get_option('comic_theme_general_settings');
                     $settings[$setting_name] = $image_url;
+                    update_option('comic_theme_general_settings', $settings);
+                    break;
+                case 'text':
+                    $setting_name = $this->ajax_input_changer($_POST['setting_name']);
+                    $value = $this->ajax_input_changer($_POST['value']);
+                    $settings = get_option('comic_theme_general_settings');
+                    $settings[$setting_name] = $value;
                     update_option('comic_theme_general_settings', $settings);
                     break;
                 default:

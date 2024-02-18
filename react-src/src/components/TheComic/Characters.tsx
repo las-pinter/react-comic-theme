@@ -3,7 +3,7 @@ import './index.css';
 import { useEffect, useState } from "react";
 import Axios from 'axios';
 
-import CharacterItem, { TCharacter } from "./CharacterItem";
+import CharacterItem, { TCharacter } from "../CastPage/CharacterItem";
 import { IComicPost } from ".";
 
 interface ICharactersProps {

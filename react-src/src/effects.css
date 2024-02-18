@@ -44,3 +44,17 @@
     opacity: 0;
     visibility: hidden;
 }
+
+.fadeIn {
+    animation: fadeInAnimation 0.3s linear;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

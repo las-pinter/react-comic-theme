@@ -36,6 +36,7 @@ export interface IContextState {
     route: string | undefined,
     menus: TMenus,
     comics: Array<Comic>,
+    castPageSlug: string,
     currentComic: {
         comicFullSlug: string,
         comicSlug: string
@@ -50,6 +51,7 @@ const storeContext = React.createContext<Readonly<IContextState>>(
         route: '',
         menus: {},
         comics: [],
+        castPageSlug: '',
         currentComic: {
             comicFullSlug: '',
             comicSlug: ''
@@ -70,6 +72,7 @@ export class Provider extends React.Component<IProps, IContextState> {
             route: props.router ? props.router.route.path : '',
             menus: {},
             comics: [],
+            castPageSlug: '',
             currentComic: {
                 comicFullSlug: props.router ? (props.router.params['*'] ? props.router.params['*'] : '') : '',
                 comicSlug: props.router ? (props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '') : '',
@@ -80,6 +83,7 @@ export class Provider extends React.Component<IProps, IContextState> {
     componentDidMount() {
         this.getMenus();
         this.getComics();
+        this.getCastPageSlug();
     }
 
     componentDidUpdate(prevProps: any) {
@@ -119,6 +123,7 @@ export class Provider extends React.Component<IProps, IContextState> {
 
         return url;
     }
+
     getComics() {
         let url = '/wp-json/comics/v1/comics';
         let self = this;
@@ -172,6 +177,21 @@ export class Provider extends React.Component<IProps, IContextState> {
         }).catch(() => {
             self.setState({
                 menus: {}
+            })
+        });
+    }
+
+    getCastPageSlug() {
+        let url = '/wp-json/settings/v1/cast_page';
+        let self = this;
+
+        return Axios.get(url).then((response) => {
+            self.setState({
+                castPageSlug: response.data
+            })
+        }).catch(() => {
+            self.setState({
+                castPageSlug: '',
             })
         });
     }
