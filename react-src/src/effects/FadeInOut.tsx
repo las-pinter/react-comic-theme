@@ -10,12 +10,14 @@ interface IFadeInOutProps {
 }
 
 const FadeInOut = (props: IFadeInOutProps): JSX.Element => {
-    const nodeRef = useRef(null);
+    const nodeRef = useRef<any>(null);
 
     return (
         <CSSTransition
-            classNames="fadeinout"
-            timeout={300}
+            classNames="fader"
+            addEndListener={(done: () => void) => {
+                nodeRef.current?.addEventListener("transitionend", done, false);
+            }}
             nodeRef={nodeRef}
             appear={true}
             in={props.show}

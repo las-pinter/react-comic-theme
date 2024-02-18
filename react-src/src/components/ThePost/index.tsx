@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import DisqusComments from '../DisqusComments';
 import PostMeta from './PostMeta';
-import Fader from '../../effects/Fader';
+import Fader from '../../effects/FadeSwitchLoader';
 
 import './index.css';
 

@@ -1,4 +1,4 @@
-import Fader from "../../effects/Fader";
+import Fader from "../../effects/FadeSwitchLoader";
 import ArchiveComicItem from "./ArchiveComicItem";
 
 import './index.css';

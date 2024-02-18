@@ -6,7 +6,7 @@ import Page from './Page';
 import Comic from './Comic';
 import Post from './Post';
 
-import Fader from '../effects/Fader';
+import Fader from '../effects/FadeSwitchLoader';
 import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
 interface IPageRouterProps extends IConsumerProps{

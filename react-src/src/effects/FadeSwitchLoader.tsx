@@ -8,12 +8,12 @@ import { SwitchTransition, CSSTransition } from 'react-transition-group';
 
 import './index.css';
 
-interface IFaderProps {
+interface IFadeSwitchLoaderProps {
     depend: any,
     children?: React.ReactNode,
 }
 
-const Fader = (props: IFaderProps): JSX.Element => {
+const FadeSwitchLoader = (props: IFadeSwitchLoaderProps): JSX.Element => {
     const {
         children,
         depend: _depend,
@@ -58,4 +58,4 @@ const Fader = (props: IFaderProps): JSX.Element => {
     );
 }
 
-export default Fader;
+export default FadeSwitchLoader;

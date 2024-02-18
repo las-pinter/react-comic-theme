@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ComicItem } from "./ArchiveChapter";
 
 import './index.css';
-import Fader from "../../effects/Fader";
+import Fader from "../../effects/FadeSwitchLoader";
 
 interface IArchiveComicItemProps {
     comic: ComicItem,

@@ -8,7 +8,7 @@ import ComicNavigator, { TComicNavigatorProps } from './ComicNavigator';
 import Characters from './Characters';
 import ComicTitle from './ComicTitle';
 
-import Fader from '../../effects/Fader';
+import Fader from '../../effects/FadeSwitchLoader';
 import { IPost } from '../ThePost';
 
 import './index.css';

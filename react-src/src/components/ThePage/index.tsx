@@ -6,7 +6,7 @@ import ComicArchive from '../ComicArchive';
 import DisqusComments from '../DisqusComments';
 import { IPost } from '../ThePost';
 
-import Fader from '../../effects/Fader';
+import Fader from '../../effects/FadeSwitchLoader';
 
 import './index.css';
 
