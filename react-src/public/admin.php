@@ -132,6 +132,9 @@ class Comic_Theme_Settings
                         <img src="<?php echo $general_settings['comic_theme_main_logo'] ?? '' ?>">
                     </div>
             <h2>Comic Selector Settings</h2>
+            <?php
+            
+            ?>
         </div>
 <?php
     }

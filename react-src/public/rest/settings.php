@@ -53,10 +53,8 @@ if (!class_exists('Comic_Theme_Settings_Rest_API')) :
             foreach ($characters as $character) {
                 $character_group = get_term_meta($character->term_id, 'character_group', true);
 
-                $character_group = $character_group != '' ? $character_group : 'Unknown';
-
                 if (!in_array($character_group, $character_groups)) {
-                    $character_groups[] = $character_group;
+                    $character_groups[] = $character_group != '' ? $character_group : 'Unknown';
                 }
             }
 
@@ -64,7 +62,7 @@ if (!class_exists('Comic_Theme_Settings_Rest_API')) :
             $general_settings = get_option('comic_theme_general_settings');
 
             foreach ($character_groups as $index => $_) {
-                $result[] = $general_settings['character_group_order_' . $index] ?? 666;
+                $result[] = $general_settings['character_group_order_' . $index] ?? false;
             }
 
             return $result;

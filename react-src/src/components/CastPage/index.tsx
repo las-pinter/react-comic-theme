@@ -27,12 +27,13 @@ const CastPage = (): JSX.Element => {
             });
 
             setCharacterGroups(characterGroups);
-            setLoading(false);
+
         }).catch(() => {
         }).then(() => {
             let url = '/wp-json/settings/v1/char_group_order/';
             Axios.get(url).then((response) => {
                 setCharacterGroupOrder(response.data);
+                setLoading(false);
             });
         }).catch(() => {
         });
@@ -45,11 +46,23 @@ const CastPage = (): JSX.Element => {
         return <></>;
     }
 
+    let charGroupKeys = Object.keys(characterGroups);
+
+    charGroupKeys.sort((a, b) => {
+        return characterGroupOrder.indexOf(a) - characterGroupOrder.indexOf(b);
+    })
+
+    let sortedCharacterGroups: Record<string, TCharacter[]> = {};
+
+    charGroupKeys.forEach((key) => {
+        sortedCharacterGroups[key] = characterGroups[key];
+    })
+
     return (
         <div className="cast-page container-vertical">
             {
-                characterGroupOrder.map((key, i) => {
-                    return <CharacterGroup key={i} characterGroupName={key} characterGroup={characterGroups[key]} level={i} />;
+                Object.keys(sortedCharacterGroups).map((key, i) => {
+                    return <CharacterGroup key={i} characterGroupName={key} characterGroup={sortedCharacterGroups[key]} level={i} />;
                 })
             }
         </div>
