@@ -6,11 +6,12 @@ import Axios from 'axios';
 import TheComic, { IComicPost } from '../components/TheComic';
 import { TheComicPost } from '../components/ThePost';
 
-import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
+interface IComicProps {
+    comicPageSlug: string,
+    comicPageFullSlug: string
+}
 
-interface IComicProps extends IConsumerProps {}
-
-const Comic = ({ context }: IComicProps): JSX.Element => {
+const Comic = ({ comicPageSlug, comicPageFullSlug }: IComicProps): JSX.Element => {
     const [comic, setComic] = useState<IComicPost | null>(null);
 
     const getComic = (slug: string) => {
@@ -22,13 +23,13 @@ const Comic = ({ context }: IComicProps): JSX.Element => {
     }
 
     useEffect(() => {
-        if (!context.currentComic.comicPageSlug) {
+        if (!comicPageSlug) {
             return;
         }
         
-        getComic(context.currentComic.comicPageSlug);
+        getComic(comicPageSlug);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [context.currentComic.comicPageSlug]);
+    }, [comicPageSlug]);
 
     if (!comic) {
         return <></>;
@@ -37,9 +38,9 @@ const Comic = ({ context }: IComicProps): JSX.Element => {
     return (
         <div className="comic-page container-vertical">
             <TheComic comicPost={comic} />
-            <TheComicPost post={comic} comicPageFullSlug={context.currentComic.comicPageFullSlug} />
+            <TheComicPost post={comic} comicPageFullSlug={comicPageFullSlug} />
         </div>
     )
 
 }
-export default WithConsumer(Comic);
+export default Comic;

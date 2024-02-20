@@ -4,12 +4,11 @@ import { useEffect, useState } from 'react';
 import ThePost, { IPost } from '../components/ThePost';
 import Axios from 'axios';
 
-import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
+interface IPostProps {
+    slug: string
+}
 
-
-interface IPostProps extends IConsumerProps {}
-
-const Post = ({ context }: IPostProps): JSX.Element => {
+const Post = ({ slug }: IPostProps): JSX.Element => {
     const [post, setPost] = useState<IPost | null>(null);
 
     const getPost = (slug: string) => {
@@ -21,13 +20,13 @@ const Post = ({ context }: IPostProps): JSX.Element => {
     }
 
     useEffect(() => {
-        if (!context.slug) {
+        if (!slug) {
             return;
         }
         
-        getPost(context.slug);
+        getPost(slug);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [context.slug]);
+    }, [slug]);
 
     if (!post) {
         return <></>;
@@ -40,4 +39,4 @@ const Post = ({ context }: IPostProps): JSX.Element => {
     )
 
 }
-export default WithConsumer(Post);
+export default Post;

@@ -2,11 +2,11 @@ import "./index.css";
 
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
+
 import ThePage, { IPage } from '../components/ThePage';
 
-
 interface IPageProps {
-    slug:string
+    slug: string
 }
 
 const Page = ({ slug }: IPageProps): JSX.Element => {

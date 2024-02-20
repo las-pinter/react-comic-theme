@@ -39,9 +39,12 @@ const PageRouter = ({ context, contextType }: IPageRouterProps): JSX.Element => 
                                 case 'page':
                                     return (<Page slug={context.slug} />);
                                 case 'comic':
-                                    return (<Comic />);
+                                    return (<Comic
+                                        comicPageSlug={context.currentComic.comicPageSlug}
+                                        comicPageFullSlug={context.currentComic.comicPageFullSlug}
+                                    />);
                                 case 'post':
-                                    return (<Post />);
+                                    return (<Post slug={context.slug} />);
                                 default:
                                     return (<></>);
                             }
