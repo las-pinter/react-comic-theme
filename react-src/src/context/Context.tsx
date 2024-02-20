@@ -35,12 +35,13 @@ export interface IContextState {
     slug: string,
     route: string | undefined,
     menus: TMenus,
-    comics: Array<Comic>,
+    comics: Record<string,Comic>,
     castPageSlug: string,
     logoImages: Record<string, string>,
     currentComic: {
-        comicFullSlug: string,
-        comicSlug: string
+        comicPageFullSlug: string,
+        comicPageSlug: string,
+        comicSlug: string,
     }
 };
 
@@ -51,11 +52,12 @@ const storeContext = React.createContext<Readonly<IContextState>>(
         slug: '',
         route: '',
         menus: {},
-        comics: [],
+        comics: {},
         castPageSlug: '',
         logoImages: {},
         currentComic: {
-            comicFullSlug: '',
+            comicPageFullSlug: '',
+            comicPageSlug: '',
             comicSlug: ''
         }
     }
@@ -73,12 +75,13 @@ export class Provider extends React.Component<IProps, IContextState> {
             slug: props.router ? (props.router.params.slug ? props.router.params.slug : '') : '',
             route: props.router ? props.router.route.path : '',
             menus: {},
-            comics: [],
+            comics: {},
             castPageSlug: '',
             logoImages: {},
             currentComic: {
-                comicFullSlug: props.router ? (props.router.params['*'] ? props.router.params['*'] : '') : '',
-                comicSlug: props.router ? (props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '') : '',
+                comicPageFullSlug: props.router ? (props.router.params['*'] ? props.router.params['*'] : '') : '',
+                comicPageSlug: props.router ? (props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '') : '',
+                comicSlug: props.router ? (props.router.params['*'] ? this.getComicSlugFromRouter(props.router.params['*']) : '') : ''
             }
         };
     }
@@ -109,8 +112,9 @@ export class Provider extends React.Component<IProps, IContextState> {
             slug: this.props.router.params.slug ? this.props.router.params.slug : '',
             route: this.props.router.route.path,
             currentComic: {
-                comicFullSlug: this.props.router.params['*'] ? this.props.router.params['*'] : '',
-                comicSlug: this.props.router.params['*'] ? this.formatComicSlug(this.props.router.params['*']) : ''
+                comicPageFullSlug: this.props.router.params['*'] ? this.props.router.params['*'] : '',
+                comicPageSlug: this.props.router.params['*'] ? this.formatComicSlug(this.props.router.params['*']) : '',
+                comicSlug: this.props.router.params['*'] ? this.getComicSlugFromRouter(this.props.router.params['*']) : '',
             }
         });
     }
@@ -120,7 +124,7 @@ export class Provider extends React.Component<IProps, IContextState> {
         switch (this.state.contextType) {
             case 'comic':
                 url += 'comic?slug=';
-                url += this.state.currentComic.comicSlug;
+                url += this.state.currentComic.comicPageSlug;
                 url += '&_embed';
                 break;
         }
@@ -138,7 +142,7 @@ export class Provider extends React.Component<IProps, IContextState> {
             })
         }).catch(() => {
             self.setState({
-                comics: [],
+                comics: {},
             })
         });
     }
@@ -217,6 +221,10 @@ export class Provider extends React.Component<IProps, IContextState> {
 
     formatComicSlug(longSlug: string): string {
         return longSlug.split('/').reverse()[1];
+    }
+
+    getComicSlugFromRouter(longSlug: string): string {
+        return longSlug.split('/')[0];
     }
 
     render() {

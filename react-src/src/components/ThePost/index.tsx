@@ -85,10 +85,10 @@ export const ThePost = ({ post, displayComments }: IThePostProps): JSX.Element =
 
 interface ITheComicPostProps {
     post: IPost,
-    comicFullSlug: string
+    comicPageFullSlug: string
 }
 
-export const TheComicPost = ({ post, comicFullSlug }: ITheComicPostProps): JSX.Element => {
+export const TheComicPost = ({ post, comicPageFullSlug }: ITheComicPostProps): JSX.Element => {
     const nodeRef = useRef<any>(null);
 
     if (!post) {
@@ -107,11 +107,11 @@ export const TheComicPost = ({ post, comicFullSlug }: ITheComicPostProps): JSX.E
                         addEndListener={(done: () => void) => {
                             nodeRef.current?.addEventListener("transitionend", done, false);
                         }}
-                        key={comicFullSlug}
+                        key={comicPageFullSlug}
                     >
                         <div ref={nodeRef} className="post-content-wrapper">
                             <h1>
-                                <Link to={'/comic/' + comicFullSlug}>
+                                <Link to={'/comic/' + comicPageFullSlug}>
                                     {post.title.rendered}
                                 </Link>
                             </h1>

@@ -22,13 +22,13 @@ const Comic = ({ context }: IComicProps): JSX.Element => {
     }
 
     useEffect(() => {
-        if (!context.currentComic.comicSlug) {
+        if (!context.currentComic.comicPageSlug) {
             return;
         }
         
-        getComic(context.currentComic.comicSlug);
+        getComic(context.currentComic.comicPageSlug);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [context.currentComic.comicSlug]);
+    }, [context.currentComic.comicPageSlug]);
 
     if (!comic) {
         return <></>;
@@ -37,7 +37,7 @@ const Comic = ({ context }: IComicProps): JSX.Element => {
     return (
         <div className="comic-page container-vertical">
             <TheComic comicPost={comic} />
-            <TheComicPost post={comic} comicFullSlug={context.currentComic.comicFullSlug} />
+            <TheComicPost post={comic} comicPageFullSlug={context.currentComic.comicPageFullSlug} />
         </div>
     )
 

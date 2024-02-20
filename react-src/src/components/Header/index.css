@@ -10,8 +10,14 @@ header {
 }
 
 .comic-logo {
-    /* Placeholder */
-    width: 200px;
-    height: 100px;
-    background: #838383;
+    width: 600px;
+    height: 150px;
+    overflow: hidden;
+}
+
+.comic-logo-image {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
 }

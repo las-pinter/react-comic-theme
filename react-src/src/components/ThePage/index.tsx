@@ -26,7 +26,7 @@ const ThePage = ({ page, context }: IThePageProps): JSX.Element => {
     }
 
     let theContent = <></>;
-    const comicArchive = context.comics.find(comic => comic.archivePage === page.slug);
+    const comicArchive = Object.values(context.comics).find(comic => comic.archivePage === page.slug);
     const castPage = context.castPageSlug === page.slug;
 
     if (comicArchive) {

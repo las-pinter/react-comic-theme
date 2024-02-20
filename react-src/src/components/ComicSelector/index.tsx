@@ -30,17 +30,18 @@ const ComicSelector = ({ context }: IComicSelectorProps): JSX.Element => {
     return (
         <div className="comic-selector container-horizontal">
             {
-                context.comics.map((item, i) => {
+                Object.keys(context.comics).map((comicSlug, i) => {
+                    let comic = context.comics[comicSlug];
                     return (
-                        <div key={item.comicSlug + '_' + i} className={"comic-selector-comic container-vertical " + item.comicSlug}>
-                            <div className="comic-name">{item.name}</div>
+                        <div key={comicSlug + '_' + i} className={"comic-selector-comic container-vertical " + comicSlug}>
+                            <div className="comic-name">{comic.name}</div>
                             <div className="comic-selector-image">
-                                <img src={ selectorImages[item.comicSlug] } alt={item.name} />
+                                <img src={ selectorImages[comicSlug] } alt={comic.name} />
                             </div>
                             <div className="comic-selector-navigation container-horizontal">
-                                <ComicSelectorNavigator link={item.firstPage} text={'First'} />
-                                <ComicSelectorNavigator link={'page/' + item.archivePage} text={'Archive'} />
-                                <ComicSelectorNavigator link={item.lastPage} text={'Last'} />
+                                <ComicSelectorNavigator link={comic.firstPage} text={'First'} />
+                                <ComicSelectorNavigator link={'page/' + comic.archivePage} text={'Archive'} />
+                                <ComicSelectorNavigator link={comic.lastPage} text={'Last'} />
                             </div>
                         </div>
                     )
