@@ -32,7 +32,7 @@ const CastPage = (): JSX.Element => {
         }).then(() => {
             let url = '/wp-json/settings/v1/char_group_order/';
             Axios.get(url).then((response) => {
-                setCharacterGroupOrder(response.data);
+                setCharacterGroupOrder(Object.values(response.data));
                 setLoading(false);
             });
         }).catch(() => {

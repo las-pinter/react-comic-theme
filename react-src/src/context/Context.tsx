@@ -37,6 +37,7 @@ export interface IContextState {
     menus: TMenus,
     comics: Array<Comic>,
     castPageSlug: string,
+    logoImages: Record<string, string>,
     currentComic: {
         comicFullSlug: string,
         comicSlug: string
@@ -52,6 +53,7 @@ const storeContext = React.createContext<Readonly<IContextState>>(
         menus: {},
         comics: [],
         castPageSlug: '',
+        logoImages: {},
         currentComic: {
             comicFullSlug: '',
             comicSlug: ''
@@ -73,6 +75,7 @@ export class Provider extends React.Component<IProps, IContextState> {
             menus: {},
             comics: [],
             castPageSlug: '',
+            logoImages: {},
             currentComic: {
                 comicFullSlug: props.router ? (props.router.params['*'] ? props.router.params['*'] : '') : '',
                 comicSlug: props.router ? (props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '') : '',
@@ -84,6 +87,7 @@ export class Provider extends React.Component<IProps, IContextState> {
         this.getMenus();
         this.getComics();
         this.getCastPageSlug();
+        this.getLogos();
     }
 
     componentDidUpdate(prevProps: any) {
@@ -192,6 +196,21 @@ export class Provider extends React.Component<IProps, IContextState> {
         }).catch(() => {
             self.setState({
                 castPageSlug: '',
+            })
+        });
+    }
+
+    getLogos() {
+        let url = '/wp-json/settings/v1/logos';
+        let self = this;
+
+        return Axios.get(url).then((response) => {
+            self.setState({
+                logoImages: response.data
+            })
+        }).catch(() => {
+            self.setState({
+                logoImages: {},
             })
         });
     }

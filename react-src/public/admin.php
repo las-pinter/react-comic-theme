@@ -67,6 +67,52 @@ class Comic_Theme_Settings
         wp_enqueue_media();
 
         $general_settings = get_option('comic_theme_general_settings');
+
+        $pages = get_pages();
+
+        $chapters = get_terms([
+            'taxonomy' => 'chapters',
+            'hide_empty' => false,
+        ]);
+
+        $comics = array();
+
+        foreach ($chapters as $chapter) {
+            $parent_chapter = Comic_Plugin_Library::get_parent_chapter($chapter->term_id);
+            $found = false;
+            foreach ($comics as $comic) {
+                if (($comic['slug'] ?? '') == $parent_chapter->slug) {
+                    $found = true;
+                    break;
+                }
+            }
+
+            if ($found) {
+                continue;
+            }
+
+            $comics[] = array(
+                'name' => $parent_chapter->name,
+                'slug' => $parent_chapter->slug
+            );
+        }
+
+        $characters = get_terms(array(
+            'taxonomy'   => 'characters',
+            'hide_empty' => false,
+        ));
+
+        $character_groups = [];
+
+        foreach ($characters as $character) {
+            $character_group = get_term_meta($character->term_id, 'character_group', true);
+
+            $character_group = $character_group != '' ? $character_group : 'Unknown';
+
+            if (!in_array($character_group, $character_groups)) {
+                $character_groups[] = $character_group;
+            }
+        }
 ?>
         <div class="wrap">
             <h1>Comic Theme General Settings</h1>
@@ -75,7 +121,6 @@ class Comic_Theme_Settings
             <h3>Cast Page<h3>
             <?php
                 $current_cast_page = $general_settings['cast_page'] ?? '';
-                $pages = get_pages();
             ?>
             <select class="comic-theme-admin-option-selector" id="cast_page">
                 <option value="-1">None</option>
@@ -90,85 +135,62 @@ class Comic_Theme_Settings
 
             <h3>Character Group Order</h3>
             <?php
-                $characters = get_terms(array(
-                    'taxonomy'   => 'characters',
-                    'hide_empty' => false,
-                ));
-
-                $character_groups = [];
-
-                foreach ($characters as $character) {
-                    $character_group = get_term_meta($character->term_id, 'character_group', true);
-
-                    $character_group = $character_group != '' ? $character_group : 'Unknown';
-
-                    if (!in_array($character_group, $character_groups)) {
-                        $character_groups[] = $character_group;
-                    }
-                }
-
                 foreach ($character_groups as $index => $_) {
             ?>
-                <select class="comic-theme-admin-option-selector" id="<?php echo "character_group_order:place_" . $index ?>">
-                    <option value="-1">None</option>
-                    <?php
-                        foreach ($character_groups as $character_group) {
-                            $current_group_setting = '';
-                            if (isset($general_settings['character_group_order'])) {
-                                $current_group_setting = $general_settings["character_group_order"]['place_' . $index] ?? '';
-                            }
-                    ?>
-                        <option class="level-0" value="<?php echo $character_group ?>" <?php echo $character_group == $current_group_setting ? 'selected="selected"' : '' ?>><?php echo $character_group ?></option>
-                    <?php
+            <select class="comic-theme-admin-option-selector" id="<?php echo "character_group_order:place_" . $index ?>">
+                <option value="-1">None</option>
+                <?php
+                    foreach ($character_groups as $character_group) {
+                        $current_group_setting = '';
+                        if (isset($general_settings['character_group_order'])) {
+                            $current_group_setting = $general_settings["character_group_order"]['place_' . $index] ?? '';
                         }
-                    ?>
-                </select>
+                ?>
+                    <option class="level-0" value="<?php echo $character_group ?>" <?php echo $character_group == $current_group_setting ? 'selected="selected"' : '' ?>><?php echo $character_group ?></option>
+                <?php
+                    }
+                ?>
+            </select>
             <?php
                 }
             ?>
 
             <h2>Comic Logo Settings</h2>
-
-                <h3>Main Logo</h3>
-                    <div class="comic-theme-admin-image-selector" id="main_logo">
-                        <img src="<?php echo $general_settings['main_logo'] ?? '' ?>">
-                    </div>
+            <h3>Main Logo</h3>
+            <div class="comic-theme-admin-image-selector" id="logo:main">
+                <img src="<?php
+                    if(!isset($general_settings['logo'])) {
+                        echo '';
+                    } else {
+                        echo $general_settings['logo']['main'] ?? '';
+                    }
+                ?>">
+            </div>
+            <?php
+                foreach ($comics as $comic) {
+                    $logo_image_url = '';
+                    if (isset($general_settings['logo'])) {
+                        $logo_image_url = $general_settings['logo'][$comic['slug']] ?? '';
+                    }
+            ?>
+                <h3><?php echo $comic['name'] ?></h3>
+                <div class="comic-theme-admin-image-selector" id="<?php echo 'logo:' . $comic['slug'] ?>" >
+                    <img src="<?php echo $logo_image_url ?? '' ?>">
+                </div>
+            <?php
+                }
+            ?>
 
             <h2>Comic Selector Settings</h2>
-
             <?php
-                $chapters = get_terms([
-                    'taxonomy' => 'chapters',
-                    'hide_empty' => false,
-                ]);
-
-                $comics = array();
-
-                foreach ($chapters as $chapter) {
-                    $parent_chapter = Comic_Plugin_Library::get_parent_chapter($chapter->term_id);
-                    $found = false;
-                    foreach ($comics as $comic) {
-                        if ($comic == $parent_chapter->slug) {
-                            $found = true;
-                            break;
-                        }
-                    }
-
-                    if ($found) {
-                        continue;
-                    }
-
-                    $comics[] = $parent_chapter->slug;
-                }
-
                 foreach ($comics as $comic) {
                     $selector_image_url = '';
                     if (isset($general_settings['comic_selector_image'])) {
-                        $selector_image_url = $general_settings['comic_selector_image'][$comic] ?? '';
+                        $selector_image_url = $general_settings['comic_selector_image'][$comic['slug']] ?? '';
                     }
             ?>
-                    <h3><?php echo $comic ?></h3>
-                    <div class="comic-theme-admin-image-selector" id="<?php echo 'comic_selector_image:' . $comic ?>">
+                    <h3><?php echo $comic['name'] ?></h3>
+                    <div class="comic-theme-admin-image-selector" id="<?php echo 'comic_selector_image:' . $comic['slug'] ?>">
                         <img src="<?php echo  $selector_image_url ?? '' ?>">
                     </div>
             <?php
