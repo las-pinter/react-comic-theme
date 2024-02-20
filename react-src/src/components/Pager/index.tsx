@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 interface IPagerProps {
     currentPage: number,
     totalPages: number,
@@ -6,13 +8,8 @@ interface IPagerProps {
 }
 
 const Pager = ({ currentPage, totalPages, nextClickedCallback, previousClickedCallback }: IPagerProps): JSX.Element => {
-    const postsNextClicked = () => {
-        nextClickedCallback();
-    }
-
-    const postsPreviousClicked = () => {
-        previousClickedCallback();
-    }
+    let handleNextClicked = useCallback(() => nextClickedCallback(), [nextClickedCallback]);
+    let handlePreviousClicked = useCallback(() => previousClickedCallback(), [previousClickedCallback]);
 
     let thePager = <></>;
 
@@ -21,13 +18,13 @@ const Pager = ({ currentPage, totalPages, nextClickedCallback, previousClickedCa
             <div className="pager">
                 <button
                     disabled={currentPage <= 1}
-                    onClick={postsPreviousClicked}
+                    onClick={handlePreviousClicked}
                 >
                     Previous
                 </button>
                 <button
                     disabled={currentPage >= totalPages}
-                    onClick={postsNextClicked}
+                    onClick={handleNextClicked}
                 >
                     Next
                 </button>

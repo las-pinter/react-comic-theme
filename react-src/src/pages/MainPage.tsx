@@ -28,20 +28,18 @@ const MainPage = (): JSX.Element => {
         setPostsCurrentPage((prevState) => {
             return prevState + 1;
         })
-        getPosts();
     }
 
     const postsPreviousClicked = () => {
         setPostsCurrentPage((prevState) => {
             return prevState - 1;
         })
-        getPosts();
     }
 
     useEffect(() => {
         getPosts();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [postsCurrentPage]);
 
     return (
         <div className="main-page container-vertical">
