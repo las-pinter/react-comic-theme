@@ -67,7 +67,6 @@ class Comic_Theme_Settings
         wp_enqueue_media();
 
         $general_settings = get_option('comic_theme_general_settings');
-
 ?>
         <div class="wrap">
             <h1>Comic Theme General Settings</h1>
@@ -95,9 +94,9 @@ class Comic_Theme_Settings
                     'taxonomy'   => 'characters',
                     'hide_empty' => false,
                 ));
-    
+
                 $character_groups = [];
-    
+
                 foreach ($characters as $character) {
                     $character_group = get_term_meta($character->term_id, 'character_group', true);
 
@@ -110,11 +109,14 @@ class Comic_Theme_Settings
 
                 foreach ($character_groups as $index => $_) {
             ?>
-                <select class="comic-theme-admin-option-selector" id="<?php echo "character_group_order_" . $index ?>">
+                <select class="comic-theme-admin-option-selector" id="<?php echo "character_group_order:place_" . $index ?>">
                     <option value="-1">None</option>
                     <?php
                         foreach ($character_groups as $character_group) {
-                            $current_group_setting = $general_settings["character_group_order_" . $index] ?? '';
+                            $current_group_setting = '';
+                            if (isset($general_settings['character_group_order'])) {
+                                $current_group_setting = $general_settings["character_group_order"]['place_' . $index] ?? '';
+                            }
                     ?>
                         <option class="level-0" value="<?php echo $character_group ?>" <?php echo $character_group == $current_group_setting ? 'selected="selected"' : '' ?>><?php echo $character_group ?></option>
                     <?php
@@ -128,12 +130,49 @@ class Comic_Theme_Settings
             <h2>Comic Logo Settings</h2>
 
                 <h3>Main Logo</h3>
-                    <div class="comic-theme-admin-image-selector" id="comic_theme_main_logo">
-                        <img src="<?php echo $general_settings['comic_theme_main_logo'] ?? '' ?>">
+                    <div class="comic-theme-admin-image-selector" id="main_logo">
+                        <img src="<?php echo $general_settings['main_logo'] ?? '' ?>">
                     </div>
+
             <h2>Comic Selector Settings</h2>
+
             <?php
-            
+                $chapters = get_terms([
+                    'taxonomy' => 'chapters',
+                    'hide_empty' => false,
+                ]);
+
+                $comics = array();
+
+                foreach ($chapters as $chapter) {
+                    $parent_chapter = Comic_Plugin_Library::get_parent_chapter($chapter->term_id);
+                    $found = false;
+                    foreach ($comics as $comic) {
+                        if ($comic == $parent_chapter->slug) {
+                            $found = true;
+                            break;
+                        }
+                    }
+
+                    if ($found) {
+                        continue;
+                    }
+
+                    $comics[] = $parent_chapter->slug;
+                }
+
+                foreach ($comics as $comic) {
+                    $selector_image_url = '';
+                    if (isset($general_settings['comic_selector_image'])) {
+                        $selector_image_url = $general_settings['comic_selector_image'][$comic] ?? '';
+                    }
+            ?>
+                    <h3><?php echo $comic ?></h3>
+                    <div class="comic-theme-admin-image-selector" id="<?php echo 'comic_selector_image:' . $comic ?>">
+                        <img src="<?php echo  $selector_image_url ?? '' ?>">
+                    </div>
+            <?php
+                }
             ?>
         </div>
 <?php
@@ -188,6 +227,17 @@ class Comic_Theme_Settings
     {
         $error = false;
 
+        function setValueByIndexes(&$array, $indexes, $value) {
+            $tempArray = &$array;
+            foreach ($indexes as $index) {
+                if (!isset($tempArray[$index])) {
+                    $tempArray[$index] = array();
+                }
+                $tempArray = &$tempArray[$index];
+            }
+            $tempArray = $value;
+        }
+
         if (!empty($_POST)) {
             $data_type = $this->ajax_input_changer($_POST['data_type']);
             switch ($data_type) {
@@ -195,14 +245,26 @@ class Comic_Theme_Settings
                     $setting_name = $this->ajax_input_changer($_POST['setting_name']);
                     $image_url = $this->ajax_input_changer($_POST['image_url']);
                     $settings = get_option('comic_theme_general_settings');
-                    $settings[$setting_name] = $image_url;
+                    if (str_contains($setting_name, ':')) {
+                        $setting_names = explode(':', $setting_name);
+                        setValueByIndexes($settings, $setting_names, $image_url);;
+                    } else {
+                        $settings[$setting_name] = $image_url;
+                    }
+
                     update_option('comic_theme_general_settings', $settings);
                     break;
                 case 'text':
                     $setting_name = $this->ajax_input_changer($_POST['setting_name']);
                     $value = $this->ajax_input_changer($_POST['value']);
                     $settings = get_option('comic_theme_general_settings');
-                    $settings[$setting_name] = $value;
+                    if (str_contains($setting_name, ':')) {
+                        $setting_names = explode(':', $setting_name);
+                        setValueByIndexes($settings, $setting_names, $value);;
+                    } else {
+                        $settings[$setting_name] = $value;
+                    }
+
                     update_option('comic_theme_general_settings', $settings);
                     break;
                 default:

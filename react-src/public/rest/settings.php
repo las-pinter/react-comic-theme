@@ -23,6 +23,11 @@ if (!class_exists('Comic_Theme_Settings_Rest_API')) :
                 'callback' => array(__CLASS__, 'get_character_group_order'),
                 'permission_callback' => '__return_true',
             ));
+            register_rest_route($namespace, '/selector_images/', array(
+                'methods' => 'GET',
+                'callback' => array(__CLASS__, 'get_selector_images'),
+                'permission_callback' => '__return_true',
+            ));
         }
 
         /**
@@ -66,6 +71,17 @@ if (!class_exists('Comic_Theme_Settings_Rest_API')) :
             }
 
             return $result;
+        }
+
+        /**
+         * Retrieving the comic selector background images
+         *
+         * @return array
+         */
+        public static function get_selector_images()
+        {
+            $general_settings = get_option('comic_theme_general_settings');
+            return $general_settings['cast_page'] ?? '-1';
         }
     }
 
