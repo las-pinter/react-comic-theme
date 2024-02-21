@@ -47,7 +47,7 @@
     padding: 10px;
     position: absolute;
     z-index: 2;
-    background: var(--cmx-container-background);
+    background: var(--cmx-foreground-color);
     box-shadow: var(--cmx-container-box-shadow);
     border: var(--cmx-container-border);
 }
@@ -98,6 +98,10 @@
 
 .menu-item-no-dropdown-submenu .menu-item-no-dropdown {
     font-size: 26pt;
+}
+
+.menu-item-social-title {
+    margin-left: 10px;
 }
 
 @media screen and (max-width: 768px) {

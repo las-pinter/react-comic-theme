@@ -3,6 +3,9 @@ import './index.css';
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebookF, faInstagram, faXTwitter } from '@fortawesome/free-brands-svg-icons';
+
 import DropdownMenu from "./DropdownMenu";
 
 import { TMenuItem } from "../../context/Context";
@@ -66,6 +69,48 @@ export const MenuItemNoDropdown = ({ item }: IMenuItemProps): JSX.Element => {
                     :
                     <></>
             }
+        </div>
+    )
+};
+
+interface IMenuItemSocialProps extends IMenuItemProps {
+    displayText: boolean
+}
+
+export const MenuItemSocial = ({ item, displayText }: IMenuItemSocialProps): JSX.Element => {
+    // @ts-ignore
+    let iconElement: JSX.Element = <></>;
+    let urlIconMap: Record<string, JSX.Element> = {
+        'facebook': <FontAwesomeIcon icon={faFacebookF} />,
+        'twitter': <FontAwesomeIcon icon={faXTwitter} />,
+        'instagram': <FontAwesomeIcon icon={faInstagram} />
+    };
+
+    let urls = Object.keys(urlIconMap);
+
+    for (let i = 0; i < urls.length; i++) {
+        const element = urls[i];
+        if (item.url.includes(element)) {
+            iconElement = urlIconMap[element];
+            break;
+        }
+    }
+
+    return (
+        <div className="menu-item-social">
+            <Link to={item.url} >
+                {iconElement}
+                {
+                    displayText
+                        ?
+                        <span className="menu-item-social-title">
+                            {item.title}
+                        </span>
+                        :
+                        <></>
+                }
+
+            </Link>
         </div>
     )
 };

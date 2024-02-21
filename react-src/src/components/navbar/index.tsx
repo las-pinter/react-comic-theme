@@ -6,7 +6,7 @@ import { FaBars } from "react-icons/fa";
 import { TMenu } from "../../context/Context";
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
-import MenuItem from "./MenuItem";
+import { MenuItem, MenuItemSocial } from "./MenuItem";
 import OverlayNavbar from "./OverlayNavbar";
 
 const Navbar = ({ context }: IConsumerProps): JSX.Element => {
@@ -14,34 +14,44 @@ const Navbar = ({ context }: IConsumerProps): JSX.Element => {
 
     useEffect(() => {
         setOverlayNavbarVisible(false);
-    },[context.slug])
+    }, [context.slug])
 
-    let menuList: TMenu = []
+    let menuListTop: TMenu = []
+    let menuListSocial: TMenu = []
 
     if (context.menus['top']) {
-        menuList = context.menus['top'];
+        menuListTop = context.menus['top'];
+    }
+    if (context.menus['social']) {
+        menuListSocial = context.menus['social'];
     }
 
     return (
         <>
-            <nav className="navbar container-horizontal">
+            <nav className="navbar container-vertical">
                 <FaBars
                     className="navigation-bar-bars"
                     onClick={() => {
                         setOverlayNavbarVisible(true);
                     }}
                 />
-
                 <div className="menu container-horizontal">
                     {
-                        menuList.map(function (item, i) {
+                        menuListTop.map(function (item, i) {
                             return <MenuItem key={'menu-item-' + item.ID} item={item} />
+                        })
+                    }
+                </div>
+                <div className="menu container-horizontal">
+                    {
+                        menuListSocial.map(function (item, i) {
+                            return <MenuItemSocial key={'menu-item-social' + item.ID} item={item} displayText={false} />
                         })
                     }
                 </div>
             </nav>
             <div className={"overlay-navbar-wrapper"}>
-                <OverlayNavbar menuList={menuList} show={overlayNavbarVisible} visibilityCallback={(value) => setOverlayNavbarVisible(value)} />
+                <OverlayNavbar menuList={menuListTop} show={overlayNavbarVisible} visibilityCallback={(value) => setOverlayNavbarVisible(value)} />
             </div>
         </>
     );
