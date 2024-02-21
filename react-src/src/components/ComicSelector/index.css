@@ -19,6 +19,7 @@
     height: 100%;
     width: 100%;
     justify-content: space-between;
+    z-index: 1;
 }
 
 .comic-selector-image {
@@ -53,4 +54,11 @@
 
 .comic-selector-nav-wrapper:hover .comic-selector-nav {
     visibility: visible
+}
+
+.comic-name {
+    z-index: 1;
+    font-size: 20pt;
+    margin-top: 10px;
+    color: white;
 }

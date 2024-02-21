@@ -3,7 +3,7 @@ import './index.css';
 import { useEffect, useState } from "react";
 import Axios from 'axios';
 
-import CharacterItem from "../CastPage/CharacterItem";
+import CharacterItem from "../CharacterItem";
 import { TCharacter } from '../TheCharacter';
 import { IComicPost } from ".";
 import { Link } from 'react-router-dom';
@@ -47,7 +47,7 @@ const Characters = ({ comicPost }: ICharactersProps) => {
                 characters.map((character, i) => {
                     return (
                         <Link key={"comic-character-" + i} to={'../character/' + character.slug}>
-                            <CharacterItem character={character} />
+                            <CharacterItem character={character} thumbnailSize='small' />
                         </Link>
                     );
                 })

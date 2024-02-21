@@ -9,9 +9,11 @@ import { CharacterComicItem } from '../ComicItem';
 
 export type TCharacter = {
     name: string,
-    thumbnail: string,
-    thumbnailMedium: string,
-    thumbnailLarge: string,
+    thumbnailSquareSmall: string,
+    thumbnailSquareMedium: string,
+    thumbnailSquareLarge: string,
+    thumbnailImageMedium: string,
+    thumbnailImageLarge: string,
     description: string,
     order: number,
     group: string,
@@ -46,8 +48,8 @@ export const TheCharacter = ({ character }: ITheCharacterProps): JSX.Element => 
     }, []);
 
     return (
-        <div className="comic-character-wrapper container-vertical">
-            <div className="comic-character-item">
+        <div className="the-character-wrapper container-vertical">
+            <div className="the-character-item">
                 <SwitchTransition mode={"out-in"}>
                     <CSSTransition
                         classNames="fader"
@@ -59,12 +61,12 @@ export const TheCharacter = ({ character }: ITheCharacterProps): JSX.Element => 
                         }}
                         key={character.name}
                     >
-                        <div ref={nodeRef} className="comic-character-content-wrapper container-vertical">
+                        <div ref={nodeRef} className="the-character-content-wrapper container-vertical">
                             <h1>
                                 <Link to={'/character/' + character.slug}>{character.name}</Link>
                             </h1>
                             <div className="container-horizontal">
-                                <div className="comic-character-image">
+                                <div className="the-character-image">
                                     {
                                         character.image ?
                                             <img
@@ -74,17 +76,19 @@ export const TheCharacter = ({ character }: ITheCharacterProps): JSX.Element => 
                                             <div className="gray-placeholder"></div>
                                     }
                                 </div>
-                                <div className="comic-character-description">
+                                <div className="the-character-description">
                                     {character.description}
                                 </div>
                             </div>
-                            <div className="comic-character-comic-list container horizontal">
-                                <h2>Related Comic Pages</h2>
-                                {
-                                    characterComics.map((comic, i) => {
-                                        return <CharacterComicItem key={i} comic={comic} />
-                                    })
-                                }
+                            <div className="the-character-comic-list container-vertical">
+                                <h2>Comic Pages</h2>
+                                <div className="the-character-comic-list-wrapper container-horizontal">
+                                    {
+                                        characterComics.map((comic, i) => {
+                                            return <CharacterComicItem key={i} comic={comic} />
+                                        })
+                                    }
+                                </div>
                             </div>
                         </div>
                     </CSSTransition>

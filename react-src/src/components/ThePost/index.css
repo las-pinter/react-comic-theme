@@ -6,46 +6,7 @@
     background: var(--cmx-container-background);
     box-shadow: var(--cmx-container-box-shadow);
     border: var(--cmx-container-border);
-    padding: 0 15px 15px 15px;
+    padding: 0 20px 20px 20px;
     box-sizing: border-box;
     width: 100%;
-}
-
-.post-appear {
-    opacity: 0;
-}
-
-.post-appear-active {
-    opacity: 1;
-    transition: opacity 200ms;
-}
-
-.post-appear-done {
-    opacity: 1;
-}
-
-.post-enter {
-    opacity: 0;
-}
-
-.post-enter-active {
-    opacity: 1;
-    transition: opacity 200ms;
-}
-
-.post-enter-done {
-    opacity: 1;
-}
-
-.post-exit {
-    opacity: 1;
-}
-
-.post-exit-active {
-    opacity: 0;
-    transition: opacity 200ms;
-}
-
-.post-exit-done {
-    opacity: 0;
 }
