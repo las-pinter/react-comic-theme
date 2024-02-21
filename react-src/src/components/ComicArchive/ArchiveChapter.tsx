@@ -3,14 +3,7 @@ import './index.css';
 import { useRef } from "react";
 
 import { CSSTransition, SwitchTransition } from "react-transition-group";
-import ArchiveComicItem from "./ArchiveComicItem";
-
-export type ComicItem = {
-    name: string,
-    slug: string,
-    permalink: string,
-    thumbnail: string
-}
+import { ArchiveComicItem, ComicItem } from '../ComicItem';
 
 interface IArchiveChapterProps {
     chapter: {

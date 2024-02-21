@@ -37,6 +37,18 @@
     font-weight: bold;
 }
 
+.comic-character-list {
+    background: var(--cmx-container-background);
+    box-shadow: var(--cmx-container-box-shadow);
+    border: var(--cmx-container-border);
+    padding: 15px 15px 15px 15px;
+    box-sizing: border-box;
+    width: 100%;
+    align-content: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
 @media screen and (min-width: 1025px) {
     .comic-navigator {
         column-gap: 50px;

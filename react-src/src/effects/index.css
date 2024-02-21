@@ -1,0 +1,60 @@
+.fader-appear {
+    opacity: 0!important;
+    visibility: hidden!important;
+}
+
+.fader-appear-active {
+    opacity: 1!important;
+    visibility: visible!important;
+    transition: opacity 300ms ease-in-out!important;
+}
+
+.fader-appear-done {
+    opacity: 1!important;
+    visibility: visible!important;
+}
+
+.fader-enter {
+    opacity: 0!important;
+    visibility: hidden!important;
+}
+
+.fader-enter-active {
+    opacity: 1!important;
+    visibility: visible!important;
+    transition: opacity 300ms ease-in-out!important;
+}
+
+.fader-enter-done {
+    opacity: 1!important;
+    visibility: visible!important;
+}
+
+.fader-exit {
+    opacity: 1!important;
+    visibility: visible!important;
+}
+
+.fader-exit-active {
+    opacity: 0!important;
+    transition: opacity 300ms ease-in-out!important;
+}
+
+.fader-exit-done {
+    opacity: 0!important;
+    visibility: hidden!important;
+}
+
+.fadeIn {
+    animation: fadeInAnimation 0.3s linear;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

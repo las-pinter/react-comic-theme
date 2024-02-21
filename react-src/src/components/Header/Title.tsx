@@ -5,8 +5,12 @@ import { Link } from 'react-router-dom';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
 const Title = ({ context }: IConsumerProps): JSX.Element => {
+    if (Object.keys(context.logoImages).length === 0) {
+        return <></>;
+    }
+
     let currentLogoImage = context.currentComic.comicSlug ? context.logoImages[context.currentComic.comicSlug] : context.logoImages.main;
-    let imageTitle = context.currentComic.comicSlug ? context.comics[context.currentComic.comicSlug]['name'] : "Tales From Somewhere";
+    let imageTitle = context.currentComic.comicSlug ? context.comics[context.currentComic.comicSlug]?.name : "Tales From Somewhere";
 
     return (
         <div className="comic-logo">

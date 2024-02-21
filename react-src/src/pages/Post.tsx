@@ -1,4 +1,4 @@
-import "./index.css";
+import './index.css';
 
 import { useEffect, useState } from 'react';
 import ThePost, { IPost } from '../components/ThePost';

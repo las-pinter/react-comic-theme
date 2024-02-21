@@ -6,6 +6,7 @@ const routes = [
     { path: '/' },
     { path: '/:slug' },
     { path: '/page/:slug' },
+    { path: '/character/:slug' },
     { path: '/comic/*' }
 ]
 

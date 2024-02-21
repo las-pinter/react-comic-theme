@@ -19,6 +19,7 @@ const OverlayNavbar = ({ menuList, show, visibilityCallback }: IFloatingNavbarPr
     return (
         <CSSTransition
             classNames="fader"
+            timeout={3000}
             addEndListener={(done: () => void) => {
                 nodeRef.current?.addEventListener("transitionend", done, false);
             }}

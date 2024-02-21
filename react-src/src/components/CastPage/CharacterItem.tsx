@@ -1,12 +1,6 @@
 import './index.css';
 
-export type TCharacter = {
-    name: string,
-    thumbnail: string,
-    order: number,
-    group: string,
-    image: string
-}
+import { TCharacter } from '../TheCharacter';
 
 interface ICharacterItemProps {
     character: TCharacter
@@ -14,9 +8,9 @@ interface ICharacterItemProps {
 
 const CharacterItem = ({ character }: ICharacterItemProps): JSX.Element => {
     return (
-        <div className="comic-character-item fadeIn">
-            <div className="comic-character-name">{character.name}</div>
-            <div className="comic-character-thumbnail">
+        <div className="cast-page-character-item fadeIn">
+            <div className="cast-page-character-name">{character.name}</div>
+            <div className="cast-page-character-thumbnail">
                 {
                     character.image ?
                         <img

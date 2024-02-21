@@ -1,0 +1,21 @@
+.comic-character-item {
+    background: var(--cmx-container-background);
+    box-shadow: var(--cmx-container-box-shadow);
+    border: var(--cmx-container-border);
+    padding: 0 15px 15px 15px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.comic-character-image {
+    max-width: 40%;
+    overflow: hidden;
+}
+
+.comic-character-image img {
+    width: 100%;
+}
+
+.comic-character-description {
+    max-width: 60%;
+}

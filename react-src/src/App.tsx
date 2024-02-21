@@ -1,5 +1,5 @@
 import './index.css';
-import './effects.css';
+import './effects/index.css';
 
 import {
     BrowserRouter as Router,
@@ -18,6 +18,7 @@ const App = () => {
                 <Route path="/" element={<PageRouter contextType={"mainPage"} />} />
                 <Route path="/:slug" element={<PageRouter contextType={"post"}/>} />
                 <Route path="/page/:slug" element={<PageRouter contextType={"page"}/>} />
+                <Route path="/character/:slug" element={<PageRouter contextType={"character"}/>} />
                 <Route path="/comic/*" element={<PageRouter contextType={"comic"}/>} />
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

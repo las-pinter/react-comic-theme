@@ -8,6 +8,7 @@ import MainPage from './MainPage';
 import Page from './Page';
 import Comic from './Comic';
 import Post from './Post';
+import Character from './Character';
 
 import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
@@ -45,6 +46,8 @@ const PageRouter = ({ context, contextType }: IPageRouterProps): JSX.Element => 
                                     />);
                                 case 'post':
                                     return (<Post slug={context.slug} />);
+                                case 'character':
+                                    return (<Character slug={context.slug} />);
                                 default:
                                     return (<></>);
                             }
