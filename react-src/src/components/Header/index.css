@@ -26,5 +26,6 @@ header {
     header.container-vertical {
         row-gap: 0;
         padding-bottom: 0;
+        padding-top: 0;
     }
 }

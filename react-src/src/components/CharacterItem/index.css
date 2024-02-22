@@ -20,18 +20,18 @@
 }
 
 .character-thumbnail-large {
-    width: 250px;
-    height: 250px;
+    width: 300px;
+    height: 300px;
 }
 
 .character-thumbnail-medium {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
 }
 
 .character-thumbnail-small {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
 }
 
 .character-thumbnail img {

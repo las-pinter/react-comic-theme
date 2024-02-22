@@ -108,6 +108,10 @@
     margin-left: 10px;
 }
 
+.menu-item-social {
+    max-width: 50%;
+}
+
 @media screen and (max-width: 768px) {
     .navigation-bar-bars {
         display: block;

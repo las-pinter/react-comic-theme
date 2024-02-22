@@ -35,6 +35,7 @@
 .comic-title {
     text-align: center;
     font-weight: bold;
+    font-size: 20pt;
 }
 
 .comic-character-list {
@@ -49,11 +50,17 @@
     flex-wrap: wrap;
 }
 
+@media screen and (max-width: 768px) {
+    .comic-navigator {
+        font-size: 30px;
+        column-gap: 50px;
+    }
+}
+
 @media screen and (min-width: 1025px) {
     .comic-navigator {
         column-gap: 50px;
     }
-
 }
 
 @media screen and (min-width: 1201px) {

@@ -24,7 +24,7 @@ const Footer = ({ context }: IFooterProps): JSX.Element => {
     return (
         <footer className="container-vertical">
             <div className="footer-link-collection container-horizontal">
-                <div className="navigation-bottom">
+                <div className="navigation-bottom container-vertical">
                     <h2>Navigation</h2>
                     <div className="container-vertical">
                         {
@@ -34,7 +34,7 @@ const Footer = ({ context }: IFooterProps): JSX.Element => {
                         }
                     </div>
                 </div>
-                <div className="social-media">
+                <div className="social-media container-vertical">
                     <h2>Social Media</h2>
                     <div className="footer-social container-vertical">
                         {
@@ -44,7 +44,7 @@ const Footer = ({ context }: IFooterProps): JSX.Element => {
                         }
                     </div>
                 </div>
-                <div className="related">
+                <div className="related container-vertical">
                     <h2>Related</h2>
                     <div className="container-vertical">
                         {

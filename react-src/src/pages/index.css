@@ -1,4 +1,8 @@
-.main-page, .page-single, .comic-page, .post-single, .character-single {
+.main-page,
+.page-single,
+.comic-page,
+.post-single,
+.character-single {
     max-width: var(--cmx-content-width);
     min-width: var(--cmx-content-min-width);
     align-items: center;
@@ -9,6 +13,7 @@
 
 .content-wrapper {
     align-items: center;
+    padding: 1px;
 }
 
 .main-content {
@@ -17,4 +22,19 @@
 
 .sidebar-content {
     width: 35%;
+}
+
+@media screen and (max-width: 768px) {
+    .main-content-wrapper.container-horizontal {
+        flex-direction: column;
+        row-gap: 20px;
+    }
+
+    .main-content {
+        width: 100%;
+    }
+
+    .sidebar-content {
+        width: 100%;
+    }
 }
