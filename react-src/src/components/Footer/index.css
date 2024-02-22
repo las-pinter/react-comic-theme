@@ -26,6 +26,7 @@ footer .menu-item-no-dropdown-submenu .menu-item-no-dropdown {
 footer .menu-item-no-dropdown-submenu {
     row-gap: 20px;
     margin-left: 20px;
+    margin-top: 0px;
 }
 
 .footer-social {

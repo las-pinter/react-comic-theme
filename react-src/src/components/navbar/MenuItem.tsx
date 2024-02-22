@@ -20,7 +20,7 @@ export const MenuItem = ({ item }: IMenuItemProps): JSX.Element => {
     if (item.children.length === 0) {
         return (
             <div className="menu-item">
-                <Link to={item.url} >
+                <Link to={item.url} title={item.title}>
                     {item.title}
                 </Link>
             </div>
@@ -35,7 +35,7 @@ export const MenuItem = ({ item }: IMenuItemProps): JSX.Element => {
                     })
                 }}
             >
-                <Link to={item.url}>
+                <Link to={item.url} title={item.title}>
                     {item.title}
                 </Link>
                 <DropdownMenu items={item.children} display={dropdown} />
@@ -58,7 +58,7 @@ export const MenuItemNoDropdown = ({ item }: IMenuItemProps): JSX.Element => {
                             item.children.map((item, i) => {
                                 return (
                                     <div key={"menu-item-no-dropdown-" + item.title} className="menu-item-no-dropdown">
-                                        <Link to={item.url} >
+                                        <Link to={item.url} title={item.title}>
                                             {item.title}
                                         </Link>
                                     </div>
@@ -93,7 +93,7 @@ export const MenuItemSocial = ({ item, displayText }: IMenuItemSocialProps): JSX
 
     return (
         <div className="menu-item-social">
-            <Link to={item.url} >
+            <Link to={item.url} title={item.title}>
                 {iconElement}
                 {
                     displayText
