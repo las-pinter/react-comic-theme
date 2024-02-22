@@ -33,6 +33,7 @@
 
 .menu-item {
     list-style: none;
+    font-size: 25px;
 }
 
 .menu-item a {

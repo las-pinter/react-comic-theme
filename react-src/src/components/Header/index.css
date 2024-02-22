@@ -1,6 +1,7 @@
 header {
     align-items: center;
-    padding: 15px;
+    box-sizing: border-box;
+    padding: 0 15px 15px 15px;
     border-bottom: 1px solid color-mix(in hsl, var(--cmx-detail-color) 80%, transparent);
     background: var(--cmx-container-background-reverse);
     box-shadow: 20px 3.5px color-mix(in hsl, var(--cmx-foreground-color) 100%, transparent),
@@ -26,6 +27,5 @@ header {
     header.container-vertical {
         row-gap: 0;
         padding-bottom: 0;
-        padding-top: 0;
     }
 }
