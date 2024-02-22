@@ -3,16 +3,16 @@ import './index.css';
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebookF, faInstagram, faXTwitter } from '@fortawesome/free-brands-svg-icons';
-
 import DropdownMenu from "./DropdownMenu";
 
 import { TMenuItem } from "../../context/Context";
+import { UrlIconMap } from '../../Icons';
 
 interface IMenuItemProps {
     item: TMenuItem
 }
+
+
 
 export const MenuItem = ({ item }: IMenuItemProps): JSX.Element => {
     const [dropdown, setDropdown] = useState(false);
@@ -80,18 +80,13 @@ interface IMenuItemSocialProps extends IMenuItemProps {
 export const MenuItemSocial = ({ item, displayText }: IMenuItemSocialProps): JSX.Element => {
     // @ts-ignore
     let iconElement: JSX.Element = <></>;
-    let urlIconMap: Record<string, JSX.Element> = {
-        'facebook': <FontAwesomeIcon icon={faFacebookF} />,
-        'twitter': <FontAwesomeIcon icon={faXTwitter} />,
-        'instagram': <FontAwesomeIcon icon={faInstagram} />
-    };
 
-    let urls = Object.keys(urlIconMap);
+    let urls = Object.keys(UrlIconMap);
 
     for (let i = 0; i < urls.length; i++) {
         const element = urls[i];
         if (item.url.includes(element)) {
-            iconElement = urlIconMap[element];
+            iconElement = UrlIconMap[element];
             break;
         }
     }

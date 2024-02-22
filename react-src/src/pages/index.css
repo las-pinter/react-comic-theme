@@ -1,5 +1,6 @@
 .main-page, .page-single, .comic-page, .post-single, .character-single {
     max-width: var(--cmx-content-width);
+    min-width: var(--cmx-content-min-width);
     align-items: center;
     width: 100%;
     position: relative;

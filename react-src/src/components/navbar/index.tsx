@@ -51,7 +51,7 @@ const Navbar = ({ context }: IConsumerProps): JSX.Element => {
                 </div>
             </nav>
             <div className={"overlay-navbar-wrapper"}>
-                <OverlayNavbar menuList={menuListTop} show={overlayNavbarVisible} visibilityCallback={(value) => setOverlayNavbarVisible(value)} />
+                <OverlayNavbar menuList={menuListTop} menuListSocial={menuListSocial} show={overlayNavbarVisible} visibilityCallback={(value) => setOverlayNavbarVisible(value)} />
             </div>
         </>
     );

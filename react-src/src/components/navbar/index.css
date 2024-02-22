@@ -67,7 +67,7 @@
     align-content: center;
     justify-content: center;
     flex-wrap: wrap;
-    z-index: 1;
+    z-index: 100;
     background: hsla(0, 0%, 0%, 0.71);
     backdrop-filter: blur(5px);
     text-align: center;
@@ -85,6 +85,10 @@
     top: 20px;
     left: 20px;
     cursor: pointer;
+}
+
+.overlay-navbar-social {
+    column-gap: 40px;
 }
 
 .menu-item-no-dropdown {
@@ -113,17 +117,22 @@
 
     .menu {
         visibility: hidden;
+        height: 0;
+    }
+
+    .navbar {
+        height: 0;
     }
 }
 
 @media screen and (min-width: 1025px) {
     .menu {
-        column-gap: 50px;
+        column-gap: 40px;
     }
 }
 
 @media screen and (min-width: 1201px) {
     .menu {
-        column-gap: 100px;
+        column-gap: 60px;
     }
 }

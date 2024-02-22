@@ -5,15 +5,16 @@ import { FaBars } from "react-icons/fa";
 import { CSSTransition } from "react-transition-group";
 
 import { TMenu } from "../../context/Context";
-import { MenuItemNoDropdown } from "./MenuItem";
+import { MenuItemNoDropdown, MenuItemSocial } from "./MenuItem";
 
 interface IFloatingNavbarProps {
     menuList: TMenu,
+    menuListSocial: TMenu,
     show: boolean,
     visibilityCallback: Dispatch<SetStateAction<boolean>>
 }
 
-const OverlayNavbar = ({ menuList, show, visibilityCallback }: IFloatingNavbarProps): JSX.Element => {
+const OverlayNavbar = ({ menuList, menuListSocial, show, visibilityCallback }: IFloatingNavbarProps): JSX.Element => {
     const nodeRef = useRef<any>(null);
 
     return (
@@ -39,6 +40,13 @@ const OverlayNavbar = ({ menuList, show, visibilityCallback }: IFloatingNavbarPr
                         return <MenuItemNoDropdown key={'menu-item-' + item.ID} item={item} />
                     })
                 }
+                <div className="overlay-navbar-social container-horizontal">
+                    {
+                        menuListSocial.map(function (item, i) {
+                            return <MenuItemSocial key={'menu-item-social' + item.ID} item={item} displayText={false} />
+                        })
+                    }
+                </div>
             </div>
         </CSSTransition>
     );

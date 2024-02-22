@@ -1,17 +1,24 @@
 import './index.css';
 
-import { Link } from 'react-router-dom';
-
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import { TMenu } from '../../context/Context';
+import { MenuItemNoDropdown, MenuItemSocial } from '../Navbar/MenuItem';
 
-interface IFooterProps extends IConsumerProps{}
+interface IFooterProps extends IConsumerProps { }
 
 const Footer = ({ context }: IFooterProps): JSX.Element => {
-    let menuList: TMenu = []
+    let menuListTop: TMenu = []
+    let menuListSocial: TMenu = []
+    let menuListRelated: TMenu = []
 
     if (context.menus['top']) {
-        menuList = context.menus['top'];
+        menuListTop = context.menus['top'];
+    }
+    if (context.menus['social']) {
+        menuListSocial = context.menus['social'];
+    }
+    if (context.menus['related']) {
+        menuListRelated = context.menus['related'];
     }
 
     return (
@@ -21,43 +28,31 @@ const Footer = ({ context }: IFooterProps): JSX.Element => {
                     <h2>Navigation</h2>
                     <div className="container-vertical">
                         {
-                            menuList.map(function (item, i) {
-
-                                let childItems = item.children.map(function (childItem, j) {
-                                    return (
-                                        <div
-                                            key={'footer-menu-item-' + childItem.ID}
-                                            className="footer-menu-item"
-                                        >
-                                            <Link to={childItem.url} >
-                                                {childItem.title}
-                                            </Link>
-                                        </div>
-                                    )
-                                });
-
-                                return (
-                                    <div
-                                        key={'footer-menu-item-' + item.ID}
-                                        className="footer-menu-item"
-                                    >
-                                        <Link to={item.url} >
-                                            {item.title}
-                                        </Link>
-                                        <div className="footer-sub-menu container-vertical">
-                                            {childItems}
-                                        </div>
-                                    </div>
-                                )
+                            menuListTop.map(function (item, i) {
+                                return <MenuItemNoDropdown key={'footer-menu-item-' + item.ID} item={item} />
                             })
                         }
                     </div>
                 </div>
                 <div className="social-media">
                     <h2>Social Media</h2>
+                    <div className="footer-social container-vertical">
+                        {
+                            menuListSocial.map(function (item, i) {
+                                return <MenuItemSocial key={'footer-menu-item-' + item.ID} item={item} displayText={true} />
+                            })
+                        }
+                    </div>
                 </div>
                 <div className="related">
                     <h2>Related</h2>
+                    <div className="container-vertical">
+                        {
+                            menuListRelated.map(function (item, i) {
+                                return <MenuItemNoDropdown key={'footer-menu-item-' + item.ID} item={item} />
+                            })
+                        }
+                    </div>
                 </div>
             </div>
             <div className="copyright"></div>

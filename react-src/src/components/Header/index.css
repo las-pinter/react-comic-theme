@@ -3,9 +3,9 @@ header {
     padding: 15px;
     border-bottom: 1px solid color-mix(in hsl, var(--cmx-detail-color) 80%, transparent);
     background: var(--cmx-container-background-reverse);
-    box-shadow: 20px 3.5px  color-mix(in hsl, var(--cmx-foreground-color) 100%, transparent),
-                50px 12.5px  color-mix(in hsl, var(--cmx-foreground-color) 4%, transparent),
-                80px 30.1px  color-mix(in hsl, var(--cmx-foreground-color) 10%, transparent);
+    box-shadow: 20px 3.5px color-mix(in hsl, var(--cmx-foreground-color) 100%, transparent),
+        50px 12.5px color-mix(in hsl, var(--cmx-foreground-color) 4%, transparent),
+        80px 30.1px color-mix(in hsl, var(--cmx-foreground-color) 10%, transparent);
     margin-bottom: 30px;
 }
 
@@ -20,4 +20,11 @@ header {
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
+}
+
+@media screen and (max-width: 768px) {
+    header.container-vertical {
+        row-gap: 0;
+        padding-bottom: 0;
+    }
 }
