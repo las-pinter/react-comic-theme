@@ -3,6 +3,8 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 import WithHeadFoot from '../wrappers/WithHeadFoot';
 import WithProvider from '../wrappers/WithProvider';
+import WithBackground from '../wrappers/WithBackground';
+import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
 import MainPage from './MainPage';
 import Page from './Page';
@@ -10,7 +12,6 @@ import Comic from './Comic';
 import Post from './Post';
 import Character from './Character';
 
-import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
 interface IPageRouterProps extends IConsumerProps {
     contextType?: string
@@ -59,4 +60,4 @@ const PageRouter = ({ context, contextType }: IPageRouterProps): JSX.Element => 
     )
 }
 
-export default WithProvider(WithHeadFoot(WithConsumer(PageRouter)));
+export default WithProvider(WithBackground(WithHeadFoot(WithConsumer(PageRouter))));

@@ -38,6 +38,7 @@ export interface IContextState {
     comics: Record<string,Comic>,
     castPageSlug: string,
     logoImages: Record<string, string>,
+    backgroundImages: Record<string, Record<string, string>>,
     currentComic: {
         comicPageFullSlug: string,
         comicPageSlug: string,
@@ -55,6 +56,7 @@ const storeContext = React.createContext<Readonly<IContextState>>(
         comics: {},
         castPageSlug: '',
         logoImages: {},
+        backgroundImages: {},
         currentComic: {
             comicPageFullSlug: '',
             comicPageSlug: '',
@@ -78,6 +80,7 @@ export class Provider extends React.Component<IProps, IContextState> {
             comics: {},
             castPageSlug: '',
             logoImages: {},
+            backgroundImages: {},
             currentComic: {
                 comicPageFullSlug: props.router ? (props.router.params['*'] ? props.router.params['*'] : '') : '',
                 comicPageSlug: props.router ? (props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '') : '',
@@ -91,6 +94,7 @@ export class Provider extends React.Component<IProps, IContextState> {
         this.getComics();
         this.getCastPageSlug();
         this.getLogos();
+        this.getBackgrounds();
     }
 
     componentDidUpdate(prevProps: any) {
@@ -215,6 +219,21 @@ export class Provider extends React.Component<IProps, IContextState> {
         }).catch(() => {
             self.setState({
                 logoImages: {},
+            })
+        });
+    }
+
+    getBackgrounds() {
+        let url = '/wp-json/settings/v1/backgrounds';
+        let self = this;
+
+        return Axios.get(url).then((response) => {
+            self.setState({
+                backgroundImages: response.data
+            })
+        }).catch(() => {
+            self.setState({
+                backgroundImages: {},
             })
         });
     }

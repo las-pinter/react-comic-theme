@@ -19,7 +19,7 @@ body {
   --cmx-container-background-reverse: radial-gradient(ellipse at bottom, color-mix(in hsl, var(--cmx-detail-color) 50%, transparent), transparent),
                           radial-gradient(ellipse at top, color-mix(in hsl, var(--cmx-foreground-color) 50%, transparent), transparent),
                           color-mix(in hsl, var(--cmx-detail-shadow) 50%, transparent);
-  --cmx-container-box-shadow: 0px 0px 10px 0px color-mix(in hsl, var(--cmx-detail-shadow) 100%, transparent);
+  --cmx-container-box-shadow: 0px 0px 10px 0px var(--cmx-detail-shadow);
   --cmx-container-border: 1px solid var(--cmx-detail-color);
 }
 
@@ -34,10 +34,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--cmx-base-color);
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
 }
 
 /* Fonts */
