@@ -3,9 +3,9 @@ import './index.css';
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 
-import TheComic, { IComicPost } from '../components/TheComic';
-import { TheComicPost } from '../components/ThePost';
-import Sidebar from '../components/Sidebar';
+import TheComic, { IComicPost } from '../components/TheComic/TheComic';
+import { TheComicPost } from '../components/ThePost/ThePost';
+import Sidebar from '../components/Sidebar/Sidebar';
 
 interface IComicProps {
     comicPageSlug: string,

@@ -2,7 +2,7 @@ import './index.css';
 
 import { Link } from 'react-router-dom';
 
-import { TCharacter } from '../TheCharacter';
+import { TCharacter } from '../TheCharacter/TheCharacter';
 
 interface ICharacterItemProps {
     character: TCharacter,

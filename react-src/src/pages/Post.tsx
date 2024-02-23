@@ -1,7 +1,7 @@
 import './index.css';
 
 import { useEffect, useState } from 'react';
-import ThePost, { IPost } from '../components/ThePost';
+import ThePost, { IPost } from '../components/ThePost/ThePost';
 import Axios from 'axios';
 
 interface IPostProps {

@@ -3,9 +3,9 @@ import './index.css';
 import { ForwardedRef, forwardRef } from 'react';
 import { DiscussionEmbed } from 'disqus-react';
 
-import { IPost } from '../ThePost';
-import { IComicPost } from '../TheComic';
-import { IPage } from '../ThePage';
+import { IPost } from '../ThePost/ThePost';
+import { IComicPost } from '../TheComic/TheComic';
+import { IPage } from '../ThePage/ThePage';
 
 interface IDisqusCommentsProps {
     post: IPost | IComicPost | IPage,

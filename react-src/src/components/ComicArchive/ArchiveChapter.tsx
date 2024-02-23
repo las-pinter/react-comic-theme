@@ -3,7 +3,7 @@ import './index.css';
 import { useRef } from "react";
 
 import { CSSTransition, SwitchTransition } from "react-transition-group";
-import { ArchiveComicItem, ComicItem } from '../ComicItem';
+import { ArchiveComicItem, ComicItem } from '../ComicItem/ComicItem';
 
 interface IArchiveChapterProps {
     chapter: {

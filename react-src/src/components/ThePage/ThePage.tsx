@@ -7,10 +7,10 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
-import ComicArchive from '../ComicArchive';
-import CastPage from '../CastPage';
-import DisqusComments from '../DisqusComments';
-import { IPost } from '../ThePost';
+import ComicArchive from '../ComicArchive/ComicArchive';
+import CastPage from '../CastPage/CastPage';
+import DisqusComments from '../DisqusComments/DisqusComments';
+import { IPost } from '../ThePost/ThePost';
 
 export interface IPage extends IPost { }
 

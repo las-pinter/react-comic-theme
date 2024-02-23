@@ -3,7 +3,7 @@ import './index.css';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import { TMenu } from '../../context/Context';
 import { MenuItemNoDropdown, MenuItemSocial } from '../Navbar/MenuItem';
-import Sidebar from '../Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 
 interface IFooterProps extends IConsumerProps { }
 

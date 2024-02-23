@@ -9,7 +9,7 @@ import ComicNavigator, { TComicNavigatorProps } from './ComicNavigator';
 import Characters from './Characters';
 import ComicTitle from './ComicTitle';
 
-import { IPost } from '../ThePost';
+import { IPost } from '../ThePost/ThePost';
 
 export interface IComicPost extends IPost {
     type: 'comic'

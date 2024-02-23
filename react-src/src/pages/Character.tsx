@@ -3,7 +3,7 @@ import './index.css';
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 
-import TheCharacter, { TCharacter } from "../components/TheCharacter";
+import TheCharacter, { TCharacter } from "../components/TheCharacter/TheCharacter";
 
 interface ICharacterProps {
     slug: string

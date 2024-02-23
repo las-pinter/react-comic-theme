@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 import CharacterGroup from './CharacterGroup';
-import { TCharacter } from '../TheCharacter';
+import { TCharacter } from '../TheCharacter/TheCharacter';
 
 const CastPage = (): JSX.Element => {
     const [loading, setLoading] = useState(true);

@@ -1,7 +1,7 @@
 import './index.css';
 
-import CharacterItem from '../CharacterItem';
-import { TCharacter } from '../TheCharacter';
+import CharacterItem from '../CharacterItem/CharacterItem';
+import { TCharacter } from '../TheCharacter/TheCharacter';
 
 export type TCharacterGroup = Array<TCharacter>
 

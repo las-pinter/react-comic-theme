@@ -3,9 +3,9 @@ import './index.css';
 import { useEffect, useState } from "react";
 import Axios from 'axios';
 
-import CharacterItem from "../CharacterItem";
-import { TCharacter } from '../TheCharacter';
-import { IComicPost } from ".";
+import CharacterItem from "../CharacterItem/CharacterItem";
+import { TCharacter } from '../TheCharacter/TheCharacter';
+import { IComicPost } from "./TheComic";
 import { Link } from 'react-router-dom';
 
 interface ICharactersProps {

@@ -3,11 +3,11 @@ import './index.css';
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 
-import ThePosts from '../components/ThePosts';
-import Pager from '../components/Pager';
-import ComicSelector from '../components/ComicSelector';
-import Sidebar from '../components/Sidebar';
-import { IPost } from '../components/ThePost';
+import ThePosts from '../components/ThePosts/ThePosts';
+import Pager from '../components/Pager/Pager';
+import ComicSelector from '../components/ComicSelector/ComicSelector';
+import Sidebar from '../components/Sidebar/Sidebar';
+import { IPost } from '../components/ThePost/ThePost';
 
 
 const MainPage = (): JSX.Element => {

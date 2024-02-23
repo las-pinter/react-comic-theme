@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
-import DisqusComments from '../DisqusComments';
+import DisqusComments from '../DisqusComments/DisqusComments';
 import PostMeta from './PostMeta';
 
 

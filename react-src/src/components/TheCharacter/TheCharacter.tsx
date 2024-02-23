@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import { CharacterComicItem } from '../ComicItem';
+import { CharacterComicItem } from '../ComicItem/ComicItem';
 
 export type TCharacter = {
     name: string,

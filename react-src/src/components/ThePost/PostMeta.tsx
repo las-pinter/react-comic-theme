@@ -1,6 +1,6 @@
 import Moment from 'react-moment';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
-import { IPost } from '.';
+import { IPost } from './ThePost';
 
 interface IPostMetaProps extends IConsumerProps {
     post?: IPost

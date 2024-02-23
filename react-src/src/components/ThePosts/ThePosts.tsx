@@ -1,4 +1,4 @@
-import ThePost, { IPost } from '../ThePost';
+import ThePost, { IPost } from '../ThePost/ThePost';
 
 interface IThePostsProps {
     posts: Array<IPost>,
