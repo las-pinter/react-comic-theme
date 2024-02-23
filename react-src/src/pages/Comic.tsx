@@ -5,6 +5,7 @@ import Axios from 'axios';
 
 import TheComic, { IComicPost } from '../components/TheComic';
 import { TheComicPost } from '../components/ThePost';
+import Sidebar from '../components/Sidebar';
 
 interface IComicProps {
     comicPageSlug: string,
@@ -38,6 +39,7 @@ const Comic = ({ comicPageSlug, comicPageFullSlug }: IComicProps): JSX.Element =
     return (
         <div className="comic-page container-vertical">
             <TheComic comicPost={comic} />
+            <Sidebar sidebarId='under-comic' background={true} />
             <TheComicPost post={comic} comicPageFullSlug={comicPageFullSlug} />
         </div>
     )

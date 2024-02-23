@@ -57,7 +57,7 @@ const MainPage = (): JSX.Element => {
                     />
                 </div>
                 <div id="right-to-main-content" className="sidebar-content container-vertical">
-                    <Sidebar sidebarId="right-to-main-content" />
+                    <Sidebar sidebarId="right-to-main-content" background={true} />
                 </div>
             </div>
         </div>

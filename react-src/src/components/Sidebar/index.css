@@ -2,10 +2,11 @@
     background: var(--cmx-container-background);
     box-shadow: var(--cmx-container-box-shadow);
     border: var(--cmx-container-border);
-    min-height: 100px;
     padding: 0 15px 15px 15px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.sidebar-item li {
+.sidebar-item li, .sidebar-item-no-background li {
     list-style: none;
 }

@@ -16,7 +16,19 @@ function custom_widgets_init()
 {
     register_sidebar(array(
         'id'            => 'right-to-main-content',
-        'name'          => 'Widgets right to main content',
+        'name'          => 'Right to Main Content Side',
+        'show_in_rest' => true,
+    ));
+
+    register_sidebar(array(
+        'id'            => 'footer',
+        'name'          => 'Footer',
+        'show_in_rest' => true,
+    ));
+
+    register_sidebar(array(
+        'id'            => 'under-comic',
+        'name'          => 'Under Comic',
         'show_in_rest' => true,
     ));
 }

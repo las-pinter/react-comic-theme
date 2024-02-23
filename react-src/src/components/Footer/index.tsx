@@ -3,6 +3,7 @@ import './index.css';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import { TMenu } from '../../context/Context';
 import { MenuItemNoDropdown, MenuItemSocial } from '../Navbar/MenuItem';
+import Sidebar from '../Sidebar';
 
 interface IFooterProps extends IConsumerProps { }
 
@@ -55,7 +56,7 @@ const Footer = ({ context }: IFooterProps): JSX.Element => {
                     </div>
                 </div>
             </div>
-            <div className="copyright"></div>
+            <Sidebar sidebarId='footer' background={false} />
         </footer>
     );
 }

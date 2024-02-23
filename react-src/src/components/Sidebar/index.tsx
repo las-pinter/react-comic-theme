@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import Axios from 'axios';
 
 interface ISidebadProps {
-    sidebarId: string
+    sidebarId: string,
+    background: boolean
 }
 
-const Sidebar = ({ sidebarId }: ISidebadProps): JSX.Element => {
+const Sidebar = ({ sidebarId, background }: ISidebadProps): JSX.Element => {
     const [sidebar, setSidebar] = useState([]);
 
     useEffect(() => {
@@ -24,7 +25,11 @@ const Sidebar = ({ sidebarId }: ISidebadProps): JSX.Element => {
         <>
             {
                 sidebar.map((item, i) => {
-                    return <div key={sidebarId + "_" + item['id']} className="sidebar-item" dangerouslySetInnerHTML={{ __html: item['rendered'] }}></div>
+                    return <div
+                        key={sidebarId + "_" + item['id']}
+                        className={"sidebar-item" + (background ? "" : "-no-background")}
+                        dangerouslySetInnerHTML={{ __html: item['rendered'] }}
+                    />
                 })
             }
         </>
