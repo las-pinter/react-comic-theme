@@ -45,6 +45,15 @@ class Comic_Theme_Settings
             array($this, 'admin_menu_general'),
             'dashicons-admin-generic'
         );
+        add_submenu_page(
+            'comic-theme-settings',
+            'Background Settings',
+            'Background Settings',
+            'manage_options',
+            'comic-theme-background-settings',
+            array($this, 'admin_menu_backgrounds'),
+            'dashicons-admin-generic'
+        );
     }
 
     /*
@@ -141,10 +150,7 @@ class Comic_Theme_Settings
                 <option value="-1">None</option>
                 <?php
                     foreach ($character_groups as $character_group) {
-                        $current_group_setting = '';
-                        if (isset($general_settings['character_group_order'])) {
-                            $current_group_setting = $general_settings["character_group_order"]['place_' . $index] ?? '';
-                        }
+                        $current_group_setting = $general_settings["character_group_order"]['place_' . $index] ?? '';
                 ?>
                     <option class="level-0" value="<?php echo $character_group ?>" <?php echo $character_group == $current_group_setting ? 'selected="selected"' : '' ?>><?php echo $character_group ?></option>
                 <?php
@@ -159,19 +165,12 @@ class Comic_Theme_Settings
             <h3>Main Logo</h3>
             <div class="comic-theme-admin-image-selector" id="logo:main">
                 <img src="<?php
-                    if(!isset($general_settings['logo'])) {
-                        echo '';
-                    } else {
-                        echo $general_settings['logo']['main'] ?? '';
-                    }
+                    echo $general_settings['logo']['main'] ?? '';
                 ?>">
             </div>
             <?php
                 foreach ($comics as $comic) {
-                    $logo_image_url = '';
-                    if (isset($general_settings['logo'])) {
-                        $logo_image_url = $general_settings['logo'][$comic['slug']] ?? '';
-                    }
+                    $logo_image_url = $general_settings['logo'][$comic['slug']] ?? '';
             ?>
                 <h3><?php echo $comic['name'] ?></h3>
                 <div class="comic-theme-admin-image-selector" id="<?php echo 'logo:' . $comic['slug'] ?>" >
@@ -197,6 +196,71 @@ class Comic_Theme_Settings
                 }
             ?>
         </div>
+<?php
+    }
+
+    /**
+     * Function for the background settings
+     */
+    function admin_menu_backgrounds()
+    {
+        if (!current_user_can('manage_options')) {
+            wp_die(__('You do not have sufficient permissions to access this page.'));
+        }
+
+        wp_enqueue_media();
+
+        $general_settings = get_option('comic_theme_general_settings');
+
+        $comics = array();
+
+        $chapters = get_terms([
+            'taxonomy' => 'chapters',
+            'hide_empty' => false,
+        ]);
+
+        foreach ($chapters as $chapter) {
+            $parent_chapter = Comic_Plugin_Library::get_parent_chapter($chapter->term_id);
+            $found = false;
+            foreach ($comics as $comic) {
+                if (($comic['slug'] ?? '') == $parent_chapter->slug) {
+                    $found = true;
+                    break;
+                }
+            }
+
+            if ($found) {
+                continue;
+            }
+
+            $comics[] = array(
+                'name' => $parent_chapter->name,
+                'slug' => $parent_chapter->slug
+            );
+        }
+?>
+        <div class="wrap">
+            <h1>Comic Theme Background Settings</h1>
+
+            <h2>Main Background</h2>
+            <h3>First Layer</h3>
+            <div class="comic-theme-admin-image-selector" id="background:main:first">
+                <img src="<?php
+                    echo $general_settings['background']['main']['first'] ?? '';
+                ?>">
+            </div>
+            <h3>Second Layer</h3>
+            <div class="comic-theme-admin-image-selector" id="background:main:second">
+                <img src="<?php
+                    echo $general_settings['background']['main']['second'] ?? '';
+                ?>">
+            </div>
+            <h3>Third Layer</h3>
+            <div class="comic-theme-admin-image-selector" id="background:main:third">
+                <img src="<?php
+                    echo $general_settings['background']['main']['third'] ?? '';
+                ?>">
+            </div>
 <?php
     }
 
