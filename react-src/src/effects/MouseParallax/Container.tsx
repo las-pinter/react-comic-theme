@@ -1,0 +1,131 @@
+import React, { useCallback, useEffect, useState } from 'react';
+import { SpringConfig, useSpring } from '@react-spring/web';
+import { OffsetContext } from './Context';
+import { defaultSpring } from './defaultValues';
+import { Position } from './interfaces';
+
+interface Props {
+    globalFactorX?: number;
+    globalFactorY?: number;
+    resetOnLeave?: boolean;
+    useWindowMouseEvents?: boolean;
+    inverted?: boolean;
+    springConfig?: SpringConfig;
+    enabled?: boolean;
+    containerStyle?: React.CSSProperties;
+    className?: string;
+    children: JSX.Element[] | JSX.Element;
+}
+
+const MouseParallaxContainer = ({
+    globalFactorX = 1,
+    globalFactorY = 1,
+    resetOnLeave,
+    useWindowMouseEvents,
+    inverted,
+    springConfig,
+    enabled = true,
+    containerStyle,
+    className,
+    children,
+}: Props) => {
+    const [offset, offsetApi] = useSpring(() => ({
+        ...defaultSpring,
+        ...(springConfig ? { config: springConfig } : {}),
+    }));
+    const resetOffset = () => offsetApi.start(defaultSpring);
+
+    const [containerRef, setContainerRef] = useState<{
+        current: HTMLDivElement | null;
+    }>({ current: null });
+    const containerRefWithCallback = useCallback((node: any) => {
+        if (node !== null) {
+            setContainerRef({ current: node });
+        }
+    }, []);
+
+    const getMousePosition = useCallback(
+        (
+            event: React.MouseEvent<HTMLDivElement, MouseEvent> | MouseEvent
+        ): Position => {
+            const rect = containerRef.current
+                ? containerRef.current.getBoundingClientRect()
+                : { left: 0, top: 0 };
+            return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+        },
+        [containerRef]
+    );
+
+    const mouseMovementHandler = useCallback(
+        (event: React.MouseEvent<HTMLDivElement, MouseEvent> | MouseEvent) => {
+            if (containerRef.current) {
+                const containerHeight = containerRef.current.clientHeight;
+                const containerWidth = containerRef.current.clientWidth;
+                const mousePosition = getMousePosition(event);
+                const offsetRelativeToCenter: Position = {
+                    x:
+                        (containerWidth / 2 - mousePosition.x) *
+                        globalFactorX *
+                        (inverted ? -1 : 1),
+                    y:
+                        (containerHeight / 2 - mousePosition.y) *
+                        globalFactorY *
+                        (inverted ? -1 : 1),
+                };
+                offsetApi.start(offsetRelativeToCenter);
+            }
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [containerRef, getMousePosition, inverted]
+    );
+
+    // Use window event handler when useWindowMouseEvents is enabled
+    useEffect(() => {
+        let myContainerRef = containerRef.current;
+        if (enabled && useWindowMouseEvents && myContainerRef) {
+            window.addEventListener('mousemove', mouseMovementHandler, false);
+            if (resetOnLeave) {
+                window.addEventListener('mouseout', resetOffset, false);
+            }
+        }
+
+        return () => {
+            if (enabled && useWindowMouseEvents && myContainerRef) {
+                window.removeEventListener('mousemove', mouseMovementHandler, false);
+                if (resetOnLeave) {
+                    window.removeEventListener('mouseout', resetOffset, false);
+                }
+            }
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        containerRef,
+        mouseMovementHandler,
+        resetOnLeave,
+        useWindowMouseEvents,
+        enabled,
+    ]);
+
+    const useMouseMoveHandler = enabled && !useWindowMouseEvents;
+    const useMouseLeaveHandler = enabled && !useWindowMouseEvents && resetOnLeave;
+    const divEvents = {
+        onMouseMove: useMouseMoveHandler ? mouseMovementHandler : undefined,
+        onMouseLeave: useMouseLeaveHandler ? resetOffset : undefined,
+    };
+
+    return (
+        <OffsetContext.Provider value={offset}>
+            <div
+                id='mouse-parallax-container'
+                ref={containerRefWithCallback}
+                style={{ overflow: 'hidden', position: 'relative', ...containerStyle }}
+                {...{ className }}
+                {...divEvents}
+            >
+                {children}
+            </div>
+        </OffsetContext.Provider>
+    );
+};
+
+export { MouseParallaxContainer };

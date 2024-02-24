@@ -1,5 +1,5 @@
 .the-background {
-    position: absolute;
+    position: fixed;
     float: none;
     z-index: -666;
     display: flex;
@@ -9,8 +9,5 @@
     align-items: center;
     box-sizing: border-box;
     width: 100%;
-}
-
-.the-background img {
-    min-width: 1920px;
+    height: 100%;
 }

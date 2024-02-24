@@ -3,6 +3,7 @@ import './index.css';
 import { useEffect } from 'react';
 
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
+import { MouseParallaxChild, MouseParallaxContainer } from '../../effects/MouseParallax';
 
 interface IBackgroundProps extends IConsumerProps { }
 
@@ -13,7 +14,11 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
 
     return (
         <div className="the-background">
-            <img src={context.backgroundImages?.main?.first} alt="" />
+            <MouseParallaxContainer useWindowMouseEvents={true}>
+                <MouseParallaxChild factorX={0.01} factorY={0}>
+                    <img src={context.backgroundImages?.main?.first} alt="" />
+                </MouseParallaxChild>
+            </MouseParallaxContainer>
         </div>
     );
 };
