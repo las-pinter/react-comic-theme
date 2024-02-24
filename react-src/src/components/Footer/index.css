@@ -18,7 +18,7 @@ footer {
 
 footer .menu-item-no-dropdown,
 footer .menu-item-no-dropdown-submenu .menu-item-no-dropdown {
-    font-size: 18px;
+    font-size: var(--cmx-font-small);
 }
 
 footer .menu-item-no-dropdown-submenu {

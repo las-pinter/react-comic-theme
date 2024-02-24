@@ -11,22 +11,24 @@ const ComicTitle = ({ title }: IComicTitleProps) => {
     const nodeRef = useRef<any>(null);
 
     return (
-        <SwitchTransition mode={"out-in"}>
-            <CSSTransition
-                classNames="fader"
-                timeout={3000}
-                nodeRef={nodeRef}
-                appear={true}
-                addEndListener={(done: () => void) => {
-                    nodeRef.current?.addEventListener("transitionend", done, false);
-                }}
-                key={title}
-            >
-                <div ref={nodeRef} className="comic-title">
-                    {title}
-                </div>
-            </CSSTransition>
-        </SwitchTransition>
+        <div className="comic-title-wrapper">
+            <SwitchTransition mode={"out-in"}>
+                <CSSTransition
+                    classNames="fader"
+                    timeout={3000}
+                    nodeRef={nodeRef}
+                    appear={true}
+                    addEndListener={(done: () => void) => {
+                        nodeRef.current?.addEventListener("transitionend", done, false);
+                    }}
+                    key={title}
+                >
+                    <div ref={nodeRef} className="comic-title">
+                        {title}
+                    </div>
+                </CSSTransition>
+            </SwitchTransition>
+        </div>
     );
 };
 

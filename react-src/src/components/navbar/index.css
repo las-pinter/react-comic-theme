@@ -4,7 +4,7 @@
     opacity: 0;
     width: 40px;
     height: 40px;
-    font-size: 40px;
+    font-size: var(--cmx-font-big);
     padding: 6px;
     color: var(--cmx-accent-color);
     cursor: pointer;
@@ -33,7 +33,7 @@
 
 .menu-item {
     list-style: none;
-    font-size: 25px;
+    font-size: var(--cmx-font-medium);
 }
 
 .menu-item a {
@@ -78,7 +78,7 @@
 .overlay-navigation-bar-bars {
     width: 40px;
     height: 40px;
-    font-size: 40px;
+    font-size: var(--cmx-font-big);
     padding: 6px;
     color: var(--cmx-accent-color);
     cursor: pointer;
@@ -93,7 +93,7 @@
 }
 
 .menu-item-no-dropdown {
-    font-size: 36pt;
+    font-size: var(--cmx-font-big);
 }
 
 .menu-item-no-dropdown-submenu {
@@ -102,7 +102,7 @@
 }
 
 .menu-item-no-dropdown-submenu .menu-item-no-dropdown {
-    font-size: 26pt;
+    font-size: var(--cmx-font-medium);
 }
 
 .menu-item-social-title {

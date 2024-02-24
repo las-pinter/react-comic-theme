@@ -60,7 +60,7 @@
 
 .comic-name {
     z-index: 1;
-    font-size: 20pt;
+    font-size: var(--cmx-font-medium);
     margin-top: 10px;
     color: white;
 }
