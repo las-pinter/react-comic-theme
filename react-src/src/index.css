@@ -3,7 +3,7 @@ body {
   --cmx-base-color: hsl(0deg 0% 8.02%);
   --cmx-foreground-color: hsl(0deg 0% 11.96%);
   --cmx-text-color: hsl(0deg 0% 49.75%);
-  --cmx-detail-color: hsl(0deg 0% 27.36%);
+  --cmx-detail-color: hsl(0deg 0% 83.27%);
   --cmx-accent-color: hsl(0deg 0% 76.53%);
   --cmx-base-shadow: color-mix(in hsl, var(--cmx-base-color) 10%, hsl(0, 0%, 1%));
   --cmx-foreground-shadow: color-mix(in hsl, var(--cmx-foreground-color) 10%, hsl(0, 0%, 1%));
@@ -13,12 +13,12 @@ body {
   --cmx-content-width: 1100px;
   --cmx-content-min-width: 490px;
 
-  --cmx-container-background: radial-gradient(ellipse at bottom, color-mix(in hsl, var(--cmx-foreground-color) 50%, transparent), transparent),
-                          radial-gradient(ellipse at top, color-mix(in hsl, var(--cmx-detail-color) 50%, transparent), transparent),
-                          color-mix(in hsl, var(--cmx-detail-shadow) 50%, transparent);
-  --cmx-container-background-reverse: radial-gradient(ellipse at bottom, color-mix(in hsl, var(--cmx-detail-color) 50%, transparent), transparent),
-                          radial-gradient(ellipse at top, color-mix(in hsl, var(--cmx-foreground-color) 50%, transparent), transparent),
-                          color-mix(in hsl, var(--cmx-detail-shadow) 50%, transparent);
+  --cmx-container-background: radial-gradient(ellipse at bottom, color-mix(in hsl, var(--cmx-foreground-color) 100%, transparent), transparent),
+                          radial-gradient(ellipse at top, color-mix(in hsl, var(--cmx-detail-color) 10%, transparent), transparent),
+                          color-mix(in hsl, var(--cmx-foreground-shadow) 80%, transparent);
+  --cmx-container-background-reverse: radial-gradient(ellipse at bottom, color-mix(in hsl, var(--cmx-detail-color) 10%, transparent), transparent),
+                          radial-gradient(ellipse at top, color-mix(in hsl, var(--cmx-foreground-color) 100%, transparent), transparent),
+                          color-mix(in hsl, var(--cmx-foreground-shadow) 80%, transparent);
   --cmx-container-box-shadow: 0px 0px 10px 0px var(--cmx-detail-shadow);
   --cmx-container-border: 1px solid var(--cmx-detail-color);
 }
