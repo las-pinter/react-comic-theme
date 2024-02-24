@@ -29,6 +29,5 @@ header {
 @media screen and (max-width: 768px) {
     header.container-vertical {
         row-gap: 0;
-        padding-bottom: 0;
     }
 }

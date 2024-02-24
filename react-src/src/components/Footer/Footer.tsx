@@ -37,7 +37,7 @@ const Footer = ({ context }: IFooterProps): JSX.Element => {
                 </div>
                 <div className="social-media container-vertical">
                     <h2>Social Media</h2>
-                    <div className="footer-social container-vertical">
+                    <div className="footer-social container-horizontal">
                         {
                             menuListSocial.map(function (item, i) {
                                 return <MenuItemSocial key={'footer-menu-item-' + item.ID} item={item} displayText={true} />

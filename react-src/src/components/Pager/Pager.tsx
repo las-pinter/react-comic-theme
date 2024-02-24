@@ -15,7 +15,7 @@ const Pager = ({ currentPage, totalPages, nextClickedCallback, previousClickedCa
 
     if (totalPages > 1) {
         thePager = (
-            <div className="pager">
+            <div className="pager container-style">
                 <button
                     disabled={currentPage <= 1}
                     onClick={handlePreviousClicked}

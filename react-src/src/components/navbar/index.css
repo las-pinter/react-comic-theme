@@ -45,7 +45,7 @@
 }
 
 .dropdown-menu {
-    padding: 10px;
+    padding: 15px;
     position: absolute;
     z-index: 2;
     background: var(--cmx-foreground-color);
@@ -109,8 +109,8 @@
     margin-left: 10px;
 }
 
-.menu-item-social {
-    max-width: 50%;
+header .menu-item-social {
+    line-height: 0px;
 }
 
 @media screen and (max-width: 768px) {

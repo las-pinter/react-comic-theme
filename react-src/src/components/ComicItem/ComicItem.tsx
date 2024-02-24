@@ -31,7 +31,7 @@ export const ArchiveComicItem = ({ comic, number }: IArchiveComicItemProps): JSX
                 }}
                 key={comic.slug}
             >
-                <Link ref={nodeRef} to={comic.permalink}>
+                <Link className="archive-comic-item-wrapper" ref={nodeRef} to={comic.permalink}>
                     <div className="archive-comic-item">
                         <div className="archive-comic-item-thumbnail">
                             {
@@ -77,7 +77,7 @@ export const CharacterComicItem = ({ comic }: ICharacterComicItemProps): JSX.Ele
                 }}
                 key={comic.slug}
             >
-                <Link ref={nodeRef} to={comic.permalink}>
+                <Link className="character-comic-item-wrapper" ref={nodeRef} to={comic.permalink}>
                     <div className="character-comic-item">
                         <div className="character-comic-item-thumbnail">
                             {

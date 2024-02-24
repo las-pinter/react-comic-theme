@@ -10,6 +10,7 @@
   --cmx-text-shadow: color-mix(in hsl, var(--cmx-text-color) 10%, hsl(0, 0%, 1%));
   --cmx-detail-shadow: color-mix(in hsl, var(--cmx-detail-color) 90%, hsl(0, 0%, 1%));
   --cmx-accent-shadow: color-mix(in hsl, var(--cmx-accent-color) 10%, hsl(0, 0%, 1%));
+  
   --cmx-content-width: 1100px;
 
   --cmx-container-background: radial-gradient(ellipse at bottom, color-mix(in hsl, var(--cmx-foreground-color) 100%, transparent), transparent),
