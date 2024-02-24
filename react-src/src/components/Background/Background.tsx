@@ -12,11 +12,37 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [context.slug, context.currentComic.comicSlug])
 
+    const firstLayerSpeed = 0.01;
+    const secondLayerSpeed = 2 * firstLayerSpeed;
+    const thirdLayerSpeed = 3 * secondLayerSpeed;
+
     return (
         <div className="the-background">
-            <MouseParallaxContainer useWindowMouseEvents={true} resetOnLeave={true} containerStyle={{ height: '100%'}}>
-                <MouseParallaxChild className="background-image-container" factorX={0.01} factorY={0} style={{ height: '100%'}}>
-                    <img className="masked-left-right fadeIn" src={context.backgroundImages?.main?.first} alt="" />
+            <MouseParallaxContainer
+                className="background-image-container-wrapper masked-left-right"
+                useWindowMouseEvents={true}
+                resetOnLeave={true}
+            >
+                <MouseParallaxChild
+                    className="background-image-container"
+                    factorX={firstLayerSpeed}
+                    factorY={0}
+                >
+                    <img className="fadeIn" src={context.backgroundImages?.main?.first} alt="" />
+                </MouseParallaxChild>
+                <MouseParallaxChild
+                    className="background-image-container"
+                    factorX={secondLayerSpeed}
+                    factorY={0}
+                >
+                    <img className="fadeIn" src={context.backgroundImages?.main?.second} alt="" />
+                </MouseParallaxChild>
+                <MouseParallaxChild
+                    className="background-image-container"
+                    factorX={thirdLayerSpeed}
+                    factorY={0}
+                >
+                    <img className="fadeIn" src={context.backgroundImages?.main?.third} alt="" />
                 </MouseParallaxChild>
             </MouseParallaxContainer>
         </div>

@@ -93,3 +93,13 @@ a:hover {
   text-shadow: 0px 0px 20px var(--cmx-accent-color);
   transition: all .1s;
 }
+
+.masked-left-right {
+  --mask: linear-gradient(to right, transparent 1%, black 5%, black 95%, transparent 99%);
+  -webkit-mask-image: var(--mask);
+  mask-image: var(--mask);
+}
+
+.overlayed-left-right {
+  background: linear-gradient(to right, black 1%, transparent 5%, transparent 95%, black 99%);
+}

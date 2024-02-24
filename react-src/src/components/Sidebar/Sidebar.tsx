@@ -27,7 +27,7 @@ const Sidebar = ({ sidebarId, background }: ISidebadProps): JSX.Element => {
                 sidebar.map((item, i) => {
                     return <div
                         key={sidebarId + "_" + item['id']}
-                        className={"sidebar-item" + (background ? "" : "-no-background") + " container-style"}
+                        className={"sidebar-item" + (background ? " container-style" : "-no-background")}
                         dangerouslySetInnerHTML={{ __html: item['rendered'] }}
                     />
                 })
