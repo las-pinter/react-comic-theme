@@ -42,7 +42,7 @@ const Characters = ({ comicPost }: ICharactersProps) => {
     }, [comicPost])
 
     return (
-        <div className="comic-character-list container-horizontal">
+        <div className="comic-character-list container-horizontal container-style">
             {
                 characters.map((character, i) => {
                     return (

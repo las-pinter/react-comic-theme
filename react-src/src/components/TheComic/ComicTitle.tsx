@@ -11,7 +11,7 @@ const ComicTitle = ({ title }: IComicTitleProps) => {
     const nodeRef = useRef<any>(null);
 
     return (
-        <div className="comic-title-wrapper">
+        <div className="comic-title-wrapper container-style">
             <SwitchTransition mode={"out-in"}>
                 <CSSTransition
                     classNames="fader"

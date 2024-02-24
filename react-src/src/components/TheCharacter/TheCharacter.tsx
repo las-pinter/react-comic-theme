@@ -49,7 +49,7 @@ export const TheCharacter = ({ character }: ITheCharacterProps): JSX.Element => 
 
     return (
         <div className="the-character-wrapper container-vertical">
-            <div className="the-character-item">
+            <div className="the-character-item container-style">
                 <SwitchTransition mode={"out-in"}>
                     <CSSTransition
                         classNames="fader"

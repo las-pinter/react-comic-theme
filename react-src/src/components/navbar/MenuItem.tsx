@@ -93,7 +93,7 @@ export const MenuItemSocial = ({ item, displayText }: IMenuItemSocialProps): JSX
 
     return (
         <div className="menu-item-social">
-            <Link to={item.url} title={item.title}>
+            <Link to={item.url} title={item.title} target="_blank" rel="noopener noreferrer">
                 {iconElement}
                 {
                     displayText

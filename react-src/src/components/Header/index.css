@@ -1,8 +1,8 @@
 header {
     align-items: center;
     box-sizing: border-box;
-    padding: 0 15px 15px 15px;
-    border-bottom: 1px solid color-mix(in hsl, var(--cmx-detail-color) 80%, transparent);
+    padding: 15px;
+    border-bottom: var(--cmx-container-border);
     background: var(--cmx-container-background-reverse);
     box-shadow: var(--cmx-container-box-shadow);
     margin-bottom: 30px;
@@ -19,6 +19,11 @@ header {
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
+    height: 100%;
+}
+
+.comic-logo-image img {
+    height: 100%;
 }
 
 @media screen and (max-width: 768px) {

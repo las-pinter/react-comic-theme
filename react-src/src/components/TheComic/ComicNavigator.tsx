@@ -20,7 +20,7 @@ const ComicNavigator = ({ comicNavLinks }: IComicNavigatorProps) => {
     let lastComicPage = comicNavLinks.lastPage;
 
     return (
-        <div className="comic-navigator container-horizontal">
+        <div className="comic-navigator container-horizontal container-style">
             <div className="comic-navigator-item"><Link to={firstComicPage}>First</Link></div>
             <div className="comic-navigator-item"><Link to={previousComicPage}>Previous</Link></div>
             <div className="comic-navigator-item"><Link to={nextComicPage}>Next</Link></div>

@@ -14,9 +14,9 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
 
     return (
         <div className="the-background">
-            <MouseParallaxContainer className="masked-left-right" useWindowMouseEvents={true} resetOnLeave={true} containerStyle={{ height: '100%'}}>
-                <MouseParallaxChild factorX={0.01} factorY={0} style={{ height: '100%'}}>
-                    <img src={context.backgroundImages?.main?.first} alt="" />
+            <MouseParallaxContainer useWindowMouseEvents={true} resetOnLeave={true} containerStyle={{ height: '100%'}}>
+                <MouseParallaxChild className="background-image-container" factorX={0.01} factorY={0} style={{ height: '100%'}}>
+                    <img className="masked-left-right fadeIn" src={context.backgroundImages?.main?.first} alt="" />
                 </MouseParallaxChild>
             </MouseParallaxContainer>
         </div>

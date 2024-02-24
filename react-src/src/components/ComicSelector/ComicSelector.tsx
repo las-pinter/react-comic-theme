@@ -28,7 +28,7 @@ const ComicSelector = ({ context }: IComicSelectorProps): JSX.Element => {
     }
 
     return (
-        <div className="comic-selector container-horizontal">
+        <div className="comic-selector container-horizontal fade-in">
             {
                 Object.keys(context.comics).map((comicSlug, i) => {
                     let comic = context.comics[comicSlug];

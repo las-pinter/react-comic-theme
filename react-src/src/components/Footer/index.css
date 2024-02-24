@@ -6,7 +6,7 @@ footer {
     margin-top: 50px;
     width: 100%;
     padding: 15px;
-    border-top: 1px solid color-mix(in hsl, var(--cmx-detail-color) 80%, transparent);
+    border-top: var(--cmx-container-border);
     background: var(--cmx-container-background);
     box-shadow: var(--cmx-container-box-shadow);
 }

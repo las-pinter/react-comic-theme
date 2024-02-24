@@ -16,8 +16,14 @@
     height: 100%;
 }
 
+.background-image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .masked-left-right {
-    --mask: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    --mask: linear-gradient(to right, transparent 1%, black 5%, black 95%, transparent 99%);
     -webkit-mask-image: var(--mask);
     mask-image: var(--mask);
 }
