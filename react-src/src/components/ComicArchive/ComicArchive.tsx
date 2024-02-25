@@ -4,22 +4,26 @@ import { useState, useEffect } from 'react';
 
 import ArchiveChapter from './ArchiveChapter';
 import RestHandler from '../../rest/RestHandler';
+import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
-interface IComicArchiveProps {
-    comicSlug: string
+interface IComicArchiveProps extends IConsumerProps {
+    comicSlug?: string
 }
 
-const ComicArchive = ({ comicSlug }: IComicArchiveProps): JSX.Element => {
+const ComicArchive = ({ context, comicSlug }: IComicArchiveProps): JSX.Element => {
     const [loading, setLoading] = useState(true);
     const [comicArchive, setComicArchive] = useState([]);
 
     useEffect(() => {
         setLoading(true);
+        context.addLoading();
         let url = '/wp-json/comics/v1/comicarchive/' + comicSlug;
         RestHandler.get(url).then((response) => {
             setComicArchive(response.data);
-            setLoading(false);
         }).catch(() => {
+        }).finally(() => {
+            setLoading(false);
+            context.removeLoading();
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [comicSlug])
@@ -44,4 +48,4 @@ const ComicArchive = ({ comicSlug }: IComicArchiveProps): JSX.Element => {
     );
 };
 
-export default ComicArchive;
+export default WithConsumer(ComicArchive);

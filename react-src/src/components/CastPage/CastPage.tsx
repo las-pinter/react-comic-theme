@@ -5,14 +5,18 @@ import { useState, useEffect } from 'react';
 import CharacterGroup from './CharacterGroup';
 import { TCharacter } from '../TheCharacter/TheCharacter';
 import RestHandler from '../../rest/RestHandler';
+import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
-const CastPage = (): JSX.Element => {
+interface ICastPageProps extends IConsumerProps { }
+
+const CastPage = ({ context }: ICastPageProps): JSX.Element => {
     const [loading, setLoading] = useState(true);
     const [characterGroups, setCharacterGroups] = useState<Record<string, TCharacter[]>>({});
     const [characterGroupOrder, setCharacterGroupOrder] = useState<Array<string>>([]);
 
     useEffect(() => {
         setLoading(true);
+        context.addLoading();
         let url = '/wp-json/comics/v1/characters/';
         RestHandler.get(url).then((response) => {
             let characters: Array<TCharacter> = response.data;
@@ -33,9 +37,11 @@ const CastPage = (): JSX.Element => {
             let url = '/wp-json/settings/v1/char_group_order/';
             RestHandler.get(url).then((response) => {
                 setCharacterGroupOrder(Object.values(response.data));
-                setLoading(false);
             });
         }).catch(() => {
+        }).finally(() => {
+            setLoading(false);
+            context.removeLoading();
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -69,4 +75,4 @@ const CastPage = (): JSX.Element => {
     );
 };
 
-export default CastPage;
+export default WithConsumer(CastPage);

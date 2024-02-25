@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { CharacterComicItem } from '../ComicItem/ComicItem';
 import RestHandler from '../../rest/RestHandler';
+import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
 export type TCharacter = {
     name: string,
@@ -21,31 +22,38 @@ export type TCharacter = {
     slug: string
 }
 
-interface ITheCharacterProps {
-    character: TCharacter
+interface ITheCharacterProps extends IConsumerProps {
+    character?: TCharacter
 }
 
-export const TheCharacter = ({ character }: ITheCharacterProps): JSX.Element => {
+export const TheCharacter = ({ context, character }: ITheCharacterProps): JSX.Element => {
     const nodeRef = useRef<any>(null);
 
     const [characterComics, setCharacterComics] = useState([]);
 
     const getCharacterComics = (slug: string) => {
+        context.addLoading();
         let url = '/wp-json/comics/v1/character/' + slug + '/comics';
         return RestHandler.get(url).then((response) => {
             setCharacterComics(response.data);
         }).catch(() => {
+        }).finally(() => {
+            context.removeLoading();
         });
     }
 
     useEffect(() => {
-        if (!character.slug) {
+        if (!character?.slug) {
             return;
         }
 
         getCharacterComics(character.slug);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    if (!character) {
+        return <></>;
+    }
 
     return (
         <div className="the-character-wrapper container-vertical">
@@ -98,4 +106,4 @@ export const TheCharacter = ({ character }: ITheCharacterProps): JSX.Element => 
     );
 }
 
-export default TheCharacter;
+export default WithConsumer(TheCharacter);

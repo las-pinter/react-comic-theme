@@ -11,16 +11,17 @@ import Characters from './Characters';
 import ComicTitle from './ComicTitle';
 
 import { IPost } from '../ThePost/ThePost';
+import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
 export interface IComicPost extends IPost {
     type: 'comic'
 }
 
-interface ITheComicProps {
-    comicPost: IComicPost
+interface ITheComicProps extends IConsumerProps {
+    comicPost?: IComicPost
 }
 
-const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
+const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
     const nodeRef = useRef<any>(null);
 
     const [comicNavLinks, setComicNavLinks] = useState<TComicNavigatorProps>({
@@ -34,6 +35,8 @@ const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
         if (!comicPost) {
             return;
         }
+
+        context.addLoading();
 
         const id = comicPost.id;
         let requests: Promise<string>[] = [];
@@ -59,7 +62,10 @@ const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
                 nextPage: values[2],
                 lastPage: values[3]
             });
+        }).finally(() => {
+            context.removeLoading();
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [comicPost]);
 
     if (!comicPost) {
@@ -103,4 +109,4 @@ const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
     );
 };
 
-export default TheComic;
+export default WithConsumer(TheComic);

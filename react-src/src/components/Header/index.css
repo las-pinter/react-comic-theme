@@ -1,5 +1,6 @@
 header {
     align-items: center;
+    justify-content: center;
     box-sizing: border-box;
     padding: 15px;
     border-bottom: var(--cmx-container-border);
@@ -8,10 +9,15 @@ header {
     margin-bottom: 30px;
 }
 
+header.container-vertical {
+    row-gap: 0;
+}
+
 .comic-logo {
     width: 600px;
     height: 150px;
     overflow: hidden;
+    margin-bottom: 10px;
 }
 
 .comic-logo-image {
@@ -24,6 +30,10 @@ header {
 
 .comic-logo-image img {
     height: 100%;
+}
+
+.loader-wrapper {
+    height: 30px;
 }
 
 @media screen and (max-width: 768px) {

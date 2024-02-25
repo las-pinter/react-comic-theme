@@ -7,20 +7,24 @@ import RestHandler from '../rest/RestHandler';
 import TheComic, { IComicPost } from '../components/TheComic/TheComic';
 import { TheComicPost } from '../components/ThePost/ThePost';
 import Sidebar from '../components/Sidebar/Sidebar';
+import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
-interface IComicProps {
-    comicPageSlug: string,
-    comicPageFullSlug: string
+interface IComicProps extends IConsumerProps {
+    comicPageSlug?: string,
+    comicPageFullSlug?: string
 }
 
-const Comic = ({ comicPageSlug, comicPageFullSlug }: IComicProps): JSX.Element => {
+const Comic = ({ context, comicPageSlug, comicPageFullSlug }: IComicProps): JSX.Element => {
     const [comic, setComic] = useState<IComicPost | null>(null);
 
     const getComic = (slug: string) => {
+        context.addLoading();
         let url = '/wp-json/wp/v2/comic?slug=' + slug + '&_embed';
         return RestHandler.get(url).then((response) => {
             setComic(response.data[0]);
         }).catch(() => {
+        }).finally(() => {
+            context.removeLoading();
         });
     }
 
@@ -33,7 +37,7 @@ const Comic = ({ comicPageSlug, comicPageFullSlug }: IComicProps): JSX.Element =
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [comicPageSlug]);
 
-    if (!comic) {
+    if (!comic || !comicPageFullSlug) {
         return <></>;
     }
 
@@ -46,4 +50,4 @@ const Comic = ({ comicPageSlug, comicPageFullSlug }: IComicProps): JSX.Element =
     )
 
 }
-export default Comic;
+export default WithConsumer(Comic);

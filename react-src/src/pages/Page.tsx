@@ -5,19 +5,23 @@ import { useEffect, useState } from 'react';
 import RestHandler from '../rest/RestHandler';
 
 import ThePage, { IPage } from '../components/ThePage/ThePage';
+import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
-interface IPageProps {
-    slug: string
+interface IPageProps extends IConsumerProps {
+    slug?: string
 }
 
-const Page = ({ slug }: IPageProps): JSX.Element => {
+const Page = ({ context, slug }: IPageProps): JSX.Element => {
     const [page, setPage] = useState<IPage | null>(null);
 
     const getPage = (slug: string) => {
+        context.addLoading();
         let url = '/wp-json/wp/v2/pages/?slug=' + slug + '&_embed';
         return RestHandler.get(url).then((response) => {
             setPage(response.data[0]);
         }).catch(() => {
+        }).finally(() => {
+            context.removeLoading();
         });
     }
 
@@ -41,4 +45,4 @@ const Page = ({ slug }: IPageProps): JSX.Element => {
     )
 
 }
-export default Page;
+export default WithConsumer(Page);

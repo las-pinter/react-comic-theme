@@ -130,7 +130,7 @@ header .menu-item-social {
     }
 }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 769px) {
     .menu {
         column-gap: 40px;
     }

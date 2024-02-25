@@ -21,11 +21,14 @@ const ComicSelector = ({ context }: IComicSelectorProps): JSX.Element => {
 
     useEffect(() => {
         setLoading(true);
+        context.addLoading();
         let url = '/wp-json/settings/v1/selector_images';
         RestHandler.get(url).then((response) => {
             setSelectorImages(response.data);
-            setLoading(false);
         }).catch(() => {
+        }).finally(() => {
+            setLoading(false);
+            context.removeLoading();
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

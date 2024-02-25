@@ -8,18 +8,21 @@ import CharacterItem from "../CharacterItem/CharacterItem";
 import { TCharacter } from '../TheCharacter/TheCharacter';
 import { IComicPost } from "./TheComic";
 import { Link } from 'react-router-dom';
+import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
-interface ICharactersProps {
-    comicPost: IComicPost
+interface ICharactersProps extends IConsumerProps {
+    comicPost?: IComicPost
 }
 
-const Characters = ({ comicPost }: ICharactersProps) => {
+const Characters = ({ context, comicPost }: ICharactersProps) => {
     const [characters, setCharacters] = useState<Array<TCharacter>>([]);
 
     useEffect(() => {
         if (!comicPost) {
             return;
         }
+
+        context.addLoading();
 
         let characterList = comicPost._embedded['wp:term'][2];
 
@@ -38,6 +41,8 @@ const Characters = ({ comicPost }: ICharactersProps) => {
 
         Promise.all(promises).then((values: Array<TCharacter>) => {
             setCharacters(values);
+        }).finally(() => {
+            context.removeLoading();
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [comicPost])
@@ -57,4 +62,4 @@ const Characters = ({ comicPost }: ICharactersProps) => {
     );
 };
 
-export default Characters;
+export default WithConsumer(Characters);

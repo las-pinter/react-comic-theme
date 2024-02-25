@@ -4,19 +4,23 @@ import { useEffect, useState } from 'react';
 import ThePost, { IPost } from '../components/ThePost/ThePost';
 
 import RestHandler from '../rest/RestHandler';
+import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
-interface IPostProps {
-    slug: string
+interface IPostProps extends IConsumerProps {
+    slug?: string
 }
 
-const Post = ({ slug }: IPostProps): JSX.Element => {
+const Post = ({ context, slug }: IPostProps): JSX.Element => {
     const [post, setPost] = useState<IPost | null>(null);
 
     const getPost = (slug: string) => {
+        context.addLoading();
         let url = '/wp-json/wp/v2/posts/?slug=' + slug + '&_embed';
         return RestHandler.get(url).then((response) => {
             setPost(response.data[0]);
         }).catch(() => {
+        }).finally(() => {
+            context.removeLoading();
         });
     }
 
@@ -40,4 +44,4 @@ const Post = ({ slug }: IPostProps): JSX.Element => {
     )
 
 }
-export default Post;
+export default WithConsumer(Post);

@@ -4,6 +4,7 @@ import { createRef, useEffect, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import RestHandler from '../../rest/RestHandler';
+import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
 type TSidebarItem = {
     id: string,
@@ -15,17 +16,17 @@ type TSidebarItem = {
 
 type TSidebar = Array<TSidebarItem>;
 
-interface ISidebadProps {
-    sidebarId: string,
-    background: boolean
+interface ISidebadProps extends IConsumerProps {
+    sidebarId?: string,
+    background?: boolean
 };
 
-const Sidebar = ({ sidebarId, background }: ISidebadProps): JSX.Element => {
+const Sidebar = ({ context, sidebarId, background }: ISidebadProps): JSX.Element => {
     const [sidebar, setSidebar] = useState<TSidebar>([]);
 
     useEffect(() => {
+        context.addLoading();
         let url = '/wp-json/wp/v2/widgets?sidebar=' + sidebarId;
-
         RestHandler.get(url).then((response) => {
             let newSidebar: TSidebar = [];
             response.data.forEach((sidebarItem: TSidebarItem) => {
@@ -36,6 +37,8 @@ const Sidebar = ({ sidebarId, background }: ISidebadProps): JSX.Element => {
 
             setSidebar(newSidebar);
         }).catch(() => {
+        }).finally(() => {
+            context.removeLoading();
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sidebarId])
@@ -69,4 +72,4 @@ const Sidebar = ({ sidebarId, background }: ISidebadProps): JSX.Element => {
     );
 };
 
-export default Sidebar;
+export default WithConsumer(Sidebar);

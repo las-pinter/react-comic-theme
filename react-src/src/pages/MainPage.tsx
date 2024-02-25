@@ -9,19 +9,24 @@ import Pager from '../components/Pager/Pager';
 import ComicSelector from '../components/ComicSelector/ComicSelector';
 import Sidebar from '../components/Sidebar/Sidebar';
 import { IPost } from '../components/ThePost/ThePost';
+import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
+interface IMainPageProps extends IConsumerProps { }
 
-const MainPage = (): JSX.Element => {
+const MainPage = ({ context }: IMainPageProps): JSX.Element => {
     const [postsCurrentPage, setPostsCurrentPage] = useState(1);
     const [postsTotalPages, setPostsTotalPages] = useState(0);
     const [posts, setPosts] = useState<Array<IPost>>([]);
 
     const getPosts = () => {
+        context.addLoading();
         let url = '/wp-json/wp/v2/posts/?page=' + postsCurrentPage + '&per_page=3&_embed';
         return RestHandler.get(url).then((response) => {
             setPosts(response.data);
             setPostsTotalPages(response.headers['x-wp-totalpages']);
         }).catch(() => {
+        }).finally(() => {
+            context.removeLoading();
         });
     }
 
@@ -65,4 +70,4 @@ const MainPage = (): JSX.Element => {
     )
 }
 
-export default MainPage;
+export default WithConsumer(MainPage);

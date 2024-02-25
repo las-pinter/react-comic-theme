@@ -30,12 +30,16 @@ export interface IProps {
 };
 
 export interface IContextState {
+    loading: boolean,
+    loadingCount: number,
+    addLoading: Function,
+    removeLoading: Function,
     contextType: string,
     term: string,
     slug: string,
     route: string | undefined,
     menus: TMenus,
-    comics: Record<string,TComic>,
+    comics: Record<string, TComic>,
     castPageSlug: string,
     logoImages: Record<string, string>,
     backgroundImages: Record<string, Record<string, string>>,
@@ -46,8 +50,12 @@ export interface IContextState {
     }
 };
 
-const storeContext = React.createContext<Readonly<IContextState>>(
+export const StoreContext = React.createContext<Readonly<IContextState>>(
     {
+        loading: false,
+        loadingCount: 0,
+        addLoading: () => { },
+        removeLoading: () => { },
         contextType: '',
         term: '',
         slug: '',
@@ -64,7 +72,7 @@ const storeContext = React.createContext<Readonly<IContextState>>(
         }
     }
 );
-export const Consumer = storeContext.Consumer;
+export const Consumer = StoreContext.Consumer;
 
 
 export class Provider extends React.Component<IProps, IContextState> {
@@ -72,6 +80,10 @@ export class Provider extends React.Component<IProps, IContextState> {
         super(props);
 
         this.state = {
+            loading: false,
+            loadingCount: 0,
+            addLoading: this.addLoading.bind(this),
+            removeLoading: this.removeLoading.bind(this),
             contextType: props.contextType,
             term: props.router ? (props.router.params.term ? props.router.params.term : '') : '',
             slug: props.router ? (props.router.params.slug ? props.router.params.slug : '') : '',
@@ -87,6 +99,25 @@ export class Provider extends React.Component<IProps, IContextState> {
                 comicSlug: props.router ? (props.router.params['*'] ? this.getComicSlugFromRouter(props.router.params['*']) : '') : ''
             }
         };
+    }
+
+    addLoading() {
+        this.setState((prevState) => {
+            return {
+                loadingCount: prevState.loadingCount + 1,
+                loading: true
+            }
+        })
+    }
+
+    removeLoading() {
+        this.setState((prevState) => {
+            let newLoadingCount = prevState.loadingCount - 1;
+            return {
+                loadingCount: newLoadingCount,
+                loading: (newLoadingCount > 0)
+            }
+        })
     }
 
     componentDidMount() {
@@ -249,9 +280,9 @@ export class Provider extends React.Component<IProps, IContextState> {
     render() {
         return (
             <>
-                <storeContext.Provider value={this.state}>
+                <StoreContext.Provider value={this.state}>
                     {this.props.children}
-                </storeContext.Provider>
+                </StoreContext.Provider>
             </>
         );
     }

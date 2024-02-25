@@ -1,14 +1,20 @@
 import Axios, { AxiosResponse } from 'axios';
 
 module RestHandler {
+    // This function is for local testing
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const sleeper = (ms: number) => {
-        return function(x:any) {
-          return new Promise<AxiosResponse<any, any>>(resolve => setTimeout(() => resolve(x), ms));
+        return (x: any) => {
+            return new Promise<AxiosResponse<any, any>>((resolve) => {
+                setTimeout(() => {
+                    resolve(x);
+                }, ms)
+            });
         };
-      }
+    }
 
     export const get = (url: string) => {
-        return Axios.get(url).then(sleeper(0));
+        return Axios.get(url);
     }
 }
 

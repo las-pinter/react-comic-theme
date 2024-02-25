@@ -5,19 +5,24 @@ import { useEffect, useState } from 'react';
 import RestHandler from '../rest/RestHandler';
 
 import TheCharacter, { TCharacter } from "../components/TheCharacter/TheCharacter";
+import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
-interface ICharacterProps {
-    slug: string
+interface ICharacterProps extends IConsumerProps {
+    slug?: string
 }
 
-const Character = ({ slug }: ICharacterProps): JSX.Element => {
+const Character = ({ context, slug }: ICharacterProps): JSX.Element => {
     const [character, setCharacter] = useState<TCharacter | null>(null);
 
     const getCharacter = (slug: string) => {
+        context.addLoading();
         let url = '/wp-json/comics/v1/character/' + slug;
         return RestHandler.get(url).then((response) => {
             setCharacter(response.data);
+            
         }).catch(() => {
+        }).finally(() => {
+            context.removeLoading();
         });
     }
 
@@ -41,4 +46,4 @@ const Character = ({ slug }: ICharacterProps): JSX.Element => {
     )
 
 }
-export default Character;
+export default WithConsumer(Character);
