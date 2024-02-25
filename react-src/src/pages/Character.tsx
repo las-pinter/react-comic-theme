@@ -1,7 +1,8 @@
 import './index.css';
 
 import { useEffect, useState } from 'react';
-import Axios from 'axios';
+
+import RestHandler from '../rest/RestHandler';
 
 import TheCharacter, { TCharacter } from "../components/TheCharacter/TheCharacter";
 
@@ -14,7 +15,7 @@ const Character = ({ slug }: ICharacterProps): JSX.Element => {
 
     const getCharacter = (slug: string) => {
         let url = '/wp-json/comics/v1/character/' + slug;
-        return Axios.get(url).then((response) => {
+        return RestHandler.get(url).then((response) => {
             setCharacter(response.data);
         }).catch(() => {
         });

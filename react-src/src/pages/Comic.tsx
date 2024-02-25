@@ -1,7 +1,8 @@
 import './index.css';
 
 import { useEffect, useState } from 'react';
-import Axios from 'axios';
+
+import RestHandler from '../rest/RestHandler';
 
 import TheComic, { IComicPost } from '../components/TheComic/TheComic';
 import { TheComicPost } from '../components/ThePost/ThePost';
@@ -17,7 +18,7 @@ const Comic = ({ comicPageSlug, comicPageFullSlug }: IComicProps): JSX.Element =
 
     const getComic = (slug: string) => {
         let url = '/wp-json/wp/v2/comic?slug=' + slug + '&_embed';
-        return Axios.get(url).then((response) => {
+        return RestHandler.get(url).then((response) => {
             setComic(response.data[0]);
         }).catch(() => {
         });

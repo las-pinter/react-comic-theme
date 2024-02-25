@@ -1,9 +1,9 @@
 import './index.css';
 
 import { useState, useEffect } from 'react';
-import Axios from 'axios';
 
 import ArchiveChapter from './ArchiveChapter';
+import RestHandler from '../../rest/RestHandler';
 
 interface IComicArchiveProps {
     comicSlug: string
@@ -16,7 +16,7 @@ const ComicArchive = ({ comicSlug }: IComicArchiveProps): JSX.Element => {
     useEffect(() => {
         setLoading(true);
         let url = '/wp-json/comics/v1/comicarchive/' + comicSlug;
-        Axios.get(url).then((response) => {
+        RestHandler.get(url).then((response) => {
             setComicArchive(response.data);
             setLoading(false);
         }).catch(() => {

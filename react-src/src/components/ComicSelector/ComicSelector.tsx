@@ -2,11 +2,11 @@ import './index.css';
 
 import { createRef, useEffect, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import Axios from 'axios';
 
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import ComicSelectorNavigator from './ComicSelectorNavigator';
 import { TComic } from '../../context/Context';
+import RestHandler from '../../rest/RestHandler';
 
 interface TNodeRefComic extends TComic {
     nodeRef: React.MutableRefObject<any>
@@ -22,7 +22,7 @@ const ComicSelector = ({ context }: IComicSelectorProps): JSX.Element => {
     useEffect(() => {
         setLoading(true);
         let url = '/wp-json/settings/v1/selector_images';
-        Axios.get(url).then((response) => {
+        RestHandler.get(url).then((response) => {
             setSelectorImages(response.data);
             setLoading(false);
         }).catch(() => {

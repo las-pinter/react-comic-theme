@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Axios from 'axios';
 
 import type { RouteMatch } from 'react-router-dom';
+import RestHandler from '../rest/RestHandler';
 
 export type TMenuItem = {
     url: string,
@@ -140,7 +140,7 @@ export class Provider extends React.Component<IProps, IContextState> {
         let url = '/wp-json/comics/v1/comics';
         let self = this;
 
-        return Axios.get(url).then((response) => {
+        return RestHandler.get(url).then((response) => {
             self.setState({
                 comics: response.data
             })
@@ -155,7 +155,7 @@ export class Provider extends React.Component<IProps, IContextState> {
         let url = '/wp-json/generic/v1/menu/';
         let self = this;
 
-        return Axios.get(url).then((response) => {
+        return RestHandler.get(url).then((response) => {
             let processedMenus: TMenus = {};
             let responseMenus: TMenus = response.data;
 
@@ -197,7 +197,7 @@ export class Provider extends React.Component<IProps, IContextState> {
         let url = '/wp-json/settings/v1/cast_page';
         let self = this;
 
-        return Axios.get(url).then((response) => {
+        return RestHandler.get(url).then((response) => {
             self.setState({
                 castPageSlug: response.data
             })
@@ -212,7 +212,7 @@ export class Provider extends React.Component<IProps, IContextState> {
         let url = '/wp-json/settings/v1/logos';
         let self = this;
 
-        return Axios.get(url).then((response) => {
+        return RestHandler.get(url).then((response) => {
             self.setState({
                 logoImages: response.data
             })
@@ -227,7 +227,7 @@ export class Provider extends React.Component<IProps, IContextState> {
         let url = '/wp-json/settings/v1/backgrounds';
         let self = this;
 
-        return Axios.get(url).then((response) => {
+        return RestHandler.get(url).then((response) => {
             self.setState({
                 backgroundImages: response.data
             })

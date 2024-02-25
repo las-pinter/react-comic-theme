@@ -2,7 +2,8 @@ import './index.css';
 
 import { useEffect, useState } from 'react';
 import ThePost, { IPost } from '../components/ThePost/ThePost';
-import Axios from 'axios';
+
+import RestHandler from '../rest/RestHandler';
 
 interface IPostProps {
     slug: string
@@ -13,7 +14,7 @@ const Post = ({ slug }: IPostProps): JSX.Element => {
 
     const getPost = (slug: string) => {
         let url = '/wp-json/wp/v2/posts/?slug=' + slug + '&_embed';
-        return Axios.get(url).then((response) => {
+        return RestHandler.get(url).then((response) => {
             setPost(response.data[0]);
         }).catch(() => {
         });

@@ -1,7 +1,8 @@
 import './index.css';
 
 import { useEffect, useState } from 'react';
-import Axios from 'axios';
+
+import RestHandler from '../rest/RestHandler';
 
 import ThePage, { IPage } from '../components/ThePage/ThePage';
 
@@ -14,7 +15,7 @@ const Page = ({ slug }: IPageProps): JSX.Element => {
 
     const getPage = (slug: string) => {
         let url = '/wp-json/wp/v2/pages/?slug=' + slug + '&_embed';
-        return Axios.get(url).then((response) => {
+        return RestHandler.get(url).then((response) => {
             setPage(response.data[0]);
         }).catch(() => {
         });

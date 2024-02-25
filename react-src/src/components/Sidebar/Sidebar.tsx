@@ -1,9 +1,9 @@
 import './index.css'
 
 import { createRef, useEffect, useState } from 'react';
-import Axios from 'axios';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
+import RestHandler from '../../rest/RestHandler';
 
 type TSidebarItem = {
     id: string,
@@ -26,7 +26,7 @@ const Sidebar = ({ sidebarId, background }: ISidebadProps): JSX.Element => {
     useEffect(() => {
         let url = '/wp-json/wp/v2/widgets?sidebar=' + sidebarId;
 
-        Axios.get(url).then((response) => {
+        RestHandler.get(url).then((response) => {
             let newSidebar: TSidebar = [];
             response.data.forEach((sidebarItem: TSidebarItem) => {
                 let newSidebarItem = sidebarItem;

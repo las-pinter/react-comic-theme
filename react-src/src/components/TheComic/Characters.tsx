@@ -1,7 +1,8 @@
 import './index.css';
 
 import { useEffect, useState } from "react";
-import Axios from 'axios';
+
+import RestHandler from '../../rest/RestHandler';
 
 import CharacterItem from "../CharacterItem/CharacterItem";
 import { TCharacter } from '../TheCharacter/TheCharacter';
@@ -27,7 +28,7 @@ const Characters = ({ comicPost }: ICharactersProps) => {
             let url = '/wp-json/comics/v1/character/' + character.slug;
 
             promises.push(
-                Axios.get(url).then((response) => {
+                RestHandler.get(url).then((response) => {
                     return response.data;
                 }).catch(() => {
                     return null;

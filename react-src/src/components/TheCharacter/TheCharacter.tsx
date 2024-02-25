@@ -1,11 +1,11 @@
 import './index.css';
 
-import Axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { CharacterComicItem } from '../ComicItem/ComicItem';
+import RestHandler from '../../rest/RestHandler';
 
 export type TCharacter = {
     name: string,
@@ -32,7 +32,7 @@ export const TheCharacter = ({ character }: ITheCharacterProps): JSX.Element => 
 
     const getCharacterComics = (slug: string) => {
         let url = '/wp-json/comics/v1/character/' + slug + '/comics';
-        return Axios.get(url).then((response) => {
+        return RestHandler.get(url).then((response) => {
             setCharacterComics(response.data);
         }).catch(() => {
         });

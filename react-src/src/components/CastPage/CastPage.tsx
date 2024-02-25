@@ -1,10 +1,10 @@
 import './index.css';
 
 import { useState, useEffect } from 'react';
-import Axios from 'axios';
 
 import CharacterGroup from './CharacterGroup';
 import { TCharacter } from '../TheCharacter/TheCharacter';
+import RestHandler from '../../rest/RestHandler';
 
 const CastPage = (): JSX.Element => {
     const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ const CastPage = (): JSX.Element => {
     useEffect(() => {
         setLoading(true);
         let url = '/wp-json/comics/v1/characters/';
-        Axios.get(url).then((response) => {
+        RestHandler.get(url).then((response) => {
             let characters: Array<TCharacter> = response.data;
             let characterGroups: Record<string, TCharacter[]> = {};
 
@@ -31,7 +31,7 @@ const CastPage = (): JSX.Element => {
         }).catch(() => {
         }).then(() => {
             let url = '/wp-json/settings/v1/char_group_order/';
-            Axios.get(url).then((response) => {
+            RestHandler.get(url).then((response) => {
                 setCharacterGroupOrder(Object.values(response.data));
                 setLoading(false);
             });

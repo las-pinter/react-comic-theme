@@ -1,7 +1,8 @@
 import './index.css';
 
 import { useEffect, useState } from 'react';
-import Axios from 'axios';
+
+import RestHandler from '../rest/RestHandler';
 
 import ThePosts from '../components/ThePosts/ThePosts';
 import Pager from '../components/Pager/Pager';
@@ -17,7 +18,7 @@ const MainPage = (): JSX.Element => {
 
     const getPosts = () => {
         let url = '/wp-json/wp/v2/posts/?page=' + postsCurrentPage + '&per_page=3&_embed';
-        return Axios.get(url).then((response) => {
+        return RestHandler.get(url).then((response) => {
             setPosts(response.data);
             setPostsTotalPages(response.headers['x-wp-totalpages']);
         }).catch(() => {

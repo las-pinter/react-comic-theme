@@ -1,7 +1,8 @@
 import './index.css';
 
 import { useEffect, useRef, useState } from 'react';
-import Axios from 'axios';
+
+import RestHandler from '../../rest/RestHandler';
 
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
@@ -44,7 +45,7 @@ const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
             '/wp-json/comics/v1/last/' + id,
         ].forEach((url) => {
             requests.push(
-                Axios.get(url).then((response) => {
+                RestHandler.get(url).then((response) => {
                     return response.data;
                 }).catch(() => {
                 })
