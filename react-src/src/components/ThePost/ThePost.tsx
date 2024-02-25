@@ -31,7 +31,10 @@ export interface IPost {
     title: {
         rendered: string
     },
-    id: string
+    id: string,
+    guid: {
+        rendered: string
+    }
 };
 
 interface IThePostProps {

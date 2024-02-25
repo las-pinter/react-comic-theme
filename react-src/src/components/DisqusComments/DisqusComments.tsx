@@ -26,7 +26,7 @@ const DisqusComments = forwardRef((props: IDisqusCommentsProps, ref: ForwardedRe
                 config={
                     {
                         url: window.location.href,
-                        identifier: props.post.id.toString(),
+                        identifier: props.post.id.toString() + ' ' + props.post.guid.rendered.toString().replace('#038;', ''),
                         title: props.post.title.rendered
                     }
                 }

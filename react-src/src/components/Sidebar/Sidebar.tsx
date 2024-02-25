@@ -1,38 +1,71 @@
 import './index.css'
 
-import { useEffect, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import Axios from 'axios';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
+
+type TSidebarItem = {
+    id: string,
+    id_base: string,
+    rendered: string,
+    sidebar: string,
+    nodeRef: React.MutableRefObject<any>
+};
+
+type TSidebar = Array<TSidebarItem>;
 
 interface ISidebadProps {
     sidebarId: string,
     background: boolean
-}
+};
 
 const Sidebar = ({ sidebarId, background }: ISidebadProps): JSX.Element => {
-    const [sidebar, setSidebar] = useState([]);
+    const [sidebar, setSidebar] = useState<TSidebar>([]);
 
     useEffect(() => {
         let url = '/wp-json/wp/v2/widgets?sidebar=' + sidebarId;
 
         Axios.get(url).then((response) => {
-            setSidebar(response.data);
+            let newSidebar: TSidebar = [];
+            response.data.forEach((sidebarItem: TSidebarItem) => {
+                let newSidebarItem = sidebarItem;
+                newSidebarItem.nodeRef = createRef();
+                newSidebar.push(newSidebarItem);
+            })
+
+            setSidebar(newSidebar);
         }).catch(() => {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sidebarId])
 
     return (
-        <>
+        <TransitionGroup>
             {
                 sidebar.map((item, i) => {
-                    return <div
-                        key={sidebarId + "_" + item['id']}
-                        className={"sidebar-item" + (background ? " container-style" : "-no-background")}
-                        dangerouslySetInnerHTML={{ __html: item['rendered'] }}
-                    />
+                    return (
+                        <CSSTransition
+                            classNames="fader"
+                            timeout={3000}
+                            nodeRef={item.nodeRef}
+                            appear={true}
+                            addEndListener={(done: () => void) => {
+                                item.nodeRef.current?.addEventListener("transitionend", done, false);
+                            }}
+                            key={sidebarId + "_" + item.id}
+                        >
+                            <div
+                                ref={item.nodeRef}
+                                className={"sidebar-item" + (background ? " container-style" : "-no-background")}
+                                dangerouslySetInnerHTML={{ __html: item.rendered }}
+                            />
+                        </CSSTransition>
+                    )
                 })
             }
-        </>
+        </TransitionGroup>
+
     );
 };
 

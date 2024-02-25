@@ -34,4 +34,4 @@ function custom_widgets_init()
 }
 add_action('widgets_init', 'custom_widgets_init');
 
-remove_filter( 'the_title', 'wptexturize' );
+remove_filter('the_title', 'wptexturize');

@@ -1,3 +1,7 @@
+:root {
+    --fader-speed: 300ms;
+}
+
 .fader-appear {
     opacity: 0!important;
     visibility: hidden!important;
@@ -6,7 +10,7 @@
 .fader-appear-active {
     opacity: 1!important;
     visibility: visible!important;
-    transition: opacity 300ms ease-in-out!important;
+    transition: opacity var(--fader-speed) ease-in-out!important;
 }
 
 .fader-appear-done {
@@ -22,7 +26,7 @@
 .fader-enter-active {
     opacity: 1!important;
     visibility: visible!important;
-    transition: opacity 300ms ease-in-out!important;
+    transition: opacity var(--fader-speed) ease-in-out!important;
 }
 
 .fader-enter-done {
@@ -37,7 +41,7 @@
 
 .fader-exit-active {
     opacity: 0!important;
-    transition: opacity 300ms ease-in-out!important;
+    transition: opacity var(--fader-speed) ease-in-out!important;
 }
 
 .fader-exit-done {

@@ -47,7 +47,7 @@
 .dropdown-menu {
     padding: 15px;
     position: absolute;
-    z-index: 2;
+    z-index: 3;
     background: var(--cmx-foreground-color);
     box-shadow: var(--cmx-container-box-shadow);
     border: var(--cmx-container-border);

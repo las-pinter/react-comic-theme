@@ -13,7 +13,7 @@ export type TMenuItem = {
 export type TMenu = Array<TMenuItem>;
 export type TMenus = Record<string, TMenu>;
 
-export type Comic = {
+export interface TComic {
     archivePage: string,
     comicSlug: string,
     name: string,
@@ -35,7 +35,7 @@ export interface IContextState {
     slug: string,
     route: string | undefined,
     menus: TMenus,
-    comics: Record<string,Comic>,
+    comics: Record<string,TComic>,
     castPageSlug: string,
     logoImages: Record<string, string>,
     backgroundImages: Record<string, Record<string, string>>,
