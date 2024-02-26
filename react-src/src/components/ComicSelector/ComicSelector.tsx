@@ -3,10 +3,11 @@ import './index.css';
 import { createRef, useEffect, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
+import RestHandler from '../../rest/RestHandler';
+
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import ComicSelectorNavigator from './ComicSelectorNavigator';
 import { TComic } from '../../context/Context';
-import RestHandler from '../../rest/RestHandler';
 
 interface TNodeRefComic extends TComic {
     nodeRef: React.MutableRefObject<any>

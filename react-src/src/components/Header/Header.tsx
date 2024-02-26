@@ -16,7 +16,7 @@ const Header = ({ context }: IHeaderProps): JSX.Element => {
                     visible={context.loading}
                     height="30"
                     width="50"
-                    color="#ff5100"
+                    color="#ffffff"
                     radius="9"
                     ariaLabel="three-dots-loading"
                     wrapperStyle={{}}

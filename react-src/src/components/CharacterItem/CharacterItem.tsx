@@ -25,7 +25,7 @@ const CharacterItem = ({ character, thumbnailSize }: ICharacterItemProps): JSX.E
             break;
     }
     return (
-        <div className="character-item fadeIn">
+        <div className="character-item">
             <Link to={"/character/" + character.slug}>
                 <div className={"character-thumbnail character-thumbnail-" + thumbnailSize}>
                     {

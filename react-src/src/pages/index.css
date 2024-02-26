@@ -13,6 +13,7 @@
 .content-wrapper {
     align-items: center;
     padding: 1px;
+    min-height: 1000px;
 }
 
 .main-content {

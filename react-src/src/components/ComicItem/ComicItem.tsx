@@ -1,104 +1,77 @@
 import './index.css';
 
-import { useRef } from "react";
+import { ForwardedRef, forwardRef } from "react";
 import { Link } from "react-router-dom";
-import { CSSTransition, SwitchTransition } from "react-transition-group";
 
-export type ComicItem = {
+export type TComicItem = {
     name: string,
     slug: string,
     permalink: string,
     thumbnail: string
 }
 
+export interface IComicItemNodeRef extends TComicItem {
+    nodeRef: React.MutableRefObject<any>
+}
+
 interface IArchiveComicItemProps {
-    comic: ComicItem,
+    comic: TComicItem,
     number: number
 }
 
-export const ArchiveComicItem = ({ comic, number }: IArchiveComicItemProps): JSX.Element => {
-    const nodeRef = useRef<any>(null);
-
+export const ArchiveComicItem = forwardRef(({ comic, number }: IArchiveComicItemProps, ref: ForwardedRef<any>): JSX.Element => {
     return (
-        <SwitchTransition mode={"out-in"}>
-            <CSSTransition
-                classNames="fader"
-                timeout={3000}
-                nodeRef={nodeRef}
-                appear={true}
-                addEndListener={(done: () => void) => {
-                    nodeRef.current?.addEventListener("transitionend", done, false);
-                }}
-                key={comic.slug}
-            >
-                <Link className="archive-comic-item-wrapper" ref={nodeRef} to={comic.permalink}>
-                    <div className="archive-comic-item">
-                        <div className="archive-comic-item-thumbnail">
-                            {
-                                comic.thumbnail ?
-                                    <img
-                                        src={comic.thumbnail}
-                                        alt={comic.name}
-                                    /> :
-                                    <div className="gray-placeholder"></div>
-                            }
-                        </div>
-                        <div className="archive-comic-item-name-wrapper container-vertical">
-                            <div className="archive-comic-item-name" title={comic.name}>
-                                {comic.name}
-                            </div>
-                        </div>
-                        <div className="archive-comic-item-number-wrapper">
-                            <div className="archive-comic-item-number">{number}</div>
-                        </div>
+        <Link ref={ref} className="archive-comic-item-wrapper" to={comic.permalink}>
+            <div className="archive-comic-item">
+                <div className="archive-comic-item-thumbnail">
+                    {
+                        comic.thumbnail ?
+                            <img
+                                src={comic.thumbnail}
+                                alt={comic.name}
+                            /> :
+                            <div className="gray-placeholder"></div>
+                    }
+                </div>
+                <div className="archive-comic-item-name-wrapper container-vertical">
+                    <div className="archive-comic-item-name" title={comic.name}>
+                        {comic.name}
                     </div>
-                </Link>
-            </CSSTransition>
-        </SwitchTransition>
+                </div>
+                <div className="archive-comic-item-number-wrapper">
+                    <div className="archive-comic-item-number">{number}</div>
+                </div>
+            </div>
+        </Link>
     );
-};
+});
 
 interface ICharacterComicItemProps {
-    comic: ComicItem
+    comic: TComicItem
 }
 
-export const CharacterComicItem = ({ comic }: ICharacterComicItemProps): JSX.Element => {
-    const nodeRef = useRef<any>(null);
-
+export const CharacterComicItem = forwardRef(({ comic }: ICharacterComicItemProps, ref: ForwardedRef<any>): JSX.Element => {
     return (
-        <SwitchTransition mode={"out-in"}>
-            <CSSTransition
-                classNames="fader"
-                timeout={3000}
-                nodeRef={nodeRef}
-                appear={true}
-                addEndListener={(done: () => void) => {
-                    nodeRef.current?.addEventListener("transitionend", done, false);
-                }}
-                key={comic.slug}
-            >
-                <Link className="character-comic-item-wrapper" ref={nodeRef} to={comic.permalink}>
-                    <div className="character-comic-item">
-                        <div className="character-comic-item-thumbnail">
-                            {
-                                comic.thumbnail ?
-                                    <img
-                                        src={comic.thumbnail}
-                                        alt={comic.name}
-                                    /> :
-                                    <div className="gray-placeholder"></div>
-                            }
-                        </div>
-                        <div className="character-comic-item-name-wrapper container-vertical">
-                            <div className="character-comic-item-name" title={comic.name}>
-                                {comic.name}
-                            </div>
-                        </div>
+        <Link ref={ref} className="character-comic-item-wrapper" to={comic.permalink}>
+            <div className="character-comic-item">
+                <div className="character-comic-item-thumbnail">
+                    {
+                        comic.thumbnail ?
+                            <img
+                                src={comic.thumbnail}
+                                alt={comic.name}
+                            /> :
+                            <div className="gray-placeholder"></div>
+                    }
+                </div>
+                <div className="character-comic-item-name-wrapper container-vertical">
+                    <div className="character-comic-item-name" title={comic.name}>
+                        {comic.name}
                     </div>
-                </Link>
-            </CSSTransition>
-        </SwitchTransition>
+                </div>
+            </div>
+        </Link>
     );
-};
+});
 
 export default ArchiveComicItem;

@@ -35,9 +35,9 @@ export const MenuItem = ({ item }: IMenuItemProps): JSX.Element => {
                     })
                 }}
             >
-                <Link to={item.url} title={item.title}>
+                <div className="linkless-link" title={item.title}>
                     {item.title}
-                </Link>
+                </div>
                 <DropdownMenu items={item.children} display={dropdown} />
             </div>
         )
@@ -47,9 +47,17 @@ export const MenuItem = ({ item }: IMenuItemProps): JSX.Element => {
 export const MenuItemNoDropdown = ({ item }: IMenuItemProps): JSX.Element => {
     return (
         <div className="menu-item-no-dropdown">
-            <Link to={item.url} >
-                {item.title}
-            </Link>
+            {
+                item.children.length !== 0
+                    ?
+                    <div className="linkless-link" >
+                        {item.title}
+                    </div>
+                    :
+                    <Link to={item.url} >
+                        {item.title}
+                    </Link>
+            }
             {
                 item.children.length !== 0
                     ?

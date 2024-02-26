@@ -29,6 +29,7 @@
     margin-inline-end: 0;
     padding-inline-start: 0px;
     transition: all linear 0.3s;
+    align-items: center;
 }
 
 .menu-item {

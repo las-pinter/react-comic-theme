@@ -1,10 +1,10 @@
 import './index.css';
 
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 import RestHandler from '../../rest/RestHandler';
-
-import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 import ComicNavigator, { TComicNavigatorProps } from './ComicNavigator';
 import Characters from './Characters';
@@ -97,7 +97,9 @@ const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
                         }}
                         key={comicImageUrl}
                     >
-                        <img ref={nodeRef} src={comicImageUrl} alt={comicPost.title.rendered} title={comicPost.title.rendered} />
+                        <Link to={comicNavLinks.nextPage}>
+                            <img ref={nodeRef} src={comicImageUrl} alt={comicPost.title.rendered} title={comicPost.title.rendered} />
+                        </Link>
                     </CSSTransition>
                 </SwitchTransition>
             </div>

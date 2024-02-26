@@ -1,51 +1,79 @@
 import './index.css';
 
-import { useRef } from "react";
+import { ForwardedRef, createRef, forwardRef, useEffect, useState } from "react";
 
-import { CSSTransition, SwitchTransition } from "react-transition-group";
-import { ArchiveComicItem, ComicItem } from '../ComicItem/ComicItem';
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { ArchiveComicItem, IComicItemNodeRef, TComicItem } from '../ComicItem/ComicItem';
 
-interface IArchiveChapterProps {
-    chapter: {
-        name: string,
-        comics: ComicItem[]
-    }
+
+export type TArchiveChapter = {
+    name: string,
+    comics: TComicItems,
+    slug: string
 }
 
-const ArchiveChapter = ({ chapter }: IArchiveChapterProps): JSX.Element => {
-    const nodeRef = useRef<any>(null);
+interface IArchiveChapterComicItem extends IComicItemNodeRef {
+    number: number
+}
+
+type TComicItems = Array<TComicItem>;
+type TArchiveChapterComicItems = Array<IArchiveChapterComicItem>;
+
+interface IArchiveChapterProps {
+    chapter: TArchiveChapter
+}
+
+const ArchiveChapter = forwardRef(({ chapter }: IArchiveChapterProps, ref: ForwardedRef<any>): JSX.Element => {
+    const [comicItems, setComicItems] = useState<TArchiveChapterComicItems>([]);
+
+    useEffect(() => {
+        setComicItems([]);
+        chapter.comics.forEach((comicItem, index) => {
+            let newComicItem = {
+                ...comicItem,
+                nodeRef: createRef(),
+                number: index
+            }
+            setComicItems(prevArray => [...prevArray, newComicItem]);
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [chapter])
 
     return (
-        <SwitchTransition mode={"out-in"}>
-            <CSSTransition
-                classNames="fader"
-                timeout={3000}
-                nodeRef={nodeRef}
-                appear={true}
-                addEndListener={(done: () => void) => {
-                    nodeRef.current?.addEventListener("transitionend", done, false);
-                }}
-                key={chapter.name}
-            >
-                <div ref={nodeRef} className="archive-chapter-wrapper container-vertical">
-                    <h2 className="chapter-name">{chapter.name}</h2>
-                    <div className="archive-chapter container-horizontal">
-                        {
-                            chapter.comics.map((comic, i) => {
-                                return (
-                                    <ArchiveComicItem
-                                        key={comic.slug + '_' + i}
-                                        comic={comic}
-                                        number={i}
-                                    />
-                                );
-                            })
-                        }
-                    </div>
-                </div>
-            </CSSTransition>
-        </SwitchTransition>
+        <div ref={ref} className="archive-chapter-wrapper container-vertical">
+            <h2 className="chapter-name">{chapter.name}</h2>
+            <TransitionGroup className="archive-chapter container-horizontal">
+                {
+                    comicItems.map((comicItem) => {
+                        const {
+                            nodeRef: _nodeRef,
+                            number: _number,
+                            ...theComicItem
+                        } = comicItem;
+
+                        return (
+                            <CSSTransition
+                                classNames="fader"
+                                timeout={3000}
+                                nodeRef={comicItem.nodeRef}
+                                appear={true}
+                                addEndListener={(done: () => void) => {
+                                    comicItem.nodeRef.current?.addEventListener("transitionend", done, false);
+                                }}
+                                key={"comic-item-" + comicItem.slug}
+                            >
+                                <ArchiveComicItem
+                                    ref={comicItem.nodeRef}
+                                    comic={theComicItem}
+                                    number={comicItem.number + 1}
+                                />
+                            </CSSTransition>
+                        );
+                    })
+                }
+            </TransitionGroup>
+        </div>
     );
-};
+});
 
 export default ArchiveChapter;

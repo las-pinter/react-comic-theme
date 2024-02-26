@@ -1,6 +1,7 @@
 import './index.css';
 
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import RestHandler from '../../rest/RestHandler';
 
@@ -10,12 +11,16 @@ import { IComicPost } from "./TheComic";
 import { Link } from 'react-router-dom';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
+interface ICharacterNoderef extends TCharacter {
+    nodeRef: React.MutableRefObject<any>
+}
+
 interface ICharactersProps extends IConsumerProps {
     comicPost?: IComicPost
 }
 
 const Characters = ({ context, comicPost }: ICharactersProps) => {
-    const [characters, setCharacters] = useState<Array<TCharacter>>([]);
+    const [characters, setCharacters] = useState<Array<ICharacterNoderef>>([]);
 
     useEffect(() => {
         if (!comicPost) {
@@ -40,7 +45,15 @@ const Characters = ({ context, comicPost }: ICharactersProps) => {
         });
 
         Promise.all(promises).then((values: Array<TCharacter>) => {
-            setCharacters(values);
+            let newCharacters: Array<ICharacterNoderef> = [];
+            values.forEach((value) => {
+                let newCharacter: ICharacterNoderef = {
+                    ...value,
+                    nodeRef: createRef()
+                }
+                newCharacters.push(newCharacter);
+            })
+            setCharacters(newCharacters);
         }).finally(() => {
             context.removeLoading();
         });
@@ -48,17 +61,28 @@ const Characters = ({ context, comicPost }: ICharactersProps) => {
     }, [comicPost])
 
     return (
-        <div className="comic-character-list container-horizontal container-style">
+        <TransitionGroup className="comic-character-list container-horizontal container-style">
             {
                 characters.map((character, i) => {
                     return (
-                        <Link key={"comic-character-" + i} to={'../character/' + character.slug}>
-                            <CharacterItem character={character} thumbnailSize='small' />
-                        </Link>
+                        <CSSTransition
+                            classNames="fader"
+                            timeout={3000}
+                            nodeRef={character.nodeRef}
+                            appear={true}
+                            addEndListener={(done: () => void) => {
+                                character.nodeRef.current?.addEventListener("transitionend", done, false);
+                            }}
+                            key={"comic-character-" + character.slug}
+                        >
+                            <Link ref={character.nodeRef} to={'../character/' + character.slug}>
+                                <CharacterItem character={character} thumbnailSize='small' />
+                            </Link>
+                        </CSSTransition>
                     );
                 })
             }
-        </div>
+        </TransitionGroup>
     );
 };
 

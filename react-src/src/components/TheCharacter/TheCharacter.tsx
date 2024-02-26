@@ -1,10 +1,10 @@
 import './index.css';
 
-import { useEffect, useRef, useState } from 'react';
-
+import { createRef, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import { CharacterComicItem } from '../ComicItem/ComicItem';
+import { CSSTransition, SwitchTransition, TransitionGroup } from 'react-transition-group';
+
+import { CharacterComicItem, IComicItemNodeRef, TComicItem } from '../ComicItem/ComicItem';
 import RestHandler from '../../rest/RestHandler';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
@@ -29,13 +29,22 @@ interface ITheCharacterProps extends IConsumerProps {
 export const TheCharacter = ({ context, character }: ITheCharacterProps): JSX.Element => {
     const nodeRef = useRef<any>(null);
 
-    const [characterComics, setCharacterComics] = useState([]);
+    const [characterComicItems, setCharacterComicItems] = useState<Array<IComicItemNodeRef>>([]);
 
     const getCharacterComics = (slug: string) => {
         context.addLoading();
+        setCharacterComicItems([]);
         let url = '/wp-json/comics/v1/character/' + slug + '/comics';
         return RestHandler.get(url).then((response) => {
-            setCharacterComics(response.data);
+            let responseData: Array<TComicItem> = response.data;
+
+            responseData.forEach((comicItem) => {
+                let newComicItem: IComicItemNodeRef = {
+                    ...comicItem,
+                    nodeRef: createRef(),
+                }
+                setCharacterComicItems(prevArray => [...prevArray, newComicItem]);
+            });
         }).catch(() => {
         }).finally(() => {
             context.removeLoading();
@@ -90,13 +99,31 @@ export const TheCharacter = ({ context, character }: ITheCharacterProps): JSX.El
                             </div>
                             <div className="the-character-comic-list container-vertical">
                                 <h2>Comic Pages</h2>
-                                <div className="the-character-comic-list-wrapper container-horizontal">
+                                <TransitionGroup className="the-character-comic-list-wrapper container-horizontal">
                                     {
-                                        characterComics.map((comic, i) => {
-                                            return <CharacterComicItem key={i} comic={comic} />
+                                        characterComicItems.map((comicItem) => {
+                                            const {
+                                                nodeRef: _nodeRef,
+                                                ...theComicItem
+                                            } = comicItem;
+
+                                            return (
+                                                <CSSTransition
+                                                    classNames="fader"
+                                                    timeout={3000}
+                                                    nodeRef={comicItem.nodeRef}
+                                                    appear={true}
+                                                    addEndListener={(done: () => void) => {
+                                                        comicItem.nodeRef.current?.addEventListener("transitionend", done, false);
+                                                    }}
+                                                    key={"comic-item-" + comicItem.slug}
+                                                >
+                                                    <CharacterComicItem ref={comicItem.nodeRef} comic={theComicItem} />
+                                                </CSSTransition>
+                                            )
                                         })
                                     }
-                                </div>
+                                </TransitionGroup>
                             </div>
                         </div>
                     </CSSTransition>
