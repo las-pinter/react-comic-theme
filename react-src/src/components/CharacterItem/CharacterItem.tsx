@@ -1,6 +1,7 @@
 import './index.css';
 
 import { Link } from 'react-router-dom';
+import { ForwardedRef, forwardRef } from 'react';
 
 import { TCharacter } from '../TheCharacter/TheCharacter';
 
@@ -9,7 +10,7 @@ interface ICharacterItemProps {
     thumbnailSize: string
 }
 
-const CharacterItem = ({ character, thumbnailSize }: ICharacterItemProps): JSX.Element => {
+const CharacterItem = forwardRef(({ character, thumbnailSize }: ICharacterItemProps, ref: ForwardedRef<any>): JSX.Element => {
     let displayImage = character.thumbnailSquareSmall;
     switch (thumbnailSize) {
         case 'small':
@@ -25,7 +26,7 @@ const CharacterItem = ({ character, thumbnailSize }: ICharacterItemProps): JSX.E
             break;
     }
     return (
-        <div className="character-item">
+        <div ref={ref} className="character-item">
             <Link to={"/character/" + character.slug}>
                 <div className={"character-thumbnail character-thumbnail-" + thumbnailSize}>
                     {
@@ -42,6 +43,6 @@ const CharacterItem = ({ character, thumbnailSize }: ICharacterItemProps): JSX.E
             </Link>
         </div>
     );
-};
+});
 
 export default CharacterItem;

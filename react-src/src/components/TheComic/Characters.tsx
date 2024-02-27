@@ -8,7 +8,6 @@ import RestHandler from '../../rest/RestHandler';
 import CharacterItem from "../CharacterItem/CharacterItem";
 import { TCharacter } from '../TheCharacter/TheCharacter';
 import { IComicPost } from "./TheComic";
-import { Link } from 'react-router-dom';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
 interface ICharacterNoderef extends TCharacter {
@@ -75,9 +74,7 @@ const Characters = ({ context, comicPost }: ICharactersProps) => {
                             }}
                             key={"comic-character-" + character.slug}
                         >
-                            <Link ref={character.nodeRef} to={'../character/' + character.slug}>
-                                <CharacterItem character={character} thumbnailSize='small' />
-                            </Link>
+                            <CharacterItem ref={character.nodeRef} character={character} thumbnailSize='small' />
                         </CSSTransition>
                     );
                 })
