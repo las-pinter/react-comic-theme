@@ -22,8 +22,12 @@ export type TCharacter = {
     slug: string
 }
 
+export interface ICharacterNodeRef extends TCharacter {
+    nodeRef: React.MutableRefObject<any>
+}
+
 interface ITheCharacterProps extends IConsumerProps {
-    character?: TCharacter
+    character?: ICharacterNodeRef
 }
 
 export const TheCharacter = ({ context, character }: ITheCharacterProps): JSX.Element => {

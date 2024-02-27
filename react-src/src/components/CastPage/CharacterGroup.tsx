@@ -1,9 +1,17 @@
 import './index.css';
 
-import CharacterItem from '../CharacterItem/CharacterItem';
-import { TCharacter } from '../TheCharacter/TheCharacter';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-export type TCharacterGroup = Array<TCharacter>
+import CharacterItem from '../CharacterItem/CharacterItem';
+import { ICharacterNodeRef } from '../TheCharacter/TheCharacter';
+
+export type TCharacterGroup = {
+    characters: Array<ICharacterNodeRef>;
+}
+export interface ICharacterGroupNodeRef extends TCharacterGroup {
+    characters: Array<ICharacterNodeRef>,
+    nodeRef: React.MutableRefObject<any>
+};
 
 interface ICharacterGroupProps {
     characterGroupName: string,
@@ -15,9 +23,9 @@ const CharacterGroup = ({ characterGroupName, characterGroup, level }: ICharacte
     return (
         <div className="cast-page-character-group-wrapper">
             <h2>{characterGroupName}</h2>
-            <div className="cast-page-character-group container-horizontal">
+            <TransitionGroup className="cast-page-character-group container-horizontal">
                 {
-                    characterGroup.map((character, i) => {
+                    characterGroup.characters.map((character, i) => {
                         let thumbSize = 'small';
                         switch (level) {
                             case 0:
@@ -29,10 +37,27 @@ const CharacterGroup = ({ characterGroupName, characterGroup, level }: ICharacte
                             default:
                                 break;
                         }
-                        return <CharacterItem key={character.name + i} character={character} thumbnailSize={thumbSize} />
+                        const {
+                            nodeRef: _nodeRef,
+                            ...theCharacter
+                        } = character;
+                        return (
+                            <CSSTransition
+                                classNames="fader"
+                                timeout={3000}
+                                nodeRef={character.nodeRef}
+                                appear={true}
+                                addEndListener={(done: () => void) => {
+                                    character.nodeRef.current?.addEventListener("transitionend", done, false);
+                                }}
+                                key={"character-item-" + character.slug}
+                            >
+                                <CharacterItem key={character.name + i} character={theCharacter} thumbnailSize={thumbSize} />
+                            </CSSTransition>
+                        );
                     })
                 }
-            </div>
+            </TransitionGroup>
         </div>
     );
 };

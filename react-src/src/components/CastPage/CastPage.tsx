@@ -1,17 +1,20 @@
 import './index.css';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createRef } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-import CharacterGroup from './CharacterGroup';
+import CharacterGroup, { ICharacterGroupNodeRef } from './CharacterGroup';
 import { TCharacter } from '../TheCharacter/TheCharacter';
 import RestHandler from '../../rest/RestHandler';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
+
+type TCharacterGroupsNodeRef = Record<string, ICharacterGroupNodeRef>;
 
 interface ICastPageProps extends IConsumerProps { }
 
 const CastPage = ({ context }: ICastPageProps): JSX.Element => {
     const [loading, setLoading] = useState(true);
-    const [characterGroups, setCharacterGroups] = useState<Record<string, TCharacter[]>>({});
+    const [characterGroups, setCharacterGroups] = useState<TCharacterGroupsNodeRef>({});
     const [characterGroupOrder, setCharacterGroupOrder] = useState<Array<string>>([]);
 
     useEffect(() => {
@@ -20,18 +23,23 @@ const CastPage = ({ context }: ICastPageProps): JSX.Element => {
         let url = '/wp-json/comics/v1/characters/';
         RestHandler.get(url).then((response) => {
             let characters: Array<TCharacter> = response.data;
-            let characterGroups: Record<string, TCharacter[]> = {};
+            let characterGroups: TCharacterGroupsNodeRef = {};
 
             characters.forEach(character => {
                 let characterGroup = character.group ? character.group : 'Unknown';
                 if (!(characterGroup in characterGroups)) {
-                    characterGroups[characterGroup] = [];
+                    characterGroups[characterGroup] = {
+                        characters: [],
+                        nodeRef: createRef()
+                    }
                 }
-                characterGroups[characterGroup].push(character);
+                characterGroups[characterGroup].characters.push({
+                    ...character,
+                    nodeRef: createRef()
+                });
             });
 
             setCharacterGroups(characterGroups);
-
         }).catch(() => {
         }).then(() => {
             let url = '/wp-json/settings/v1/char_group_order/';
@@ -58,20 +66,41 @@ const CastPage = ({ context }: ICastPageProps): JSX.Element => {
         return characterGroupOrder.indexOf(a) - characterGroupOrder.indexOf(b);
     })
 
-    let sortedCharacterGroups: Record<string, TCharacter[]> = {};
+    let sortedCharacterGroups: TCharacterGroupsNodeRef = {};
 
     charGroupKeys.forEach((key) => {
-        sortedCharacterGroups[key] = characterGroups[key];
+        sortedCharacterGroups[key] = {
+            ...characterGroups[key],
+            nodeRef: createRef()
+        }
     })
 
     return (
-        <div className="cast-page container-vertical">
+        <TransitionGroup className="cast-page container-vertical">
             {
                 Object.keys(sortedCharacterGroups).map((key, i) => {
-                    return <CharacterGroup key={i} characterGroupName={key} characterGroup={sortedCharacterGroups[key]} level={i} />;
+                    const sortedCharacterGroup: ICharacterGroupNodeRef = sortedCharacterGroups[key];
+                    const {
+                        nodeRef: _nodeRef,
+                        ...theSortedCharacterGroup
+                    } = sortedCharacterGroup;
+                    return (
+                        <CSSTransition
+                            classNames="fader"
+                            timeout={3000}
+                            nodeRef={sortedCharacterGroup.nodeRef}
+                            appear={true}
+                            addEndListener={(done: () => void) => {
+                                sortedCharacterGroup.nodeRef.current?.addEventListener("transitionend", done, false);
+                            }}
+                            key={"character-group-" + key}
+                        >
+                            <CharacterGroup characterGroupName={key} characterGroup={theSortedCharacterGroup} level={i} />
+                        </CSSTransition>
+                    );
                 })
             }
-        </div>
+        </TransitionGroup>
     );
 };
 
