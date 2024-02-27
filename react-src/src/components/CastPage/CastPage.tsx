@@ -95,7 +95,7 @@ const CastPage = ({ context }: ICastPageProps): JSX.Element => {
                             }}
                             key={"character-group-" + key}
                         >
-                            <CharacterGroup characterGroupName={key} characterGroup={theSortedCharacterGroup} level={i} />
+                            <CharacterGroup ref={sortedCharacterGroup.nodeRef} characterGroupName={key} characterGroup={theSortedCharacterGroup} level={i} />
                         </CSSTransition>
                     );
                 })

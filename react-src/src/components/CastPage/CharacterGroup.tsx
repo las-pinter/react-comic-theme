@@ -1,6 +1,7 @@
 import './index.css';
 
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { ForwardedRef, forwardRef } from 'react';
 
 import CharacterItem from '../CharacterItem/CharacterItem';
 import { ICharacterNodeRef } from '../TheCharacter/TheCharacter';
@@ -19,9 +20,9 @@ interface ICharacterGroupProps {
     level: number
 }
 
-const CharacterGroup = ({ characterGroupName, characterGroup, level }: ICharacterGroupProps): JSX.Element => {
+const CharacterGroup =  forwardRef(({ characterGroupName, characterGroup, level }: ICharacterGroupProps, ref: ForwardedRef<any>): JSX.Element => {
     return (
-        <div className="cast-page-character-group-wrapper">
+        <div ref={ref} className="cast-page-character-group-wrapper">
             <h2>{characterGroupName}</h2>
             <TransitionGroup className="cast-page-character-group container-horizontal">
                 {
@@ -52,7 +53,7 @@ const CharacterGroup = ({ characterGroupName, characterGroup, level }: ICharacte
                                 }}
                                 key={"character-item-" + character.slug}
                             >
-                                <CharacterItem key={character.name + i} character={theCharacter} thumbnailSize={thumbSize} />
+                                <CharacterItem ref={character.nodeRef} key={character.name + i} character={theCharacter} thumbnailSize={thumbSize} />
                             </CSSTransition>
                         );
                     })
@@ -60,6 +61,6 @@ const CharacterGroup = ({ characterGroupName, characterGroup, level }: ICharacte
             </TransitionGroup>
         </div>
     );
-};
+});
 
 export default CharacterGroup;
