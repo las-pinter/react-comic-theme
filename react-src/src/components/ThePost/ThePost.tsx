@@ -8,6 +8,14 @@ import DisqusComments from '../DisqusComments/DisqusComments';
 import PostMeta from './PostMeta';
 
 
+export type TTerm = {
+    id: number,
+    link: string,
+    name: string,
+    slug: string,
+    taxonomy: string
+}
+
 export interface IPost {
     type: string,
     _embedded: {
@@ -17,11 +25,7 @@ export interface IPost {
         'wp:featuredmedia': Array<{
             source_url: string
         }>,
-        'wp:term': Array<
-            Array<{
-                slug: string
-            }>
-        >
+        'wp:term': Array<Array<TTerm>>
     },
     date: string,
     slug: string,

@@ -1,75 +1,40 @@
 import './index.css';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
-import RestHandler from '../../rest/RestHandler';
-
-import ComicNavigator, { TComicNavigatorProps } from './ComicNavigator';
+import ComicNavigator from './ComicNavigator';
 import Characters from './Characters';
 import ComicTitle from './ComicTitle';
 
 import { IPost } from '../ThePost/ThePost';
-import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
 export interface IComicPost extends IPost {
-    type: 'comic'
+    type: 'comic',
+    page_number: number,
+    first_page: string,
+    previous_page: string,
+    next_page: string,
+    last_page: string,
 }
 
-interface ITheComicProps extends IConsumerProps {
+interface ITheComicProps {
     comicPost?: IComicPost
 }
 
-const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
+const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
     const nodeRef = useRef<any>(null);
-
-    const [comicNavLinks, setComicNavLinks] = useState<TComicNavigatorProps>({
-        firstPage: '',
-        previousPage: '',
-        nextPage: '',
-        lastPage: ''
-    });
-
-    useEffect(() => {
-        if (!comicPost) {
-            return;
-        }
-
-        context.addLoading();
-
-        const id = comicPost.id;
-        let requests: Promise<string>[] = [];
-
-        [
-            '/wp-json/comics/v1/first/' + id,
-            '/wp-json/comics/v1/previous/' + id,
-            '/wp-json/comics/v1/next/' + id,
-            '/wp-json/comics/v1/last/' + id,
-        ].forEach((url) => {
-            requests.push(
-                RestHandler.get(url).then((response) => {
-                    return response.data;
-                }).catch(() => {
-                })
-            );
-        });
-
-        Promise.all(requests).then((values: Array<string>) => {
-            setComicNavLinks({
-                firstPage: values[0],
-                previousPage: values[1],
-                nextPage: values[2],
-                lastPage: values[3]
-            });
-        }).finally(() => {
-            context.removeLoading();
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [comicPost]);
 
     if (!comicPost) {
         return <></>;
+    }
+
+    let comicNavLinks = {
+        firstPage: comicPost.first_page,
+        previousPage: comicPost.previous_page,
+        nextPage: comicPost.next_page,
+        lastPage: comicPost.last_page
     }
 
     let comicImageUrl = '';
@@ -79,9 +44,11 @@ const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
         }
     }
 
+    let chapterName = comicPost?._embedded?.['wp:term']?.[1]?.[0]?.name;
+
     return (
         <div className="the-comic-container">
-            <ComicTitle title={comicPost.title.rendered} />
+            <ComicTitle chapterName={chapterName} pageNumber={comicPost.page_number} title={comicPost.title.rendered} />
             <div className="navigator-top">
                 <ComicNavigator comicNavLinks={comicNavLinks} />
             </div>
@@ -111,4 +78,4 @@ const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
     );
 };
 
-export default WithConsumer(TheComic);
+export default TheComic;

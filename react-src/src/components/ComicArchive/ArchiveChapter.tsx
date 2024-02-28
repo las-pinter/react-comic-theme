@@ -8,7 +8,7 @@ import { ArchiveComicItem, IComicItemNodeRef, TComicItem } from '../ComicItem/Co
 
 export type TArchiveChapter = {
     name: string,
-    comics: TComicItems,
+    comics: Array<TComicItem>,
     slug: string
 }
 
@@ -16,7 +16,6 @@ interface IArchiveChapterComicItem extends IComicItemNodeRef {
     number: number
 }
 
-type TComicItems = Array<TComicItem>;
 type TArchiveChapterComicItems = Array<IArchiveChapterComicItem>;
 
 interface IArchiveChapterProps {
