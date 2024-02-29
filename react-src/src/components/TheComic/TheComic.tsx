@@ -13,6 +13,7 @@ import { IPost } from '../ThePost/ThePost';
 export interface IComicPost extends IPost {
     type: 'comic',
     page_number: number,
+    chapter_number: number,
     first_page: string,
     previous_page: string,
     next_page: string,
@@ -44,11 +45,9 @@ const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
         }
     }
 
-    let chapterName = comicPost?._embedded?.['wp:term']?.[1]?.[0]?.name;
-
     return (
         <div className="the-comic-container">
-            <ComicTitle chapterName={chapterName} pageNumber={comicPost.page_number} title={comicPost.title.rendered} />
+            <ComicTitle chapterNumber={comicPost.chapter_number} pageNumber={comicPost.page_number} title={comicPost.title.rendered} />
             <div className="navigator-top">
                 <ComicNavigator comicNavLinks={comicNavLinks} />
             </div>

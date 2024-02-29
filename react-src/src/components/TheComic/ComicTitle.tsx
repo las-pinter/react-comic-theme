@@ -4,12 +4,12 @@ import { useRef } from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 interface IComicTitleProps {
-    chapterName: string,
+    chapterNumber: number,
     pageNumber: number,
     title: string
 }
 
-const ComicTitle = ({ chapterName, pageNumber, title }: IComicTitleProps) => {
+const ComicTitle = ({ chapterNumber, pageNumber, title }: IComicTitleProps) => {
     const nodeRef = useRef<any>(null);
 
     return (
@@ -26,12 +26,11 @@ const ComicTitle = ({ chapterName, pageNumber, title }: IComicTitleProps) => {
                     key={title}
                 >
                     <div ref={nodeRef} className="comic-title">
-                        <p>{"Chapter: " + chapterName + " Page: " + pageNumber}</p>
-                        {title}
+                        {"Chapter " + chapterNumber + " - Page " + pageNumber + " - " + title}
                     </div>
                 </CSSTransition>
             </SwitchTransition>
-        </div>
+        </div >
     );
 };
 
