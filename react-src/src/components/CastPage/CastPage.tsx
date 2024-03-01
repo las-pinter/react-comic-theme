@@ -87,9 +87,11 @@ const CastPage = ({ context }: ICastPageProps): JSX.Element => {
                     return (
                         <CSSTransition
                             classNames="fader"
-                            timeout={3000}
                             nodeRef={sortedCharacterGroup.nodeRef}
+                            mountOnEnter={true}
+                            unmountOnExit={true}
                             appear={true}
+                            timeout={10000}
                             addEndListener={(done: () => void) => {
                                 sortedCharacterGroup.nodeRef.current?.addEventListener("transitionend", done, false);
                             }}

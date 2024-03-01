@@ -59,9 +59,11 @@ export const ThePost = ({ post, displayComments }: IThePostProps): JSX.Element =
                 <SwitchTransition mode={"out-in"}>
                     <CSSTransition
                         classNames="fader"
-                        timeout={3000}
                         nodeRef={nodeRef}
+                        mountOnEnter={true}
+                        unmountOnExit={true}
                         appear={true}
+                        timeout={10000}
                         addEndListener={(done: () => void) => {
                             nodeRef.current?.addEventListener("transitionend", done, false);
                         }}
@@ -108,9 +110,11 @@ export const TheComicPost = ({ post, comicPageFullSlug }: ITheComicPostProps): J
                 <SwitchTransition mode={"out-in"}>
                     <CSSTransition
                         classNames="fader"
-                        timeout={3000}
                         nodeRef={nodeRef}
+                        mountOnEnter={true}
+                        unmountOnExit={true}
                         appear={true}
+                        timeout={10000}
                         addEndListener={(done: () => void) => {
                             nodeRef.current?.addEventListener("transitionend", done, false);
                         }}

@@ -2,34 +2,18 @@
     --fader-speed: 300ms;
 }
 
-.fader-appear {
+.fader-appear, .fader-enter {
     opacity: 0!important;
     visibility: hidden!important;
 }
 
-.fader-appear-active {
+.fader-appear-active, .fader-enter-active {
     opacity: 1!important;
     visibility: visible!important;
     transition: opacity var(--fader-speed) ease-in-out!important;
 }
 
-.fader-appear-done {
-    opacity: 1!important;
-    visibility: visible!important;
-}
-
-.fader-enter {
-    opacity: 0!important;
-    visibility: hidden!important;
-}
-
-.fader-enter-active {
-    opacity: 1!important;
-    visibility: visible!important;
-    transition: opacity var(--fader-speed) ease-in-out!important;
-}
-
-.fader-enter-done {
+.fader-appear-done, .fader-enter-done {
     opacity: 1!important;
     visibility: visible!important;
 }

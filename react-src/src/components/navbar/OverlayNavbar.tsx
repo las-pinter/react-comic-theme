@@ -20,11 +20,13 @@ const OverlayNavbar = ({ menuList, menuListSocial, show, visibilityCallback }: I
     return (
         <CSSTransition
             classNames="fader"
-            timeout={3000}
+            timeout={10000}
             addEndListener={(done: () => void) => {
                 nodeRef.current?.addEventListener("transitionend", done, false);
             }}
             nodeRef={nodeRef}
+            mountOnEnter={true}
+            unmountOnExit={true}
             appear={true}
             in={show}
         >

@@ -60,9 +60,11 @@ const ComicSelector = ({ context }: IComicSelectorProps): JSX.Element => {
                     return (
                         <CSSTransition
                             classNames="fader"
-                            timeout={3000}
                             nodeRef={comic.nodeRef}
+                            mountOnEnter={true}
+                            unmountOnExit={true}
                             appear={true}
+                            timeout={10000}
                             addEndListener={(done: () => void) => {
                                 comic.nodeRef.current?.addEventListener("transitionend", done, false);
                             }}

@@ -45,9 +45,11 @@ const CharacterGroup =  forwardRef(({ characterGroupName, characterGroup, level 
                         return (
                             <CSSTransition
                                 classNames="fader"
-                                timeout={3000}
                                 nodeRef={character.nodeRef}
+                                mountOnEnter={true}
+                                unmountOnExit={true}
                                 appear={true}
+                                timeout={10000}
                                 addEndListener={(done: () => void) => {
                                     character.nodeRef.current?.addEventListener("transitionend", done, false);
                                 }}

@@ -74,9 +74,11 @@ export const TheCharacter = ({ context, character }: ITheCharacterProps): JSX.El
                 <SwitchTransition mode={"out-in"}>
                     <CSSTransition
                         classNames="fader"
-                        timeout={3000}
                         nodeRef={nodeRef}
+                        mountOnEnter={true}
+                        unmountOnExit={true}
                         appear={true}
+                        timeout={10000}
                         addEndListener={(done: () => void) => {
                             nodeRef.current?.addEventListener("transitionend", done, false);
                         }}
@@ -114,9 +116,11 @@ export const TheCharacter = ({ context, character }: ITheCharacterProps): JSX.El
                                             return (
                                                 <CSSTransition
                                                     classNames="fader"
-                                                    timeout={3000}
                                                     nodeRef={comicItem.nodeRef}
+                                                    mountOnEnter={true}
+                                                    unmountOnExit={true}
                                                     appear={true}
+                                                    timeout={10000}
                                                     addEndListener={(done: () => void) => {
                                                         comicItem.nodeRef.current?.addEventListener("transitionend", done, false);
                                                     }}

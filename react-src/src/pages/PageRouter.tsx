@@ -24,9 +24,11 @@ const PageRouter = ({ context, contextType }: IPageRouterProps): JSX.Element => 
         <SwitchTransition mode={"out-in"}>
             <CSSTransition
                 classNames="fader"
-                timeout={3000}
                 nodeRef={nodeRef}
                 appear={true}
+                mountOnEnter={true}
+                unmountOnExit={true}
+                timeout={10000}
                 addEndListener={(done: () => void) => {
                     nodeRef.current?.addEventListener("transitionend", done, false);
                 }}

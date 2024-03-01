@@ -53,9 +53,11 @@ const ArchiveChapter = forwardRef(({ chapter }: IArchiveChapterProps, ref: Forwa
                         return (
                             <CSSTransition
                                 classNames="fader"
-                                timeout={3000}
                                 nodeRef={comicItem.nodeRef}
+                                mountOnEnter={true}
+                                unmountOnExit={true}
                                 appear={true}
+                                timeout={10000}
                                 addEndListener={(done: () => void) => {
                                     comicItem.nodeRef.current?.addEventListener("transitionend", done, false);
                                 }}

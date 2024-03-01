@@ -16,7 +16,7 @@ const DisqusComments = forwardRef((props: IDisqusCommentsProps, ref: ForwardedRe
     return (
         <div
             ref={ref}
-            id="disqus"
+            id="disqus_thread"
             style={{
                 display: props.display ? "block" : "none"
             }}

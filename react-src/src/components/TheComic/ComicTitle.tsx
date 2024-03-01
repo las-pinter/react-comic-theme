@@ -17,9 +17,11 @@ const ComicTitle = ({ chapterNumber, pageNumber, title }: IComicTitleProps) => {
             <SwitchTransition mode={"out-in"}>
                 <CSSTransition
                     classNames="fader"
-                    timeout={3000}
                     nodeRef={nodeRef}
+                    mountOnEnter={true}
+                    unmountOnExit={true}
                     appear={true}
+                    timeout={10000}
                     addEndListener={(done: () => void) => {
                         nodeRef.current?.addEventListener("transitionend", done, false);
                     }}

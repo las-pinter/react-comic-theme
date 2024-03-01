@@ -43,9 +43,11 @@ const ThePage = ({ page, context }: IThePageProps): JSX.Element => {
                 <SwitchTransition mode={"out-in"}>
                     <CSSTransition
                         classNames="fader"
-                        timeout={3000}
                         nodeRef={nodeRef}
+                        mountOnEnter={true}
+                        unmountOnExit={true}
                         appear={true}
+                        timeout={10000}
                         addEndListener={(done: () => void) => {
                             nodeRef.current?.addEventListener("transitionend", done, false);
                         }}

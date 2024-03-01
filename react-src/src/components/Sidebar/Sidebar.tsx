@@ -50,9 +50,11 @@ const Sidebar = ({ context, sidebarId, background }: ISidebadProps): JSX.Element
                     return (
                         <CSSTransition
                             classNames="fader"
-                            timeout={3000}
                             nodeRef={item.nodeRef}
+                            mountOnEnter={true}
+                            unmountOnExit={true}
                             appear={true}
+                            timeout={10000}
                             addEndListener={(done: () => void) => {
                                 item.nodeRef.current?.addEventListener("transitionend", done, false);
                             }}
