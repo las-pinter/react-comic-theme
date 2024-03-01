@@ -6,8 +6,12 @@
     border-width: 5px;
     border-color: #333;
     position: relative;
+}
+
+.archive-comic-item.non-hovered,
+.character-comic-item.non-hovered {
     transition-timing-function: ease;
-    transition-duration: .5s;
+    transition-duration: 1000ms;
 }
 
 .archive-comic-item-thumbnail {
@@ -46,8 +50,12 @@
     justify-content: center;
     flex-wrap: wrap;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .5);
+}
+
+.archive-comic-item-name-wrapper.non-hovered,
+.character-comic-item-name-wrapper.non-hovered {
     transition-timing-function: ease;
-    transition-duration: .5s;
+    transition-duration: 1000ms;
 }
 
 .archive-comic-item-name,
@@ -62,8 +70,12 @@
     font-weight: bold;
     visibility: hidden;
     opacity: 0;
-    transition-timing-function: ease-out;
-    transition-duration: .5s;
+}
+
+.archive-comic-item-name.non-hovered,
+.character-comic-item-name.non-hovered {
+    transition-timing-function: ease;
+    transition-duration: 1000ms;
 }
 
 .archive-comic-item-number-wrapper {
@@ -90,23 +102,23 @@
     font-size: 16px;
 }
 
-.archive-comic-item-wrapper:hover .archive-comic-item,
-.character-comic-item-wrapper:hover .character-comic-item {
+.archive-comic-item-wrapper.hovered .archive-comic-item,
+.character-comic-item-wrapper.hovered .character-comic-item {
     transform: scale(1.3);
     z-index: 10;
     transition-timing-function: ease;
     transition-duration: .5s;
 }
 
-.archive-comic-item-wrapper:hover:hover .archive-comic-item-name-wrapper,
-.character-comic-item-wrapper:hover .character-comic-item-name-wrapper {
+.archive-comic-item-wrapper.hovered .archive-comic-item-name-wrapper,
+.character-comic-item-wrapper.hovered .character-comic-item-name-wrapper {
     background-color: rgba(0, 0, 0, 0.65);
     transition-timing-function: ease;
     transition-duration: .3s;
 }
 
-.archive-comic-item-wrapper:hover:hover .archive-comic-item-name-wrapper .archive-comic-item-name,
-.character-comic-item-wrapper:hover .character-comic-item-name-wrapper .character-comic-item-name {
+.archive-comic-item-wrapper.hovered .archive-comic-item-name-wrapper .archive-comic-item-name,
+.character-comic-item-wrapper.hovered .character-comic-item-name-wrapper .character-comic-item-name {
     visibility: visible;
     opacity: 1;
     transition-timing-function: ease;
