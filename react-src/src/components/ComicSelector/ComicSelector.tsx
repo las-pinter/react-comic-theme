@@ -71,7 +71,9 @@ const ComicSelector = ({ context }: IComicSelectorProps): JSX.Element => {
                             key={comicSlug + '_' + i}
                         >
                             <div ref={comic.nodeRef} className={"comic-selector-comic container-vertical " + comicSlug}>
-                                <div className="comic-name">{comic.name}</div>
+                                <div className="comic-name">
+                                    <img src={context.logoImages[comicSlug]} alt={comic.name} />
+                                </div>
                                 <div className="comic-selector-image">
                                     <img src={selectorImages[comicSlug]} alt={comic.name} />
                                 </div>

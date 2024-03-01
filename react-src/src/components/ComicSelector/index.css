@@ -12,6 +12,7 @@
     position: relative;
     border-radius: 10px;
     overflow: hidden;
+    align-items: center;
 }
 
 .comic-selector-navigation {
@@ -61,18 +62,15 @@
 
 .comic-name {
     z-index: 1;
-    font-size: var(--cmx-font-medium);
     margin-top: 10px;
-    color: white;
-    text-shadow: 0px 0px 40px hsl(0deg 0% 0%),
-        0px 0px 30px hsl(0deg 0% 0%),
-        0px 0px 20px hsl(0deg 0% 0%),
-        0px 0px 10px hsl(0deg 0% 0%),
-        0px 0px 10px hsl(0deg 0% 0%),
-        0px 0px 20px hsl(0deg 0% 0%),
-        0px 0px 20px hsl(0deg 0% 0%),
-        0px 0px 20px hsl(0deg 0% 0%),
-        0px 0px 20px hsl(0deg 0% 0%);
+    max-width: 150px;
+    max-height: 150px;
+    overflow: hidden;
+}
+
+.comic-name img {
+    width: 100%;
+    filter: drop-shadow(0px 0px 3px #000) drop-shadow(0px 1px 2px #000);
 }
 
 @media screen and (max-width: 768px) {

@@ -124,10 +124,12 @@ header .menu-item-social {
     .menu {
         visibility: hidden;
         height: 0;
+        overflow: hidden;
     }
 
     .navbar {
         height: 0;
+        overflow: hidden;
     }
 }
 
