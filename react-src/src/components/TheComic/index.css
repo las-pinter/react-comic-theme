@@ -32,6 +32,14 @@
     width: 80%;
 }
 
+.comic-navigator-item {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 10px;
+}
+
 .comic-title-wrapper {
     padding: 10px;
     z-index: 2;

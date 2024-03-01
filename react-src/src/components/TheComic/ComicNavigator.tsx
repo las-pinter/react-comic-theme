@@ -1,3 +1,4 @@
+import { NavigationIcons } from '../../Icons';
 import './index.css';
 
 import { Link } from 'react-router-dom';
@@ -21,10 +22,18 @@ const ComicNavigator = ({ comicNavLinks }: IComicNavigatorProps) => {
 
     return (
         <div className="comic-navigator container-horizontal container-style">
-            <div className="comic-navigator-item"><Link to={firstComicPage}>First</Link></div>
-            <div className="comic-navigator-item"><Link to={previousComicPage}>Previous</Link></div>
-            <div className="comic-navigator-item"><Link to={nextComicPage}>Next</Link></div>
-            <div className="comic-navigator-item"><Link to={lastComicPage}>Last</Link></div>
+            <Link to={firstComicPage} className="comic-navigator-item">
+                {NavigationIcons.first}First
+            </Link>
+            <Link to={previousComicPage} className="comic-navigator-item">
+                {NavigationIcons.previous}Previous
+            </Link>
+            <Link to={nextComicPage} className="comic-navigator-item">
+                Next{NavigationIcons.next}
+            </Link>
+            <Link to={lastComicPage} className="comic-navigator-item">
+                Last{NavigationIcons.last}
+            </Link>
         </div>
     );
 };
