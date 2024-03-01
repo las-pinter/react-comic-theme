@@ -79,6 +79,9 @@
         font-size: var(--cmx-font-big);
         column-gap: 50px;
     }
+    .comic-navigator-text {
+        display: none;
+    }
 }
 
 @media screen and (min-width: 1025px) {
