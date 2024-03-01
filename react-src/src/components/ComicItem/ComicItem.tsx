@@ -33,53 +33,22 @@ const getHoverClass = (hoverItem: number) => {
 }
 
 export const ArchiveComicItem = forwardRef(({ comic, number }: IArchiveComicItemProps, ref: ForwardedRef<any>): JSX.Element => {
-    const [hover, setHover] = useState({
-        itemWrapper: 0,
-        item: 0,
-        nameWrapper: 0,
-        name: 0
-    });
+    const [hover, setHover] = useState(0);
 
     return (
         <Link
             ref={ref}
-            className={"archive-comic-item-wrapper" + getHoverClass(hover.itemWrapper)}
+            className={"archive-comic-item-wrapper" + getHoverClass(hover)}
             to={comic.permalink}
             onMouseEnter={() => {
-                setHover((prevState) => {
-                    return {
-                        ...prevState,
-                        itemWrapper: 1
-                    }
-                })
+                setHover(1)
             }}
             onMouseLeave={() => {
-                setHover((prevState) => {
-                    return {
-                        ...prevState,
-                        itemWrapper: 2
-                    }
-                })
+                setHover(2)
             }}
         >
             <div
-                className={"archive-comic-item" + getHoverClass(hover.item)}
-                onMouseEnter={() => {
-                    setHover((prevState) => {
-                        return {
-                            ...prevState,
-                            item: 1
-                        }
-                    })
-                }}
-                onMouseLeave={() => {
-                    setHover((prevState) => {
-                        return {
-                            ...prevState,
-                            item: 2
-                        }
-                    })
-                }}
+                className={"archive-comic-item" + getHoverClass(hover)}
             >
                 <div className="archive-comic-item-thumbnail">
                     {
@@ -92,43 +61,11 @@ export const ArchiveComicItem = forwardRef(({ comic, number }: IArchiveComicItem
                     }
                 </div>
                 <div
-                    className={"archive-comic-item-name-wrapper container-vertical" + getHoverClass(hover.nameWrapper)}
-                    onMouseEnter={() => {
-                        setHover((prevState) => {
-                            return {
-                                ...prevState,
-                                nameWrapper: 1
-                            }
-                        })
-                    }}
-                    onMouseLeave={() => {
-                        setHover((prevState) => {
-                            return {
-                                ...prevState,
-                                nameWrapper: 2
-                            }
-                        })
-                    }}
+                    className={"archive-comic-item-name-wrapper container-vertical" + getHoverClass(hover)}
                 >
                     <div
-                        className={"archive-comic-item-name" + getHoverClass(hover.name)}
+                        className={"archive-comic-item-name" + getHoverClass(hover)}
                         title={comic.name}
-                        onMouseEnter={() => {
-                            setHover((prevState) => {
-                                return {
-                                    ...prevState,
-                                    name: 1
-                                }
-                            })
-                        }}
-                        onMouseLeave={() => {
-                            setHover((prevState) => {
-                                return {
-                                    ...prevState,
-                                    name: 2
-                                }
-                            })
-                        }}
                     >
                         {comic.name}
                     </div>
@@ -146,53 +83,22 @@ interface ICharacterComicItemProps {
 }
 
 export const CharacterComicItem = forwardRef(({ comic }: ICharacterComicItemProps, ref: ForwardedRef<any>): JSX.Element => {
-    const [hover, setHover] = useState({
-        itemWrapper: 0,
-        item: 0,
-        nameWrapper: 0,
-        name: 0
-    });
+    const [hover, setHover] = useState(0);
 
     return (
         <Link
             ref={ref}
-            className={"character-comic-item-wrapper" + getHoverClass(hover.itemWrapper)}
+            className={"character-comic-item-wrapper" + getHoverClass(hover)}
             to={comic.permalink}
             onMouseEnter={() => {
-                setHover((prevState) => {
-                    return {
-                        ...prevState,
-                        itemWrapper: 1
-                    }
-                })
+                setHover(1)
             }}
             onMouseLeave={() => {
-                setHover((prevState) => {
-                    return {
-                        ...prevState,
-                        itemWrapper: 2
-                    }
-                })
+                setHover(2)
             }}
         >
             <div
-                className={"character-comic-item" + getHoverClass(hover.item)}
-                onMouseEnter={() => {
-                    setHover((prevState) => {
-                        return {
-                            ...prevState,
-                            item: 1
-                        }
-                    })
-                }}
-                onMouseLeave={() => {
-                    setHover((prevState) => {
-                        return {
-                            ...prevState,
-                            item: 2
-                        }
-                    })
-                }}
+                className={"character-comic-item" + getHoverClass(hover)}
             >
                 <div className="character-comic-item-thumbnail">
                     {
@@ -205,43 +111,11 @@ export const CharacterComicItem = forwardRef(({ comic }: ICharacterComicItemProp
                     }
                 </div>
                 <div
-                    className={"character-comic-item-name-wrapper container-vertical" + getHoverClass(hover.nameWrapper)}
-                    onMouseEnter={() => {
-                        setHover((prevState) => {
-                            return {
-                                ...prevState,
-                                nameWrapper: 1
-                            }
-                        })
-                    }}
-                    onMouseLeave={() => {
-                        setHover((prevState) => {
-                            return {
-                                ...prevState,
-                                nameWrapper: 2
-                            }
-                        })
-                    }}
+                    className={"character-comic-item-name-wrapper container-vertical" + getHoverClass(hover)}
                 >
                     <div
-                        className={"character-comic-item-name"+ getHoverClass(hover.name)}
+                        className={"character-comic-item-name" + getHoverClass(hover)}
                         title={comic.name}
-                        onMouseEnter={() => {
-                            setHover((prevState) => {
-                                return {
-                                    ...prevState,
-                                    name: 1
-                                }
-                            })
-                        }}
-                        onMouseLeave={() => {
-                            setHover((prevState) => {
-                                return {
-                                    ...prevState,
-                                    name: 2
-                                }
-                            })
-                        }}
                     >
                         {comic.name}
                     </div>
