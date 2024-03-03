@@ -46,6 +46,9 @@ export const ArchiveComicItem = forwardRef(({ comic, number }: IArchiveComicItem
             onMouseLeave={() => {
                 setHover(2)
             }}
+            onClick={() => {
+                window.scrollTo(0, 0);
+            }}
         >
             <div
                 className={"archive-comic-item" + getHoverClass(hover)}
@@ -95,6 +98,9 @@ export const CharacterComicItem = forwardRef(({ comic }: ICharacterComicItemProp
             }}
             onMouseLeave={() => {
                 setHover(2)
+            }}
+            onClick={() => {
+                window.scrollTo(0, 0);
             }}
         >
             <div
