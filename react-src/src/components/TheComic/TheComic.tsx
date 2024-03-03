@@ -9,6 +9,7 @@ import Characters from './Characters';
 import ComicTitle from './ComicTitle';
 
 import { IPost } from '../ThePost/ThePost';
+import ContentWarningOverlay from './ContentWarningOverlay';
 
 export interface IComicPost extends IPost {
     type: 'comic',
@@ -18,6 +19,7 @@ export interface IComicPost extends IPost {
     previous_page: string,
     next_page: string,
     last_page: string,
+    content_warning: string,
 }
 
 interface ITheComicProps {
@@ -65,14 +67,23 @@ const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
                         }}
                         key={comicImageUrl}
                     >
-                        <Link to={comicNavLinks.nextPage}>
-                            <img
-                                ref={nodeRef}
-                                src={comicImageUrl}
-                                alt={"Chapter " + comicPost.chapter_number + " - Page " + comicPost.page_number + " - " + comicPost.title.rendered}
-                                title={"Chapter " + comicPost.chapter_number + " - Page " + comicPost.page_number + " - " + comicPost.title.rendered}
-                            />
-                        </Link>
+                        <>
+                            <Link className="the-comic-link" to={comicNavLinks.nextPage}>
+                                <img
+                                    ref={nodeRef}
+                                    src={comicImageUrl}
+                                    alt={"Chapter " + comicPost.chapter_number + " - Page " + comicPost.page_number + " - " + comicPost.title.rendered}
+                                    title={"Chapter " + comicPost.chapter_number + " - Page " + comicPost.page_number + " - " + comicPost.title.rendered}
+                                />
+                            </Link>
+                            {
+                                comicPost.content_warning === '1'
+                                    ?
+                                    <ContentWarningOverlay />
+                                    :
+                                    <></>
+                            }
+                        </>
                     </CSSTransition>
                 </SwitchTransition>
             </div>
