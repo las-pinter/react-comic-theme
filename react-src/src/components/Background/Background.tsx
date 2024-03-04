@@ -1,6 +1,6 @@
 import './index.css';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import { MouseParallaxChild, MouseParallaxContainer } from '../../effects/MouseParallax';
@@ -13,28 +13,15 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
     const secondNodeRef = useRef<any>(null);
     const thirdNodeRef = useRef<any>(null);
 
-    const [theBackground, setTheBackround] = useState<Record<string, string>>({});
-
-    useEffect(() => {
-        if (context.currentComic.locationSlug === '') {
-            setTheBackround(context.backgroundImages?.main);
-        } else {
-            setTheBackround(context.backgroundImages?.[context.currentComic.locationSlug]);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [context.slug, context.currentComic.comicSlug, context.currentComic.locationSlug])
-
     const firstLayerSpeed = 0.01;
     const secondLayerSpeed = 2 * firstLayerSpeed;
     const thirdLayerSpeed = 3 * secondLayerSpeed;
 
-    if (!theBackground) {
-        return <></>;
-    }
+    let theBackground = context.currentComic.locationSlug ? context.backgroundImages?.[context.currentComic.locationSlug] : context.backgroundImages?.main;
 
-    let firstLayerImage = theBackground.first;
-    let secondLayerImage = theBackground.second;
-    let thirdLayerImage = theBackground.third;
+    let firstLayerImage = theBackground?.first ? theBackground?.first : '';
+    let secondLayerImage = theBackground?.second ? theBackground?.second : '';
+    let thirdLayerImage = theBackground?.third ? theBackground?.third : '';
 
     return (
         <div className="the-background">
