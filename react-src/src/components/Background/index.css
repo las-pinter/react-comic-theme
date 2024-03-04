@@ -14,19 +14,28 @@
 
 .the-background img {
     height: 100%;
-    position: absolute;
+    z-index: -650;
+    position: relative;
 }
 
 .background-image-container-wrapper {
     height: 100%;
-    width: 1920px;
+    width: 100%;
 }
 
 .background-image-container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     position: absolute;
     height: 100%;
     width: 100%;
+    flex-wrap: nowrap;
+}
+
+.background-darkness {
+    background: var(--cmx-base-color);
+    height: 100%;
+    width: 100%;
+    z-index: -650;
+    position: relative;
 }

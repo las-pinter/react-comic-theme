@@ -104,7 +104,7 @@ a:hover, .linkless-link:hover {
 }
 
 .masked-left-right {
-    --mask: linear-gradient(to right, transparent 1%, black 5%, black 95%, transparent 99%);
+    --mask: linear-gradient(to right, transparent 1%, black 2%, black 98%, transparent 99%);
     -webkit-mask-image: var(--mask);
     mask-image: var(--mask);
 }

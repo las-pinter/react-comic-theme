@@ -32,17 +32,3 @@
     opacity: 0!important;
     visibility: hidden!important;
 }
-
-.fadeIn {
-    animation: fadeInAnimation 0.5s linear;
-}
-
-@keyframes fadeInAnimation {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
