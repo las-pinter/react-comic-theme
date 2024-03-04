@@ -162,39 +162,49 @@ class Comic_Theme_Settings
             ?>
 
             <h2>Comic Logo Settings</h2>
-            <h3>Main Logo</h3>
-            <div class="comic-theme-admin-image-selector" id="logo:main">
-                <img src="<?php
-                    echo $general_settings['logo']['main'] ?? '';
-                ?>">
-            </div>
-            <?php
-                foreach ($comics as $comic) {
-                    $logo_image_url = $general_settings['logo'][$comic['slug']] ?? '';
-            ?>
-                <h3><?php echo $comic['name'] ?></h3>
-                <div class="comic-theme-admin-image-selector" id="<?php echo 'logo:' . $comic['slug'] ?>" >
-                    <img src="<?php echo $logo_image_url ?? '' ?>">
+            <div class="comic-theme-admin-image-group">
+                <div class="comic-theme-admin-image-item">
+                    <h3>Main Logo</h3>
+                    <div class="comic-theme-admin-image-selector" id="logo:main">
+                        <img src="<?php
+                            echo $general_settings['logo']['main'] ?? '';
+                        ?>">
+                    </div>
                 </div>
-            <?php
-                }
-            ?>
+                <?php
+                    foreach ($comics as $comic) {
+                        $logo_image_url = $general_settings['logo'][$comic['slug']] ?? '';
+                ?>
+                    <div class="comic-theme-admin-image-item">
+                        <h3><?php echo $comic['name'] ?></h3>
+                        <div class="comic-theme-admin-image-selector" id="<?php echo 'logo:' . $comic['slug'] ?>" >
+                            <img src="<?php echo $logo_image_url ?? '' ?>">
+                        </div>
+                    </div>
+                <?php
+                    }
+                ?>
+            </div>
 
             <h2>Comic Selector Settings</h2>
-            <?php
-                foreach ($comics as $comic) {
-                    $selector_image_url = '';
-                    if (isset($general_settings['comic_selector_image'])) {
-                        $selector_image_url = $general_settings['comic_selector_image'][$comic['slug']] ?? '';
+            <div class="comic-theme-admin-image-group">
+                <?php
+                    foreach ($comics as $comic) {
+                        $selector_image_url = '';
+                        if (isset($general_settings['comic_selector_image'])) {
+                            $selector_image_url = $general_settings['comic_selector_image'][$comic['slug']] ?? '';
+                        }
+                ?>
+                        <div class="comic-theme-admin-image-item">
+                            <h3><?php echo $comic['name'] ?></h3>
+                            <div class="comic-theme-admin-image-selector" id="<?php echo 'comic_selector_image:' . $comic['slug'] ?>">
+                                <img src="<?php echo $selector_image_url ?? '' ?>">
+                            </div>
+                        </div>
+                <?php
                     }
-            ?>
-                    <h3><?php echo $comic['name'] ?></h3>
-                    <div class="comic-theme-admin-image-selector" id="<?php echo 'comic_selector_image:' . $comic['slug'] ?>">
-                        <img src="<?php echo  $selector_image_url ?? '' ?>">
-                    </div>
-            <?php
-                }
-            ?>
+                ?>
+            </div>
         </div>
 <?php
     }
@@ -238,29 +248,71 @@ class Comic_Theme_Settings
                 'slug' => $parent_chapter->slug
             );
         }
+
+        $locations = get_terms([
+            'taxonomy' => 'locations',
+            'hide_empty' => false,
+        ]);
 ?>
         <div class="wrap">
             <h1>Comic Theme Background Settings</h1>
 
             <h2>Main Background</h2>
-            <h3>First Layer</h3>
-            <div class="comic-theme-admin-image-selector" id="background:main:first">
-                <img src="<?php
-                    echo $general_settings['background']['main']['first'] ?? '';
-                ?>">
+            <div class="comic-theme-admin-image-group">
+                <div class="comic-theme-admin-image-item">
+                    <h3>First Layer</h3>
+                    <div class="comic-theme-admin-image-selector" id="background:main:first">
+                        <img src="<?php
+                            echo $general_settings['background']['main']['first'] ?? '';
+                        ?>">
+                    </div>
+                </div>
+                <div class="comic-theme-admin-image-item">
+                    <h3>Second Layer</h3>
+                    <div class="comic-theme-admin-image-selector" id="background:main:second">
+                        <img src="<?php
+                            echo $general_settings['background']['main']['second'] ?? '';
+                        ?>">
+                    </div>
+                </div>
+                <div class="comic-theme-admin-image-item">
+                    <h3>Third Layer</h3>
+                    <div class="comic-theme-admin-image-selector" id="background:main:third">
+                        <img src="<?php
+                            echo $general_settings['background']['main']['third'] ?? '';
+                        ?>">
+                    </div>
+                </div>
             </div>
-            <h3>Second Layer</h3>
-            <div class="comic-theme-admin-image-selector" id="background:main:second">
-                <img src="<?php
-                    echo $general_settings['background']['main']['second'] ?? '';
-                ?>">
-            </div>
-            <h3>Third Layer</h3>
-            <div class="comic-theme-admin-image-selector" id="background:main:third">
-                <img src="<?php
-                    echo $general_settings['background']['main']['third'] ?? '';
-                ?>">
-            </div>
+            <h2>Location Backgrounds</h2>
+            <?php
+                foreach ($locations as $location) {
+            ?>
+                <h3><?php echo $location->name ?></h3>
+                <div class="comic-theme-admin-image-group">
+                    <div class="comic-theme-admin-image-item">
+                        <h4>First Layer</h4>
+                        <div class="comic-theme-admin-image-selector" id="<?php echo 'background:' . $location->slug . ":first" ?>">
+                            <img src="<?php echo $general_settings['background'][$location->slug]['first'] ?? '' ?>">
+                        </div>
+                    </div>
+                    <div class="comic-theme-admin-image-item">
+                        <h4>Second Layer</h4>
+                        <div class="comic-theme-admin-image-selector" id="<?php echo 'background:' . $location->slug . ":second" ?>">
+                            <img src="<?php echo $general_settings['background'][$location->slug]['second'] ?? '' ?>">
+                        </div>
+                    </div>
+                    <div class="comic-theme-admin-image-item">
+                        <h4>Third Layer</h4>
+                        <div class="comic-theme-admin-image-selector" id="<?php echo 'background:' . $location->slug . ":third" ?>">
+                            <img src="<?php echo $general_settings['background'][$location->slug]['third'] ?? '' ?>">
+                        </div>
+                    </div>
+                </div>
+            <?php
+                }
+            ?>
+        </div>
 <?php
     }
 

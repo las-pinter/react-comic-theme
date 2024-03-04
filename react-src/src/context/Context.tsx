@@ -47,7 +47,9 @@ export interface IContextState {
         comicPageFullSlug: string,
         comicPageSlug: string,
         comicSlug: string,
-    }
+        locationSlug: string,
+    },
+    setComicLocation: Function,
 };
 
 export const StoreContext = React.createContext<Readonly<IContextState>>(
@@ -68,8 +70,10 @@ export const StoreContext = React.createContext<Readonly<IContextState>>(
         currentComic: {
             comicPageFullSlug: '',
             comicPageSlug: '',
-            comicSlug: ''
-        }
+            comicSlug: '',
+            locationSlug: ''
+        },
+        setComicLocation: () => { },
     }
 );
 export const Consumer = StoreContext.Consumer;
@@ -96,13 +100,15 @@ export class Provider extends React.Component<IProps, IContextState> {
             currentComic: {
                 comicPageFullSlug: props.router ? (props.router.params['*'] ? props.router.params['*'] : '') : '',
                 comicPageSlug: props.router ? (props.router.params['*'] ? this.formatComicSlug(props.router.params['*']) : '') : '',
-                comicSlug: props.router ? (props.router.params['*'] ? this.getComicSlugFromRouter(props.router.params['*']) : '') : ''
-            }
+                comicSlug: props.router ? (props.router.params['*'] ? this.getComicSlugFromRouter(props.router.params['*']) : '') : '',
+                locationSlug: ''
+            },
+            setComicLocation: this.setComicLocation.bind(this),
         };
     }
 
     addLoading() {
-        this.setState((prevState) => {
+        this.setState((prevState: IContextState) => {
             return {
                 loadingCount: prevState.loadingCount + 1,
                 loading: true
@@ -111,7 +117,7 @@ export class Provider extends React.Component<IProps, IContextState> {
     }
 
     removeLoading() {
-        this.setState((prevState) => {
+        this.setState((prevState: IContextState) => {
             let newLoadingCount = prevState.loadingCount - 1;
             return {
                 loadingCount: newLoadingCount,
@@ -141,30 +147,20 @@ export class Provider extends React.Component<IProps, IContextState> {
             return;
         }
 
-        this.setState({
-            contextType: this.props.contextType,
-            term: this.props.router.params.term ? this.props.router.params.term : '',
-            slug: this.props.router.params.slug ? this.props.router.params.slug : '',
-            route: this.props.router.route.path,
-            currentComic: {
-                comicPageFullSlug: this.props.router.params['*'] ? this.props.router.params['*'] : '',
-                comicPageSlug: this.props.router.params['*'] ? this.formatComicSlug(this.props.router.params['*']) : '',
-                comicSlug: this.props.router.params['*'] ? this.getComicSlugFromRouter(this.props.router.params['*']) : '',
+        this.setState((prevState: IContextState) => {
+            return {
+                contextType: this.props.contextType,
+                term: this.props.router?.params.term ? this.props.router.params.term : '',
+                slug: this.props.router?.params.slug ? this.props.router.params.slug : '',
+                route: this.props.router?.route.path,
+                currentComic: {
+                    comicPageFullSlug: this.props.router?.params['*'] ? this.props.router.params['*'] : '',
+                    comicPageSlug: this.props.router?.params['*'] ? this.formatComicSlug(this.props.router.params['*']) : '',
+                    comicSlug: this.props.router?.params['*'] ? this.getComicSlugFromRouter(this.props.router.params['*']) : '',
+                    locationSlug: this.props.router?.params['*'] ? prevState.currentComic.locationSlug : ''
+                }
             }
         });
-    }
-
-    buildUrl(): string {
-        let url = '/wp-json/wp/v2/';
-        switch (this.state.contextType) {
-            case 'comic':
-                url += 'comic?slug=';
-                url += this.state.currentComic.comicPageSlug;
-                url += '&_embed';
-                break;
-        }
-
-        return url;
     }
 
     getComics() {
@@ -275,6 +271,17 @@ export class Provider extends React.Component<IProps, IContextState> {
 
     getComicSlugFromRouter(longSlug: string): string {
         return longSlug.split('/')[0];
+    }
+
+    setComicLocation(locationSlug: string) {
+        this.setState((prevState: IContextState) => {
+            return {
+                currentComic: {
+                    ...prevState.currentComic,
+                    locationSlug: locationSlug
+                }
+            }
+        })
     }
 
     render() {

@@ -1,10 +1,22 @@
 .comic-theme-admin-image-selector {
     max-width: 300px;
-    max-height: 300px;
     background: gray;
+    cursor: pointer;
+    border: solid;
+    border-width: thick;
+    overflow: hidden;
 }
 
 .comic-theme-admin-image-selector img {
     width: 100%;
     height: 100%;
+    display: block;
+    float: left;
+}
+
+.comic-theme-admin-image-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 30px;
 }
