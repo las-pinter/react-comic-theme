@@ -1,5 +1,6 @@
 import './index.css';
 
+import { ForwardedRef, forwardRef } from 'react';
 import { Link } from "react-router-dom";
 
 import { TMenuItem } from "../../context/Context";
@@ -9,9 +10,10 @@ interface IDropdownMenuProps {
     display: Boolean
 }
 
-const DropdownMenu = ({ items, display }: IDropdownMenuProps): JSX.Element => {
+const DropdownMenu = forwardRef(({ items, display }: IDropdownMenuProps, ref: ForwardedRef<any>): JSX.Element => {
     return (
         <div
+            ref={ref}
             className="dropdown-menu container-vertical"
             style={{
                 display: display ? "flex" : "none"
@@ -30,6 +32,6 @@ const DropdownMenu = ({ items, display }: IDropdownMenuProps): JSX.Element => {
             }
         </div>
     );
-};
+});
 
 export default DropdownMenu;

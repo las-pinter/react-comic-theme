@@ -23,7 +23,7 @@ const MainPage = ({ context }: IMainPageProps): JSX.Element => {
         let url = '/wp-json/wp/v2/posts/?page=' + postsCurrentPage + '&per_page=3&_embed';
         return RestHandler.get(url).then((response) => {
             setPosts(response.data);
-            setPostsTotalPages(response.headers['x-wp-totalpages']);
+            setPostsTotalPages(parseInt(response.headers['x-wp-totalpages']));
         }).catch(() => {
         }).finally(() => {
             context.removeLoading();

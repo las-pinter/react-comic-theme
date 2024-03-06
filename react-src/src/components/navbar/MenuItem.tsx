@@ -1,6 +1,6 @@
 import './index.css';
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import DropdownMenu from "./DropdownMenu";
@@ -12,10 +12,21 @@ interface IMenuItemProps {
     item: TMenuItem
 }
 
-
-
 export const MenuItem = ({ item }: IMenuItemProps): JSX.Element => {
+    const wrapperRef = useRef<any>(null);
     const [dropdown, setDropdown] = useState(false);
+
+    useEffect(() => {
+        function handleClickOutside(event:any) {
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+                setDropdown(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [wrapperRef]);
 
     if (item.children.length === 0) {
         return (
@@ -38,7 +49,7 @@ export const MenuItem = ({ item }: IMenuItemProps): JSX.Element => {
                 <div className="linkless-link" title={item.title}>
                     {item.title}
                 </div>
-                <DropdownMenu items={item.children} display={dropdown} />
+                <DropdownMenu ref={wrapperRef} items={item.children} display={dropdown} />
             </div>
         )
     }
