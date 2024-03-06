@@ -118,8 +118,13 @@
 .comic-character-list {
     width: 80%;
     align-content: center;
-    justify-content: flex-start;
+    justify-content: center;
     flex-wrap: wrap;
+}
+
+.comic-character-list .character-thumbnail-small {
+    width: 100px;
+    height: 100px;
 }
 
 .navigator-top {
@@ -144,6 +149,11 @@
 
     .comic-navigator-text {
         display: none;
+    }
+
+    .comic-character-list .character-thumbnail-small {
+        width: 75px;
+        height: 75px;
     }
 }
 
