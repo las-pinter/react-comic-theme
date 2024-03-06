@@ -1,6 +1,6 @@
 import './index.css';
 
-import { useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import { MouseParallaxChild, MouseParallaxContainer } from '../../effects/MouseParallax';
@@ -12,6 +12,30 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
     const firstNodeRef = useRef<any>(null);
     const secondNodeRef = useRef<any>(null);
     const thirdNodeRef = useRef<any>(null);
+
+    const [firstVoidWidth, setFirstVoidWidth] = useState(0);
+    const [secondVoidWidth, setSecondVoidWidth] = useState(0);
+
+    const firstImageRef = useCallback((node: any) => {
+        if (!node) {
+            return;
+        }
+        const resizeObserver = new ResizeObserver(() => {
+            setSecondVoidWidth(node.getBoundingClientRect().width)
+        });
+        resizeObserver.observe(node);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    const thirdImageRef = useCallback((node: any) => {
+        if (!node) {
+            return;
+        }
+        const resizeObserver = new ResizeObserver(() => {
+            setFirstVoidWidth(node.getBoundingClientRect().width)
+        });
+        resizeObserver.observe(node);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const firstLayerSpeed = 0.01;
     const secondLayerSpeed = 2 * firstLayerSpeed;
@@ -48,7 +72,9 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
                             }}
                             key={firstLayerImage}
                         >
-                            <img ref={firstNodeRef} src={firstLayerImage} alt="" />
+                            <div ref={firstNodeRef}>
+                                <img ref={firstImageRef} src={firstLayerImage} alt="" />
+                            </div>
                         </CSSTransition>
                     </SwitchTransition>
                 </MouseParallaxChild>
@@ -70,7 +96,9 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
                             }}
                             key={secondLayerImage}
                         >
-                            <img ref={secondNodeRef} src={secondLayerImage} alt="" />
+                            <div ref={secondNodeRef}>
+                                <img src={secondLayerImage} alt="" />
+                            </div>
                         </CSSTransition>
                     </SwitchTransition>
                 </MouseParallaxChild>
@@ -79,7 +107,6 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
                     factorX={thirdLayerSpeed}
                     factorY={0}
                 >
-                    <div className="background-darkness" />
                     <SwitchTransition mode={"out-in"}>
                         <CSSTransition
                             classNames="fader"
@@ -93,9 +120,26 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
                             }}
                             key={thirdLayerImage}
                         >
-                            <img ref={thirdNodeRef} src={thirdLayerImage} alt="" />
+                            <div ref={thirdNodeRef}>
+                                <img ref={thirdImageRef} src={thirdLayerImage} alt="" />
+                            </div>
                         </CSSTransition>
                     </SwitchTransition>
+                </MouseParallaxChild>
+                <MouseParallaxChild
+                    className="background-image-container"
+                    factorX={thirdLayerSpeed}
+                    factorY={0}
+                >
+                    <div className="background-darkness" />
+                    <div>
+                        <div
+                            className="void-background overlayed-left-right"
+                            style={{
+                                width: firstVoidWidth + "px",
+                            }}
+                        />
+                    </div>
                     <div className="background-darkness" />
                 </MouseParallaxChild>
                 <MouseParallaxChild
@@ -104,7 +148,14 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
                     factorY={0}
                 >
                     <div className="background-darkness" />
-                    <img src={firstLayerImage} alt="" style={{ visibility: 'hidden' }} />
+                    <div>
+                        <div
+                            className="void-background overlayed-left-right"
+                            style={{
+                                width: secondVoidWidth + "px",
+                            }}
+                        />
+                    </div>
                     <div className="background-darkness" />
                 </MouseParallaxChild>
             </MouseParallaxContainer>

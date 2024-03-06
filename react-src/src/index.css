@@ -110,5 +110,5 @@ a:hover, .linkless-link:hover {
 }
 
 .overlayed-left-right {
-    background: linear-gradient(to right, black 1%, transparent 5%, transparent 95%, black 99%);
+    background: linear-gradient(to right, var(--cmx-base-color) 1%, transparent 5%, transparent 95%, var(--cmx-base-color) 99%);
 }

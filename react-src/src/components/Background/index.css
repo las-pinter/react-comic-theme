@@ -18,6 +18,13 @@
     position: relative;
 }
 
+.void-background {
+    height: 100%;
+    z-index: -650;
+    position: relative;
+    display: block;
+}
+
 .background-image-container-wrapper {
     height: 100%;
     width: 100%;
