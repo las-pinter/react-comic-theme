@@ -44,7 +44,7 @@ const Sidebar = ({ context, sidebarId, background }: ISidebadProps): JSX.Element
     }, [sidebarId])
 
     return (
-        <TransitionGroup>
+        <TransitionGroup className="container-vertical">
             {
                 sidebar.map((item, i) => {
                     return (
