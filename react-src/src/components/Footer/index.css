@@ -72,6 +72,6 @@ footer .menu-item-social {
     footer .menu-item-no-dropdown,
     footer .menu-item-social,
     footer .menu-item-no-dropdown-submenu .menu-item-no-dropdown {
-        font-size: var(--cmx-font-big);
+        font-size: var(--cmx-font-medium);
     }
 }
