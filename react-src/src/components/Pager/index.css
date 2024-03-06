@@ -1,0 +1,23 @@
+.pager {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pager .MuiPaginationItem-root {
+    color: var(--cmx-accent-color);
+}
+
+.pager .Mui-selected {
+    background-color: rgb(255 255 255 / 15%);
+}
+
+.pager .MuiPaginationItem-root.Mui-selected:hover {
+    background-color: rgb(255 255 255 / 40%);
+}
+
+.pager .MuiPaginationItem-root:hover {
+    background-color: rgb(255 255 255 / 10%);
+}

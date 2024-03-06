@@ -1,44 +1,53 @@
+import './index.css';
+
 import { useCallback } from "react";
+
+import * as React from 'react';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 interface IPagerProps {
     currentPage: number,
     totalPages: number,
-    nextClickedCallback: Function,
-    previousClickedCallback: Function
+    pagerChangedCallback: Function,
 }
 
-const Pager = ({ currentPage, totalPages, nextClickedCallback, previousClickedCallback }: IPagerProps): JSX.Element => {
-    let handleNextClicked = useCallback(() => nextClickedCallback(), [nextClickedCallback]);
-    let handlePreviousClicked = useCallback(() => previousClickedCallback(), [previousClickedCallback]);
+const Pager = ({ currentPage, totalPages, pagerChangedCallback }: IPagerProps): JSX.Element => {
+    let handlePagerChanged = useCallback((value: number) => {
+        pagerChangedCallback(value)
+    }, [pagerChangedCallback]);
 
-    let thePager = <></>;
+    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+        handlePagerChanged(value);
+    };
 
-    if (totalPages > 1) {
-        thePager = (
-            <div className="pager container-style">
-                <button
-                    disabled={currentPage <= 1}
-                    onClick={handlePreviousClicked}
-                >
-                    Previous
-                </button>
-                <button
-                    disabled={currentPage >= totalPages}
-                    onClick={handleNextClicked}
-                >
-                    Next
-                </button>
-                <div className="pager-text">
-                    Page{' '}
-                    <span dangerouslySetInnerHTML={{ __html: currentPage.toString() }} />
-                    {' '}/{' '}
-                    <span dangerouslySetInnerHTML={{ __html: totalPages.toString() }} />
-                </div>
-            </div>
-        );
-    }
-
-    return thePager;
+    return (
+        <div className="pager container-style">
+            <Stack spacing={2}>
+                {
+                    totalPages > 1
+                        ?
+                        <Pagination
+                            count={totalPages}
+                            page={currentPage}
+                            size="large"
+                            onChange={handleChange}
+                            showFirstButton
+                            showLastButton
+                        />
+                        :
+                        <Pagination
+                            count={5}
+                            page={1}
+                            size="large"
+                            disabled
+                            showFirstButton
+                            showLastButton
+                        />
+                }
+            </Stack>
+        </div>
+    );
 }
 
 export default Pager;

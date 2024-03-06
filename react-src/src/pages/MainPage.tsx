@@ -30,16 +30,8 @@ const MainPage = ({ context }: IMainPageProps): JSX.Element => {
         });
     }
 
-    const postsNextClicked = () => {
-        setPostsCurrentPage((prevState) => {
-            return prevState + 1;
-        })
-    }
-
-    const postsPreviousClicked = () => {
-        setPostsCurrentPage((prevState) => {
-            return prevState - 1;
-        })
+    const pagerChanged = (value: number) => {
+        setPostsCurrentPage(value);
     }
 
     useEffect(() => {
@@ -58,8 +50,7 @@ const MainPage = ({ context }: IMainPageProps): JSX.Element => {
                     <Pager
                         currentPage={postsCurrentPage}
                         totalPages={postsTotalPages}
-                        nextClickedCallback={postsNextClicked}
-                        previousClickedCallback={postsPreviousClicked}
+                        pagerChangedCallback={pagerChanged}
                     />
                 </div>
                 <div id="right-to-main-content" className="sidebar-content container-vertical">
