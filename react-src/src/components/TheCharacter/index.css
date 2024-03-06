@@ -26,3 +26,19 @@
     column-gap: 0px;
     flex-direction: row;
 }
+
+.the-character-comic-list .MuiAccordion-root {
+    background-color: #231e27;
+    color: var(--cmx-accent-color);
+}
+
+.the-character-comic-list .MuiAccordionSummary-expandIconWrapper {
+    color: rgb(255 255 255 / 54%);
+}
+
+.the-character-comic-list .MuiTypography-root {
+    font-family: "Rosarivo", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: var(--cmx-medium-font);
+}

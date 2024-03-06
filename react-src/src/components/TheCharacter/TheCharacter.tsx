@@ -4,6 +4,12 @@ import { createRef, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CSSTransition, SwitchTransition, TransitionGroup } from 'react-transition-group';
 
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+
 import { CharacterComicItem, IComicItemNodeRef, TComicItem } from '../ComicItem/ComicItem';
 import RestHandler from '../../rest/RestHandler';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
@@ -104,34 +110,44 @@ export const TheCharacter = ({ context, character }: ITheCharacterProps): JSX.El
                                 </div>
                             </div>
                             <div className="the-character-comic-list container-vertical">
-                                <h2>Comic Pages</h2>
-                                <TransitionGroup className="the-character-comic-list-wrapper container-horizontal">
-                                    {
-                                        characterComicItems.map((comicItem) => {
-                                            const {
-                                                nodeRef: _nodeRef,
-                                                ...theComicItem
-                                            } = comicItem;
+                                <Accordion>
+                                    <AccordionSummary
+                                        expandIcon={<ArrowDownwardIcon />}
+                                        aria-controls="panel1-content"
+                                        id="panel1-header"
+                                    >
+                                        <Typography>Comic Pages</Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <TransitionGroup className="the-character-comic-list-wrapper container-horizontal">
+                                            {
+                                                characterComicItems.map((comicItem) => {
+                                                    const {
+                                                        nodeRef: _nodeRef,
+                                                        ...theComicItem
+                                                    } = comicItem;
 
-                                            return (
-                                                <CSSTransition
-                                                    classNames="fader"
-                                                    nodeRef={comicItem.nodeRef}
-                                                    mountOnEnter={true}
-                                                    unmountOnExit={true}
-                                                    appear={true}
-                                                    timeout={10000}
-                                                    addEndListener={(done: () => void) => {
-                                                        comicItem.nodeRef.current?.addEventListener("transitionend", done, false);
-                                                    }}
-                                                    key={"comic-item-" + comicItem.slug}
-                                                >
-                                                    <CharacterComicItem ref={comicItem.nodeRef} comic={theComicItem} />
-                                                </CSSTransition>
-                                            )
-                                        })
-                                    }
-                                </TransitionGroup>
+                                                    return (
+                                                        <CSSTransition
+                                                            classNames="fader"
+                                                            nodeRef={comicItem.nodeRef}
+                                                            mountOnEnter={true}
+                                                            unmountOnExit={true}
+                                                            appear={true}
+                                                            timeout={10000}
+                                                            addEndListener={(done: () => void) => {
+                                                                comicItem.nodeRef.current?.addEventListener("transitionend", done, false);
+                                                            }}
+                                                            key={"comic-item-" + comicItem.slug}
+                                                        >
+                                                            <CharacterComicItem ref={comicItem.nodeRef} comic={theComicItem} />
+                                                        </CSSTransition>
+                                                    )
+                                                })
+                                            }
+                                        </TransitionGroup>
+                                    </AccordionDetails>
+                                </Accordion>
                             </div>
                         </div>
                     </CSSTransition>
