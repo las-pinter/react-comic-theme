@@ -1,8 +1,10 @@
 import './index.css';
 
 import { ForwardedRef, createRef, forwardRef, useEffect, useState } from "react";
-
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+
 import { ArchiveComicItem, IComicItemNodeRef, TComicItem } from '../ComicItem/ComicItem';
 
 
@@ -40,7 +42,19 @@ const ArchiveChapter = forwardRef(({ chapter }: IArchiveChapterProps, ref: Forwa
 
     return (
         <div ref={ref} className="archive-chapter-wrapper container-vertical">
-            <h2 className="chapter-name">{chapter.name}</h2>
+            <div className="chapter-name-wrapper">
+                <h2 className="chapter-name">
+                    {chapter.name}
+                </h2>
+                <div className="to-the-top-button" title="To the Top">
+                    <ArrowUpwardIcon
+                        fontSize="large"
+                        onClick={() => {
+                            window.scrollTo(0, 0);
+                        }}
+                    />
+                </div>
+            </div>
             <TransitionGroup className="archive-chapter container-horizontal">
                 {
                     comicItems.map((comicItem) => {

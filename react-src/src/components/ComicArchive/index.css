@@ -3,3 +3,16 @@
     justify-content: center;
     row-gap: 20px;
 }
+
+.to-the-top-button {
+    color: var(--cmx-accent-color);
+    cursor: pointer;
+}
+
+.chapter-name-wrapper {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
