@@ -47,11 +47,17 @@ const MainPage = ({ context }: IMainPageProps): JSX.Element => {
                     <ThePosts
                         posts={posts}
                     />
-                    <Pager
-                        currentPage={postsCurrentPage}
-                        totalPages={postsTotalPages}
-                        pagerChangedCallback={pagerChanged}
-                    />
+                    {
+                        posts.length > 0
+                            ?
+                            <Pager
+                                currentPage={postsCurrentPage}
+                                totalPages={postsTotalPages}
+                                pagerChangedCallback={pagerChanged}
+                            />
+                            :
+                            <></>
+                    }
                 </div>
                 <div id="right-to-main-content" className="sidebar-content container-vertical">
                     <Sidebar sidebarId="right-to-main-content" background={true} />
