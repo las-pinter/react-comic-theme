@@ -10,12 +10,12 @@
     color: var(--cmx-accent-color);
 }
 
-.pager .Mui-selected {
+.pager .MuiButtonBase-root.Mui-selected {
     background-color: rgb(255 255 255 / 15%);
 }
 
 .pager .MuiPaginationItem-root.Mui-selected:hover {
-    background-color: rgb(255 255 255 / 40%);
+    background-color: rgb(255 255 255 / 30%);
 }
 
 .pager .MuiPaginationItem-root:hover {
