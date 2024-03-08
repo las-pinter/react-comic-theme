@@ -43,10 +43,11 @@ export interface IPost {
 
 interface IThePostProps {
     post: IPost,
-    displayComments: boolean
+    displayComments: boolean,
+    comicPageFullSlug?: string,
 }
 
-export const ThePost = ({ post, displayComments }: IThePostProps): JSX.Element => {
+export const ThePost = ({ post, displayComments, comicPageFullSlug }: IThePostProps): JSX.Element => {
     const nodeRef = useRef<any>(null);
 
     if (!post) {
@@ -67,11 +68,11 @@ export const ThePost = ({ post, displayComments }: IThePostProps): JSX.Element =
                         addEndListener={(done: () => void) => {
                             nodeRef.current?.addEventListener("transitionend", done, false);
                         }}
-                        key={post.slug}
+                        key={comicPageFullSlug ? comicPageFullSlug : post.slug}
                     >
                         <div ref={nodeRef} className="post-content-wrapper">
                             <h1>
-                                <Link to={'/' + post.slug}>
+                                <Link to={comicPageFullSlug ? '/comic/' + comicPageFullSlug : '/' + post.slug}>
                                     {post.title.rendered}
                                 </Link>
                             </h1>
@@ -88,51 +89,6 @@ export const ThePost = ({ post, displayComments }: IThePostProps): JSX.Element =
                     :
                     <></>
             }
-        </div>
-    );
-};
-
-interface ITheComicPostProps {
-    post: IPost,
-    comicPageFullSlug: string
-}
-
-export const TheComicPost = ({ post, comicPageFullSlug }: ITheComicPostProps): JSX.Element => {
-    const nodeRef = useRef<any>(null);
-
-    if (!post) {
-        return <></>;
-    }
-
-    return (
-        <div className="post-wrapper container-vertical">
-            <div id={'post-id-' + post.id} className={'post-item'}>
-                <SwitchTransition mode={"out-in"}>
-                    <CSSTransition
-                        classNames="fader"
-                        nodeRef={nodeRef}
-                        mountOnEnter={true}
-                        unmountOnExit={true}
-                        appear={true}
-                        timeout={10000}
-                        addEndListener={(done: () => void) => {
-                            nodeRef.current?.addEventListener("transitionend", done, false);
-                        }}
-                        key={comicPageFullSlug}
-                    >
-                        <div ref={nodeRef} className="post-content-wrapper">
-                            <h1>
-                                <Link to={'/comic/' + comicPageFullSlug}>
-                                    {post.title.rendered}
-                                </Link>
-                            </h1>
-                            <PostMeta index={post} />
-                            <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
-                        </div>
-                    </CSSTransition>
-                </SwitchTransition>
-            </div>
-            <DisqusComments post={post} display={true} />
         </div>
     );
 };

@@ -1,9 +1,8 @@
 import Moment from 'react-moment';
-import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import { IPost } from './ThePost';
 
-interface IPostMetaProps extends IConsumerProps {
-    post?: IPost
+interface IPostMetaProps {
+    post: IPost
 }
 
 const PostMeta = ({ post }: IPostMetaProps): JSX.Element => {
@@ -22,4 +21,4 @@ const PostMeta = ({ post }: IPostMetaProps): JSX.Element => {
     return theMeta;
 
 };
-export default WithConsumer(PostMeta);
+export default PostMeta;

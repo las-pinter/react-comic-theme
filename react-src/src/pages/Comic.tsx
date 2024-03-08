@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import RestHandler from '../rest/RestHandler';
 
 import TheComic, { IComicPost } from '../components/TheComic/TheComic';
-import { TheComicPost } from '../components/ThePost/ThePost';
+import ThePost from '../components/ThePost/ThePost';
 import Sidebar from '../components/Sidebar/Sidebar';
 import WithConsumer, { IConsumerProps } from '../wrappers/WithConsumer';
 
@@ -47,7 +47,7 @@ const Comic = ({ context, comicPageSlug, comicPageFullSlug }: IComicProps): JSX.
         <div className="comic-page container-vertical">
             <TheComic comicPost={comic} />
             <Sidebar sidebarId='under-comic' background={true} />
-            <TheComicPost post={comic} comicPageFullSlug={comicPageFullSlug} />
+            <ThePost post={comic} displayComments={true} comicPageFullSlug={comicPageFullSlug} />
         </div>
     )
 
