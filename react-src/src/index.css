@@ -45,6 +45,10 @@ body {
     font-size: var(--cmx-font-small);
 }
 
+.noscroll {
+    overflow: hidden;
+}
+
 h1,
 h2,
 h3,

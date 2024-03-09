@@ -12,9 +12,18 @@ import OverlayNavbar from "./OverlayNavbar";
 const Navbar = ({ context }: IConsumerProps): JSX.Element => {
     const [overlayNavbarVisible, setOverlayNavbarVisible] = useState(false);
 
+    const setOverlayVisible = (value: boolean) => {
+        setOverlayNavbarVisible(value);
+        if (value === true) {
+            document.body.classList.add('noscroll');
+        } else {
+            document.body.classList.remove('noscroll');
+        }
+    }
+
     useEffect(() => {
-        setOverlayNavbarVisible(false);
-    }, [context.slug])
+        setOverlayVisible(false);
+    }, [context.slug, context.currentComic.comicSlug])
 
     let menuListTop: TMenu = []
     let menuListSocial: TMenu = []
@@ -32,7 +41,7 @@ const Navbar = ({ context }: IConsumerProps): JSX.Element => {
                 <FaBars
                     className="navigation-bar-bars"
                     onClick={() => {
-                        setOverlayNavbarVisible(true);
+                        setOverlayVisible(true);
                     }}
                 />
                 <div className="menu container-horizontal">
@@ -51,7 +60,7 @@ const Navbar = ({ context }: IConsumerProps): JSX.Element => {
                 </div>
             </nav>
             <div className={"overlay-navbar-wrapper"}>
-                <OverlayNavbar menuList={menuListTop} menuListSocial={menuListSocial} show={overlayNavbarVisible} visibilityCallback={(value) => setOverlayNavbarVisible(value)} />
+                <OverlayNavbar menuList={menuListTop} menuListSocial={menuListSocial} show={overlayNavbarVisible} visibilityCallback={setOverlayVisible} />
             </div>
         </>
     );

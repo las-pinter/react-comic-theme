@@ -1,6 +1,6 @@
 import './index.css';
 
-import { Dispatch, SetStateAction, useRef } from "react";
+import { useCallback, useRef } from "react";
 import { FaBars } from "react-icons/fa";
 import { CSSTransition } from "react-transition-group";
 
@@ -11,11 +11,15 @@ interface IFloatingNavbarProps {
     menuList: TMenu,
     menuListSocial: TMenu,
     show: boolean,
-    visibilityCallback: Dispatch<SetStateAction<boolean>>
+    visibilityCallback: Function
 }
 
 const OverlayNavbar = ({ menuList, menuListSocial, show, visibilityCallback }: IFloatingNavbarProps): JSX.Element => {
     const nodeRef = useRef<any>(null);
+
+    let handleBarButtonPressed = useCallback((value: boolean) => {
+        visibilityCallback(value)
+    }, [visibilityCallback]);
 
     return (
         <CSSTransition
@@ -34,7 +38,7 @@ const OverlayNavbar = ({ menuList, menuListSocial, show, visibilityCallback }: I
                 <FaBars
                     className="overlay-navigation-bar-bars"
                     onClick={() => {
-                        visibilityCallback(false)
+                        handleBarButtonPressed(false)
                     }}
                 />
                 {

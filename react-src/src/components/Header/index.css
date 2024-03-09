@@ -2,7 +2,7 @@ header {
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    padding: 15px;
+    padding: 20px;
     border-bottom: var(--cmx-container-border);
     background: var(--cmx-container-background-reverse);
     box-shadow: var(--cmx-container-box-shadow);
