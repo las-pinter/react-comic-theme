@@ -41,7 +41,12 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
     const secondLayerSpeed = 2 * firstLayerSpeed;
     const thirdLayerSpeed = 3 * secondLayerSpeed;
 
-    let theBackground = context.currentComic.locationSlug ? context.backgroundImages?.[context.currentComic.locationSlug] : context.backgroundImages?.main;
+    let theBackground = context.backgroundImages?.main;
+
+    if (context.backgroundImages?.[context.currentComic.locationSlug] &&
+        context.backgroundImages?.[context.currentComic.locationSlug]?.first !== '') {
+        theBackground = context.backgroundImages?.[context.currentComic.locationSlug]
+    }
 
     let firstLayerImage = theBackground?.first ? theBackground?.first : '';
     let secondLayerImage = theBackground?.second ? theBackground?.second : '';
