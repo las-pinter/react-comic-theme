@@ -17,7 +17,9 @@ const Post = ({ context, slug }: IPostProps): JSX.Element => {
         context.addLoading();
         let url = '/wp-json/wp/v2/posts/?slug=' + slug + '&_embed';
         return RestHandler.get(url).then((response) => {
-            setPost(response.data[0]);
+            let post = response.data[0];
+            setPost(post);
+            document.title = post.title.rendered + " | Tales From Somwewhere";
         }).catch(() => {
         }).finally(() => {
             context.removeLoading();

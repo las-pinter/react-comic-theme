@@ -21,9 +21,10 @@ const Comic = ({ context, comicPageSlug, comicPageFullSlug }: IComicProps): JSX.
         context.addLoading();
         let url = '/wp-json/wp/v2/comic?slug=' + slug + '&_embed';
         return RestHandler.get(url).then((response) => {
-            let theComic = response.data[0];
-            setComic(theComic);
-            context.setComicLocation(theComic?._embedded['wp:term'][3][0].slug)
+            let comic = response.data[0];
+            setComic(comic);
+            document.title = comic.title.rendered + " | Tales From Somwewhere";
+            context.setComicLocation(comic?._embedded['wp:term'][3][0].slug)
         }).catch(() => {
         }).finally(() => {
             context.removeLoading();

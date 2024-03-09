@@ -18,8 +18,9 @@ const Character = ({ context, slug }: ICharacterProps): JSX.Element => {
         context.addLoading();
         let url = '/wp-json/comics/v1/character/' + slug;
         return RestHandler.get(url).then((response) => {
-            setCharacter(response.data);
-            
+            let character = response.data;
+            setCharacter(character);
+            document.title = character.name + " | Tales From Somwewhere";
         }).catch(() => {
         }).finally(() => {
             context.removeLoading();

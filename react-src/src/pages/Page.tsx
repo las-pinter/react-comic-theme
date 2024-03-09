@@ -18,7 +18,9 @@ const Page = ({ context, slug }: IPageProps): JSX.Element => {
         context.addLoading();
         let url = '/wp-json/wp/v2/pages/?slug=' + slug + '&_embed';
         return RestHandler.get(url).then((response) => {
-            setPage(response.data[0]);
+            let page = response.data[0];
+            setPage(page);
+            document.title = page.title.rendered + " | Tales From Somwewhere";
         }).catch(() => {
         }).finally(() => {
             context.removeLoading();
