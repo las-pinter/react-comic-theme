@@ -3,6 +3,8 @@ import './index.css'
 import { createRef, useEffect, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
+import InnerHTML from 'dangerously-set-html-content'
+
 import RestHandler from '../../rest/RestHandler';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 
@@ -63,8 +65,9 @@ const Sidebar = ({ context, sidebarId, background }: ISidebadProps): JSX.Element
                             <div
                                 ref={item.nodeRef}
                                 className={"sidebar-item" + (background ? " container-style" : "-no-background")}
-                                dangerouslySetInnerHTML={{ __html: item.rendered }}
-                            />
+                            >
+                                <InnerHTML html={item.rendered} />
+                            </div>
                         </CSSTransition>
                     )
                 })
