@@ -23,7 +23,7 @@ const Comic = ({ context, comicPageSlug, comicPageFullSlug }: IComicProps): JSX.
         return RestHandler.get(url).then((response) => {
             let comic = response.data[0];
             setComic(comic);
-            document.title = comic.title.rendered + " | Tales From Somwewhere";
+            document.title = comic.title.rendered + " | Tales From Somewhere";
             context.setComicLocation(comic?._embedded['wp:term'][3][0].slug)
         }).catch(() => {
         }).finally(() => {

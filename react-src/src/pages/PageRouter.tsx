@@ -12,12 +12,15 @@ import Comic from './Comic';
 import Post from './Post';
 import Character from './Character';
 
+import UsePageTracking from '../hooks/PageTracking';
 
 interface IPageRouterProps extends IConsumerProps {
     contextType?: string
 }
 
 const PageRouter = ({ context, contextType }: IPageRouterProps): JSX.Element => {
+    UsePageTracking();
+    
     const nodeRef = useRef<any>(null);
 
     return (

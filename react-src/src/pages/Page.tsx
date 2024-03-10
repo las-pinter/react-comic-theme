@@ -20,7 +20,7 @@ const Page = ({ context, slug }: IPageProps): JSX.Element => {
         return RestHandler.get(url).then((response) => {
             let page = response.data[0];
             setPage(page);
-            document.title = page.title.rendered + " | Tales From Somwewhere";
+            document.title = page.title.rendered + " | Tales From Somewhere";
         }).catch(() => {
         }).finally(() => {
             context.removeLoading();

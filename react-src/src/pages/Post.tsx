@@ -19,7 +19,7 @@ const Post = ({ context, slug }: IPostProps): JSX.Element => {
         return RestHandler.get(url).then((response) => {
             let post = response.data[0];
             setPost(post);
-            document.title = post.title.rendered + " | Tales From Somwewhere";
+            document.title = post.title.rendered + " | Tales From Somewhere";
         }).catch(() => {
         }).finally(() => {
             context.removeLoading();

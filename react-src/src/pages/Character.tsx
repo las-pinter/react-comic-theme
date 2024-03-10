@@ -20,7 +20,7 @@ const Character = ({ context, slug }: ICharacterProps): JSX.Element => {
         return RestHandler.get(url).then((response) => {
             let character = response.data;
             setCharacter(character);
-            document.title = character.name + " | Tales From Somwewhere";
+            document.title = character.name + " | Tales From Somewhere";
         }).catch(() => {
         }).finally(() => {
             context.removeLoading();
