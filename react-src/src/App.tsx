@@ -10,11 +10,7 @@ import {
 
 import PageRouter from './pages/PageRouter';
 
-import ReactGA from 'react-ga4';
-
 const App = () => {
-    ReactGA.initialize('G-BS16XEB2VB');
-
     return (
         <Router>
             <Routes>

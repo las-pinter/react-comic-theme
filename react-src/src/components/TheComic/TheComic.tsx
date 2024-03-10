@@ -68,9 +68,12 @@ const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
                         key={comicImageUrl}
                     >
                         <>
-                            <Link className="the-comic-link" to={comicNavLinks.nextPage}>
+                            <Link
+                                ref={nodeRef}
+                                className="the-comic-link"
+                                to={comicNavLinks.nextPage}
+                            >
                                 <img
-                                    ref={nodeRef}
                                     src={comicImageUrl}
                                     alt={"Chapter " + comicPost.chapter_number + " - Page " + comicPost.page_number + " - " + comicPost.title.rendered}
                                     title={"Chapter " + comicPost.chapter_number + " - Page " + comicPost.page_number + " - " + comicPost.title.rendered}

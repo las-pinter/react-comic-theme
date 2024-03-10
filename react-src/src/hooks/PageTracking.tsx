@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-import ReactGA from 'react-ga4';
-
 const UsePageTracking = () => {
     const location = useLocation();
 
     useEffect(() => {
-        ReactGA.send({
-            hitType: "pageview",
-            page: location.pathname
-        });
+        window.gtag('event', 'page_view', {
+            page_title: document.title,
+            page_location: window.location.href,
+            page_path: location.pathname,
+            send_to: 'G-BS16XEB2VB'
+        })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
 };
