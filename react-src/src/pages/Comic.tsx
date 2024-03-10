@@ -16,13 +16,15 @@ interface IComicProps extends IConsumerProps {
 
 const Comic = ({ context, comicPageSlug, comicPageFullSlug }: IComicProps): JSX.Element => {
     const [comic, setComic] = useState<IComicPost | null>(null);
+    const [currentComicPageFullSlug, setCurrentComicPageFullSlug] = useState<string>('');
 
-    const getComic = (slug: string) => {
+    const getComic = (slug: string, fullSlug: string) => {
         context.addLoading();
         let url = '/wp-json/wp/v2/comic?slug=' + slug + '&_embed';
         return RestHandler.get(url).then((response) => {
             let comic = response.data[0];
             setComic(comic);
+            setCurrentComicPageFullSlug(fullSlug);
             document.title = comic.title.rendered + " | Tales From Somewhere";
             context.setComicLocation(comic?._embedded['wp:term'][3][0].slug)
         }).catch(() => {
@@ -35,12 +37,15 @@ const Comic = ({ context, comicPageSlug, comicPageFullSlug }: IComicProps): JSX.
         if (!comicPageSlug) {
             return;
         }
+        if (!comicPageFullSlug) {
+            return;
+        }
         
-        getComic(comicPageSlug);
+        getComic(comicPageSlug, comicPageFullSlug);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [comicPageSlug]);
+    }, [comicPageSlug, comicPageFullSlug]);
 
-    if (!comic || !comicPageFullSlug) {
+    if (!comic || currentComicPageFullSlug === '') {
         return <></>;
     }
 
@@ -48,7 +53,7 @@ const Comic = ({ context, comicPageSlug, comicPageFullSlug }: IComicProps): JSX.
         <div className="comic-page container-vertical">
             <TheComic comicPost={comic} />
             <Sidebar sidebarId='under-comic' background={true} />
-            <ThePost post={comic} displayComments={true} comicPageFullSlug={comicPageFullSlug} />
+            <ThePost post={comic} displayComments={true} comicPageFullSlug={currentComicPageFullSlug} />
         </div>
     )
 

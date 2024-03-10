@@ -1,6 +1,6 @@
 import './index.css';
 
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
@@ -9,6 +9,7 @@ import Characters from './Characters';
 import ComicTitle from './ComicTitle';
 
 import { IPost } from '../ThePost/ThePost';
+import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import ContentWarningOverlay from './ContentWarningOverlay';
 
 export interface IComicPost extends IPost {
@@ -22,12 +23,30 @@ export interface IComicPost extends IPost {
     content_warning: string,
 }
 
-interface ITheComicProps {
+interface ITheComicProps extends IConsumerProps {
     comicPost?: IComicPost
 }
 
-const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
+const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
     const nodeRef = useRef<any>(null);
+    const [comicImageUrl, setComicImageUrl] = useState('');
+
+    useEffect(() => {
+        context.addLoading();
+
+        let comicImageUrl = '';
+        if (comicPost?._embedded?.['wp:featuredmedia']) {
+            comicImageUrl = comicPost._embedded['wp:featuredmedia'][0].source_url;
+        }
+
+        const img = new Image();
+        img.onload = () => {
+            setComicImageUrl(comicImageUrl);
+            context.removeLoading();
+        }
+        img.src = comicImageUrl;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [comicPost])
 
     if (!comicPost) {
         return <></>;
@@ -38,13 +57,6 @@ const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
         previousPage: comicPost.previous_page,
         nextPage: comicPost.next_page,
         lastPage: comicPost.last_page
-    }
-
-    let comicImageUrl = '';
-    if (comicPost._embedded) {
-        if (comicPost._embedded['wp:featuredmedia']) {
-            comicImageUrl = comicPost._embedded['wp:featuredmedia'][0].source_url;
-        }
     }
 
     return (
@@ -98,4 +110,4 @@ const TheComic = ({ comicPost }: ITheComicProps): JSX.Element => {
     );
 };
 
-export default TheComic;
+export default WithConsumer(TheComic);
