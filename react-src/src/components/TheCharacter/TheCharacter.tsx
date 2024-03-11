@@ -105,9 +105,7 @@ export const TheCharacter = ({ context, character }: ITheCharacterProps): JSX.El
                                             <div className="gray-placeholder"></div>
                                     }
                                 </div>
-                                <div className="the-character-description">
-                                    {character.description}
-                                </div>
+                                <div className="the-character-description" dangerouslySetInnerHTML={{ __html: character.description }} />
                             </div>
                             <div className="the-character-comic-list container-vertical">
                                 <Accordion>
