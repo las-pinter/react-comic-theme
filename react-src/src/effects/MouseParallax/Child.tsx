@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { animated } from '@react-spring/web';
 import { useParallaxOffset } from './Context';
 import { SpringPosition } from './interfaces';
+import { Translate } from '@mui/icons-material';
 
 interface Props {
     factorX?: number;

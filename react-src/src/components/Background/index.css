@@ -14,13 +14,25 @@
 
 .the-background img {
     height: 100%;
-    z-index: -650;
+    z-index: -665;
     position: relative;
+}
+
+.the-background img.background-first {
+    z-index: -664;
+}
+
+.the-background img.background-second {
+    z-index: -663;
+}
+
+.the-background img.background-third {
+    z-index: -662;
 }
 
 .void-background {
     height: 100%;
-    z-index: -650;
+    z-index: -649;
     position: relative;
     display: block;
 }

@@ -63,6 +63,11 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
                     className="background-image-container"
                     factorX={firstLayerSpeed}
                     factorY={0}
+                    style={
+                        {
+                            transform: 'translateZ(0px)'
+                        }
+                    }
                 >
                     <SwitchTransition mode={"out-in"}>
                         <CSSTransition
@@ -78,7 +83,7 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
                             key={firstLayerImage}
                         >
                             <div ref={firstNodeRef}>
-                                <img ref={firstImageRef} src={firstLayerImage} alt="" />
+                                <img className="background-first" ref={firstImageRef} src={firstLayerImage} alt="" />
                             </div>
                         </CSSTransition>
                     </SwitchTransition>
@@ -87,6 +92,11 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
                     className="background-image-container"
                     factorX={secondLayerSpeed}
                     factorY={0}
+                    style={
+                        {
+                            transform: 'translateZ(1px)'
+                        }
+                    }
                 >
                     <SwitchTransition mode={"out-in"}>
                         <CSSTransition
@@ -102,7 +112,7 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
                             key={secondLayerImage}
                         >
                             <div ref={secondNodeRef}>
-                                <img src={secondLayerImage} alt="" />
+                                <img className="background-second" src={secondLayerImage} alt="" />
                             </div>
                         </CSSTransition>
                     </SwitchTransition>
@@ -111,6 +121,11 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
                     className="background-image-container"
                     factorX={thirdLayerSpeed}
                     factorY={0}
+                    style={
+                        {
+                            transform: 'translateZ(2px)'
+                        }
+                    }
                 >
                     <SwitchTransition mode={"out-in"}>
                         <CSSTransition
@@ -126,7 +141,7 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
                             key={thirdLayerImage}
                         >
                             <div ref={thirdNodeRef}>
-                                <img ref={thirdImageRef} src={thirdLayerImage} alt="" />
+                                <img className="background-third" ref={thirdImageRef} src={thirdLayerImage} alt="" />
                             </div>
                         </CSSTransition>
                     </SwitchTransition>
@@ -135,6 +150,11 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
                     className="background-image-container"
                     factorX={thirdLayerSpeed}
                     factorY={0}
+                    style={
+                        {
+                            transform: 'translateZ(3px)'
+                        }
+                    }
                 >
                     <div className="background-darkness" />
                     <div>
@@ -151,6 +171,11 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
                     className="background-image-container"
                     factorX={firstLayerSpeed}
                     factorY={0}
+                    style={
+                        {
+                            transform: 'translateZ(4px)'
+                        }
+                    }
                 >
                     <div className="background-darkness" />
                     <div>
