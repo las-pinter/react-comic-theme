@@ -52,7 +52,7 @@ const Comic = ({ context, comicPageSlug, comicPageFullSlug }: IComicProps): JSX.
     return (
         <div className="comic-page container-vertical">
             <TheComic comicPost={comic} />
-            <Sidebar sidebarId='under-comic' background={true} />
+            <Sidebar key={currentComicPageFullSlug} sidebarId='under-comic' background={true} />
             <ThePost post={comic} displayComments={true} comicPageFullSlug={currentComicPageFullSlug} />
         </div>
     )

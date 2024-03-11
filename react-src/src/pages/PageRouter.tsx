@@ -13,6 +13,7 @@ import Post from './Post';
 import Character from './Character';
 
 import UsePageTracking from '../hooks/PageTracking';
+import ResetComicAdVars from '../hooks/ComicAdReseter';
 
 interface IPageRouterProps extends IConsumerProps {
     contextType?: string
@@ -20,6 +21,7 @@ interface IPageRouterProps extends IConsumerProps {
 
 const PageRouter = ({ context, contextType }: IPageRouterProps): JSX.Element => {
     UsePageTracking();
+    ResetComicAdVars();
     
     const nodeRef = useRef<any>(null);
 
