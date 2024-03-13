@@ -27,7 +27,12 @@ const CharacterItem = forwardRef(({ character, thumbnailSize }: ICharacterItemPr
     }
     return (
         <div ref={ref} className="character-item">
-            <Link to={"/character/" + character.slug}>
+            <Link
+                to={"/character/" + character.slug}
+                onClick={() => {
+                    window.scrollTo(0, 0);
+                }}
+            >
                 <div className={"character-thumbnail character-thumbnail-" + thumbnailSize}>
                     {
                         displayImage ?
