@@ -35,3 +35,7 @@ function custom_widgets_init()
 add_action('widgets_init', 'custom_widgets_init');
 
 remove_filter('the_title', 'wptexturize');
+
+add_action( 'wp_head', function () {
+    echo '<script>"AmLPO_ShADCc"</script>';
+});
