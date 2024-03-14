@@ -36,6 +36,20 @@ add_action('widgets_init', 'custom_widgets_init');
 
 remove_filter('the_title', 'wptexturize');
 
-add_action( 'wp_head', function () {
+add_action('wp_head', function () {
     echo '<script>"AmLPO_ShADCc"</script>';
+});
+
+add_action('init', function () {
+    if (current_user_can('unfiltered_html')) {
+        // Disables Kses only for textarea saves
+        foreach (array('pre_term_description', 'pre_link_description', 'pre_link_notes', 'pre_user_description') as $filter) {
+            remove_filter($filter, 'wp_filter_kses');
+        }
+    }
+
+    // Disables Kses only for textarea admin displays
+    foreach (array('term_description', 'link_description', 'link_notes', 'user_description') as $filter) {
+        remove_filter($filter, 'wp_kses_data');
+    }
 });
