@@ -85,11 +85,17 @@ const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
                                 className="the-comic-link"
                                 to={comicNavLinks.nextPage}
                             >
-                                <img
-                                    src={comicImageUrl}
-                                    alt={"Chapter " + comicPost.chapter_number + " - Page " + comicPost.page_number + " - " + comicPost.title.rendered}
-                                    title={"Chapter " + comicPost.chapter_number + " - Page " + comicPost.page_number + " - " + comicPost.title.rendered}
-                                />
+                                {
+                                    comicImageUrl
+                                        ?
+                                        <img
+                                            src={comicImageUrl}
+                                            alt={"Chapter " + comicPost.chapter_number + " - Page " + comicPost.page_number + " - " + comicPost.title.rendered}
+                                            title={"Chapter " + comicPost.chapter_number + " - Page " + comicPost.page_number + " - " + comicPost.title.rendered}
+                                        />
+                                        :
+                                        <></>
+                                }
                             </Link>
                             {
                                 comicPost.content_warning === '1'
