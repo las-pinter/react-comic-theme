@@ -119,6 +119,7 @@
     align-content: center;
     justify-content: center;
     flex-wrap: wrap;
+    align-items: flex-start;
 }
 
 .comic-character-list .character-thumbnail-small {

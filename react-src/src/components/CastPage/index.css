@@ -2,4 +2,5 @@
     flex-wrap: wrap;
     justify-content: center;
     row-gap: 20px;
+    align-items: flex-start;
 }

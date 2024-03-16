@@ -24,6 +24,13 @@
     font-family: "Rosarivo", cursive;
     font-weight: 400;
     font-style: normal;
+    display: flex;
+    width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
 }
 
 .character-thumbnail {
