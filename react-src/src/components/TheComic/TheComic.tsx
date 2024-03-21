@@ -30,6 +30,7 @@ interface ITheComicProps extends IConsumerProps {
 const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
     const nodeRef = useRef<any>(null);
     const [comicImageUrl, setComicImageUrl] = useState('');
+    const [contentWarning, setContentWarning] = useState('0');
 
     useEffect(() => {
         context.addLoading();
@@ -42,6 +43,7 @@ const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
         const img = new Image();
         img.onload = () => {
             setComicImageUrl(comicImageUrl);
+            setContentWarning(comicPost?.content_warning ? comicPost.content_warning : '0')
             context.removeLoading();
         }
         img.src = comicImageUrl;
@@ -98,7 +100,7 @@ const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
                                 }
                             </Link>
                             {
-                                comicPost.content_warning === '1'
+                                contentWarning === '1'
                                     ?
                                     <ContentWarningOverlay />
                                     :
