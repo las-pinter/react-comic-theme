@@ -2,6 +2,7 @@ declare global {
     interface Window {
         cad263: number;
         cad265: number;
+        comic_rocket_started: number;
     }
 }
 
@@ -10,6 +11,7 @@ declare global {
 const ResetComicAdVars = () => {
     window.cad263 = 0;
     window.cad265 = 0;
+    window.comic_rocket_started = 0;
 };
 
 export default ResetComicAdVars;

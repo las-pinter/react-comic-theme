@@ -7,7 +7,6 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import DisqusComments from '../DisqusComments/DisqusComments';
 import PostMeta from './PostMeta';
 
-
 export type TTerm = {
     id: number,
     link: string,
