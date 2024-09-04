@@ -108,7 +108,7 @@ const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
                                     <></>
                             }
                             {
-                                context.loading
+                                context.loading && comicImageUrl !== ""
                                     ?
                                     <ComicLoadingOverlay />
                                     :
