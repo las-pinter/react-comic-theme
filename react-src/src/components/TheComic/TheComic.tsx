@@ -11,6 +11,7 @@ import ComicTitle from './ComicTitle';
 import { IPost } from '../ThePost/ThePost';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import ContentWarningOverlay from './ContentWarningOverlay';
+import ComicLoadingOverlay from './ComicLoadingOverlay';
 
 export interface IComicPost extends IPost {
     type: 'comic',
@@ -103,6 +104,13 @@ const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
                                 contentWarning === '1'
                                     ?
                                     <ContentWarningOverlay />
+                                    :
+                                    <></>
+                            }
+                            {
+                                context.loading
+                                    ?
+                                    <ComicLoadingOverlay />
                                     :
                                     <></>
                             }
