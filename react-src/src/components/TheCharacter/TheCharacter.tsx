@@ -13,6 +13,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { CharacterComicItem, IComicItemNodeRef, TComicItem } from '../ComicItem/ComicItem';
 import RestHandler from '../../rest/RestHandler';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
+import CharacterPage from './CharacterPage';
 
 export type TCharacter = {
     name: string,
@@ -25,7 +26,8 @@ export type TCharacter = {
     order: number,
     group: string,
     image: string,
-    slug: string
+    slug: string,
+    characterPage: string
 }
 
 export interface ICharacterNodeRef extends TCharacter {
@@ -94,19 +96,25 @@ export const TheCharacter = ({ context, character }: ITheCharacterProps): JSX.El
                             <h1>
                                 <Link to={'/character/' + character.slug}>{character.name}</Link>
                             </h1>
-                            <div className="container-horizontal">
-                                <div className="the-character-image">
-                                    {
-                                        character.image ?
-                                            <img
-                                                src={character.image}
-                                                alt={character.name}
-                                            /> :
-                                            <div className="gray-placeholder"></div>
-                                    }
+                            {
+                                character.characterPage
+                                    ?
+                                    <CharacterPage characterPageSlug={character.characterPage} />
+                                    : 
+                                    <div className="container-horizontal">
+                                    <div className="the-character-image">
+                                        {
+                                            character.image ?
+                                                <img
+                                                    src={character.image}
+                                                    alt={character.name}
+                                                /> :
+                                                <div className="gray-placeholder"></div>
+                                        }
+                                    </div>
+                                    <div className="the-character-description" dangerouslySetInnerHTML={{ __html: character.description }} />
                                 </div>
-                                <div className="the-character-description" dangerouslySetInnerHTML={{ __html: character.description }} />
-                            </div>
+                            }
                             <div className="the-character-comic-list container-vertical">
                                 <Accordion>
                                     <AccordionSummary
