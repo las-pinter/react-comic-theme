@@ -198,24 +198,28 @@ const Background = ({ context }: IBackgroundProps): JSX.Element => {
                         </MouseParallaxChild>
                     </MouseParallaxContainer>
                     :
-                    <SwitchTransition mode={"out-in"}>
-                        <CSSTransition
-                            classNames="fader"
-                            nodeRef={fullImageNodeRef}
-                            appear={true}
-                            mountOnEnter={true}
-                            unmountOnExit={true}
-                            timeout={10000}
-                            addEndListener={(done: () => void) => {
-                                fullImageNodeRef.current?.addEventListener("transitionend", done, false);
-                            }}
-                            key={fullImage}
-                        >
-                            <div ref={fullImageNodeRef}>
-                                <img className="background-full" ref={fullImageNodeRef} src={fullImage} alt="" />
-                            </div>
-                        </CSSTransition>
-                    </SwitchTransition>
+                    <div className="background-image-container-wrapper">
+                        <div className="background-image-container">
+                            <SwitchTransition mode={"out-in"}>
+                                <CSSTransition
+                                    classNames="fader"
+                                    nodeRef={fullImageNodeRef}
+                                    appear={true}
+                                    mountOnEnter={true}
+                                    unmountOnExit={true}
+                                    timeout={10000}
+                                    addEndListener={(done: () => void) => {
+                                        fullImageNodeRef.current?.addEventListener("transitionend", done, false);
+                                    }}
+                                    key={fullImage}
+                                >
+                                    <div ref={fullImageNodeRef}>
+                                        <img className="background-full" ref={fullImageNodeRef} src={fullImage} alt="" />
+                                    </div>
+                                </CSSTransition>
+                            </SwitchTransition>
+                        </div>
+                    </div>
             }
         </div>
     );
