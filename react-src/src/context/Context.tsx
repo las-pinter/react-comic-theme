@@ -50,6 +50,7 @@ export interface IContextState {
         locationSlug: string,
     },
     setComicLocation: Function,
+    mediumScreenWidth: number
 };
 
 export const StoreContext = React.createContext<Readonly<IContextState>>(
@@ -74,6 +75,7 @@ export const StoreContext = React.createContext<Readonly<IContextState>>(
             locationSlug: ''
         },
         setComicLocation: () => { },
+        mediumScreenWidth: 1025,
     }
 );
 export const Consumer = StoreContext.Consumer;
@@ -104,6 +106,7 @@ export class Provider extends React.Component<IProps, IContextState> {
                 locationSlug: ''
             },
             setComicLocation: this.setComicLocation.bind(this),
+            mediumScreenWidth: 1025,
         };
     }
 

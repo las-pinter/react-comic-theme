@@ -259,6 +259,14 @@ class Comic_Theme_Settings
 
             <h2>Main Background</h2>
             <div class="comic-theme-admin-image-group">
+            <div class="comic-theme-admin-image-item">
+                    <h3>Full Image</h3>
+                    <div class="comic-theme-admin-image-selector" id="background:main:full">
+                        <img src="<?php
+                            echo $general_settings['background']['main']['full'] ?? '';
+                        ?>">
+                    </div>
+                </div>
                 <div class="comic-theme-admin-image-item">
                     <h3>First Layer</h3>
                     <div class="comic-theme-admin-image-selector" id="background:main:first">
@@ -290,6 +298,12 @@ class Comic_Theme_Settings
             ?>
                 <h3><?php echo $location->name ?></h3>
                 <div class="comic-theme-admin-image-group">
+                <div class="comic-theme-admin-image-item">
+                        <h4>Full Image</h4>
+                        <div class="comic-theme-admin-image-selector" id="<?php echo 'background:' . $location->slug . ":full" ?>">
+                            <img src="<?php echo $general_settings['background'][$location->slug]['full'] ?? '' ?>">
+                        </div>
+                    </div>
                     <div class="comic-theme-admin-image-item">
                         <h4>First Layer</h4>
                         <div class="comic-theme-admin-image-selector" id="<?php echo 'background:' . $location->slug . ":first" ?>">
