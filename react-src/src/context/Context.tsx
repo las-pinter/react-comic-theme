@@ -29,6 +29,10 @@ export interface IProps {
     duration?: number,
 };
 
+export type IBackgroundImageRecord = Record<string, string>;
+
+export type IBackgroundImages = Record<string, IBackgroundImageRecord>;
+
 export interface IContextState {
     loading: boolean,
     loadingCount: number,
@@ -42,7 +46,7 @@ export interface IContextState {
     comics: Record<string, TComic>,
     castPageSlug: string,
     logoImages: Record<string, string>,
-    backgroundImages: Record<string, Record<string, string>>,
+    backgroundImages: IBackgroundImages,
     currentComic: {
         comicPageFullSlug: string,
         comicPageSlug: string,

@@ -12,6 +12,7 @@ import { IPost } from '../ThePost/ThePost';
 import WithConsumer, { IConsumerProps } from '../../wrappers/WithConsumer';
 import ContentWarningOverlay from './ContentWarningOverlay';
 import ComicLoadingOverlay from './ComicLoadingOverlay';
+import ImageHandler from '../../utils/ImageHandler';
 
 export interface IComicPost extends IPost {
     type: 'comic',
@@ -36,21 +37,20 @@ const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
 
     useEffect(() => {
         context.addLoading();
-        setComicImageLoading(true)
+        setComicImageLoading(true);
 
         let comicImageUrl = '';
         if (comicPost?._embedded?.['wp:featuredmedia']) {
             comicImageUrl = comicPost._embedded['wp:featuredmedia'][0].source_url;
         }
 
-        const img = new Image();
-        img.onload = () => {
+        ImageHandler.loadImage(context, comicImageUrl).then(() => {
             setComicImageUrl(comicImageUrl);
-            setContentWarning(comicPost?.content_warning ? comicPost.content_warning : '0')
+            setContentWarning(comicPost?.content_warning ? comicPost.content_warning : '0');
             context.removeLoading();
-            setComicImageLoading(false)
-        }
-        img.src = comicImageUrl;
+            setComicImageLoading(false);
+        });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [comicPost])
 
