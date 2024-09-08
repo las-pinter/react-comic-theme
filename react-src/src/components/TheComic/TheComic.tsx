@@ -32,9 +32,11 @@ const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
     const nodeRef = useRef<any>(null);
     const [comicImageUrl, setComicImageUrl] = useState('');
     const [contentWarning, setContentWarning] = useState('0');
+    const [comicImageLoading, setComicImageLoading] = useState(false);
 
     useEffect(() => {
         context.addLoading();
+        setComicImageLoading(true)
 
         let comicImageUrl = '';
         if (comicPost?._embedded?.['wp:featuredmedia']) {
@@ -46,6 +48,7 @@ const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
             setComicImageUrl(comicImageUrl);
             setContentWarning(comicPost?.content_warning ? comicPost.content_warning : '0')
             context.removeLoading();
+            setComicImageLoading(false)
         }
         img.src = comicImageUrl;
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -108,7 +111,7 @@ const TheComic = ({ context, comicPost }: ITheComicProps): JSX.Element => {
                                     <></>
                             }
                             {
-                                context.loading && comicImageUrl !== ""
+                                comicImageLoading && comicImageUrl !== ""
                                     ?
                                     <ComicLoadingOverlay />
                                     :
