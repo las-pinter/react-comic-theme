@@ -25,7 +25,7 @@ const ContentWarningOverlay = () => {
                             setCookie('mature_reader', true);
                         }}
                     >
-                        I'm already 18+, let me see the content.
+                        I'm already over 18
                     </button>
                 </div>
             </div>
