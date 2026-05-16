@@ -22,7 +22,7 @@ const DisqusComments = forwardRef((props: IDisqusCommentsProps, ref: ForwardedRe
             }}
         >
             <DiscussionEmbed
-                shortname='talesfromsomewhere'
+                shortname='<COMIC_SHORTNAME_HERE>'
                 config={
                     {
                         url: window.location.href,
